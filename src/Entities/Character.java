@@ -27,7 +27,7 @@ public abstract class Character {
     public final int MAXDEXTERITY = 100;
     public final int MAXARMOREQUIPMENT = 2;
     public final int MAXWEAPONEQUIPMENT = 1;
-    public  final int MAXEQUIPMENT = 3;
+    public final int MAXEQUIPMENT = 3;
 
     //Attributes
     protected String name;
@@ -85,7 +85,7 @@ public abstract class Character {
     public void setEquipment(List<StuffItem> equipment) {
         this.equipment = equipment;
     }
-   
+
     public List<Item> getInventory() {
         return inventory;
     }
@@ -112,8 +112,40 @@ public abstract class Character {
 
     public void useUseableItem(UseableItem useableItem) {
         if (this.inventory.contains(useableItem)) {
-            this.inventory.remove(useableItem);
             // traitement
+            // utilisation = influence sur caratéristiques
+            // utilisation potion -> augmentation santé perso
+            this.inventory.remove(useableItem);
+        }
+    }
+
+    /**
+     *
+     * To use Armor in the equipment against an opponent
+     * 
+     * @param armor
+     * @param opponent
+     */
+    public void useArmor(Armor armor, Character opponent) {
+        if (this.equipment.contains(armor)) {
+            // traitement
+            // utilisation = influence sur caratéristiques
+
+        }
+    }
+
+    /**
+     *
+     * To use a Weapon in the equipment against an opponent
+     * 
+     * @param weapon
+     * @param opponent
+     */
+    public void useWeapon(Weapon weapon, Character opponent) {
+        if (this.equipment.contains(weapon)) {
+            // traitement
+            // utilisation = influence sur caratéristiques
+            // utilisation arme -> diminution santé adversaire
         }
     }
 
@@ -136,15 +168,42 @@ public abstract class Character {
         return 0;
     }
 
-    public void equipMe(StuffItem stuffItem) {
-        if(equipment.size()<=MAXEQUIPMENT){
-            if((stuffItem.getClass() == Weapon.class && numberArmorEquipment()<=MAXWEAPONEQUIPMENT)||(stuffItem.getClass() == Armor.class && numberArmorEquipment()<=MAXARMOREQUIPMENT)){
+    /**
+     *
+     * Equip character with Armor or Weapon
+     *
+     * @param stuffItem
+     * @return
+     */
+    public boolean equipMe(StuffItem stuffItem) {
+        if (equipment.size() < MAXEQUIPMENT && inventory.contains(stuffItem)) { //if character owns stuff item and his equipment contains less than MAXEQUIPMENT stuff items
+            if ((stuffItem.getClass() == Weapon.class && numberWeaponEquipment() < MAXWEAPONEQUIPMENT) || (stuffItem.getClass() == Armor.class && numberArmorEquipment() < MAXARMOREQUIPMENT)) {
+                //if number of weapon in equiment is less than MAXWEAPONEQUIPMENT and the stuff item is a weapon 
+                //OR if number of armor in equiment is less than MAXARMOREQUIPMENT and the stuff item is an armor 
                 equipment.add(stuffItem);
+                return true;
             }
         }
+        return false;
     }
 
-    public void equipMe(StuffItem newStuffItem, StuffItem removeStuffItem) {
-
+    /**
+     *
+     * Equip character with Armor or Weapon and replace an other Stuff
+     *
+     * @param newStuffItem
+     * @param removeStuffItem
+     * @return
+     */
+    public boolean equipMe(StuffItem newStuffItem, StuffItem removeStuffItem) {
+        if (equipment.size() <= MAXEQUIPMENT && inventory.contains(newStuffItem) && equipment.contains(removeStuffItem)) { //if character owns the new stuff item and his equipment contains the replacement stuff item and his equipment contains less than MAXEQUIPMENT stuff items
+            equipment.remove(removeStuffItem);
+            if (equipMe(newStuffItem) == true) {
+                return true;
+            } else {
+                equipment.add(removeStuffItem);
+            }
+        }
+        return false;
     }
 }

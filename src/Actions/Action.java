@@ -5,6 +5,8 @@
  */
 package Actions;
 
+import Items.UseableItem;
+
 /**
  *
  * @author yannick
@@ -14,4 +16,5 @@ public class Action
     private Character source;
     private Character destination;
     private Skill skill;
+    private UseableItem useableItem;
 }

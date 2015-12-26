@@ -9,7 +9,7 @@ package Items;
  *
  * @author yannick
  */
-public class Armor extends Item
+public class Armor extends StuffItem
 {
     
     public Armor(String name, int weight)

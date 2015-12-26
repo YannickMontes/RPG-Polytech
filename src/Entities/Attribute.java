@@ -14,5 +14,6 @@ public enum Attribute
     STRENGTH,
     DEXTERITY,
     HEALTH,
-    DEFENSE
+    DEFENSE,
+    SPEED
 }

@@ -9,7 +9,11 @@ package Items;
  *
  * @author yannick
  */
-public class Stuff
+public class StuffItem extends Item
 {
-    
+
+    public StuffItem(String name, int weight) {
+        super(name, weight);
+    }
+
 }

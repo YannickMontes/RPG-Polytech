@@ -9,7 +9,10 @@ package Items;
  *
  * @author yannick
  */
-public class Weapon
-{
+public class Weapon extends StuffItem
+{    
+    public Weapon(String name, int weight) {
+        super(name, weight);
+    }
     
 }

@@ -5,7 +5,6 @@
  */
 package Entities;
 
-import Actions.Skill;
 import Items.Armor;
 import Items.Item;
 import Items.StuffItem;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import Actions.Care;
 
 /**
  *

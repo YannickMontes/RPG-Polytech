@@ -9,6 +9,6 @@ package Actions;
  *
  * @author yannick
  */
-public interface Skill {
+public interface Care extends Capacity {
     
 }

@@ -15,6 +15,6 @@ public class Action
 {
     private Character source;
     private Character destination;
-    private Skill skill;
+    private Care skill;
     private UseableItem useableItem;
 }

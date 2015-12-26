@@ -5,18 +5,22 @@
  */
 package Entities;
 
+import Actions.Attack;
+import Actions.Block;
+
 /**
  *
  * @author yannick
  */
-public class Warrior extends Character {
+public class Warrior extends Character implements Attack, Block {
     
     public Warrior(String name)
     {
         super(name);
-        this.attributes.put(Attribute.STRENGTH, 50);
-        this.attributes.put(Attribute.DEXTERITY, 30);
-        this.attributes.put(Attribute.DEFENSE, 20);
+        this.attributes.put(Attribute.STRENGTH, 40);
+        this.attributes.put(Attribute.DEXTERITY, 25);
+        this.attributes.put(Attribute.DEFENSE, 25);
+        this.attributes.put(Attribute.SPEED, 10);
         this.maxWeight = 25;
     }
     

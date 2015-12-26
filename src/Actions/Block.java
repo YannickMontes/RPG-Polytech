@@ -9,6 +9,6 @@ package Actions;
  *
  * @author yannick
  */
-public interface Block {
+public interface Block extends Capacity {
     
 }

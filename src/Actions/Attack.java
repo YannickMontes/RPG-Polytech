@@ -9,7 +9,7 @@ package Actions;
  *
  * @author yannick
  */
-public interface Attack 
+public interface Attack extends Capacity
 {
     
 }

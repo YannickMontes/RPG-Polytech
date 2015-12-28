@@ -15,18 +15,14 @@ public class Armor extends StuffItem
 {
     private int defenseValue;
     
-    public Armor(String name, int weight, int defenseValue)
+    public Armor(String name, int weight, int handlingAbility, int defenseValue)
     {
-        super(name, weight);
+        super(name, weight,handlingAbility);
         this.defenseValue=defenseValue;
     }
 
     public int getDefenseValue() {
         return defenseValue;
-    }
-
-    public Stream<Object> get() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

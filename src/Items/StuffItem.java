@@ -9,11 +9,17 @@ package Items;
  *
  * @author yannick
  */
-public abstract class StuffItem extends Item
-{
-    
-    public StuffItem(String name, int weight) {
+public abstract class StuffItem extends Item {
+
+    private int handlingAbility;
+
+    public StuffItem(String name, int weight, int handlingAbility) {
         super(name, weight);
+        this.handlingAbility = handlingAbility;
+    }
+
+    public int getHandlingAbility() {
+        return handlingAbility;
     }
 
 }

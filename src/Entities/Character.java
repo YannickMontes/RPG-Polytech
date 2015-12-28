@@ -246,9 +246,12 @@ public abstract class Character {
                 probability += ((Weapon) weapon).getHandlingAbility();
             }
         } else if (capacity.getClass() == Block.class) {
-
+            probability=this.attributes.get(Attribute.DEFENSE);
+            for (StuffItem armor : this.getEquipment(Armor.class)) {
+                probability += ((Armor) armor).getHandlingAbility();
+            }
         } else if (capacity.getClass() == Care.class) {
-
+            probability=1;
         }
         return probability;
     }

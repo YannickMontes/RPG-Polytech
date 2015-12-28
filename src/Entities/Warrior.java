@@ -13,15 +13,35 @@ import Actions.Block;
  * @author yannick
  */
 public class Warrior extends Character implements Attack, Block {
-    
-    public Warrior(String name)
-    {
+
+    public Warrior(String name) {
         super(name);
-        this.attributes.put(Attribute.STRENGTH, 40);
-        this.attributes.put(Attribute.DEXTERITY, 25);
-        this.attributes.put(Attribute.DEFENSE, 25);
-        this.attributes.put(Attribute.SPEED, 10);
+        this.attributes.put(Attribute.STRENGTH, 50);
+        this.attributes.put(Attribute.DEXTERITY, 35);
+        this.attributes.put(Attribute.DEFENSE, 30);
+        this.attributes.put(Attribute.SPEED, 15);
         this.maxWeight = 25;
     }
-    
+
+    @Override
+    public boolean strikeABlow(Character opponent) {
+        boolean success = false;
+//traitement
+        return success;
+    }
+
+    @Override
+    public boolean block(Character opponent) {
+        boolean success = false;
+//traitement
+        return success;
+    }
+
+    @Override
+    public boolean dodge(Character opponent) {
+        boolean success = false;
+//traitement
+        return success;
+    }
+
 }

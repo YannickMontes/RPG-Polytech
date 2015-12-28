@@ -5,6 +5,9 @@
  */
 package Entities;
 
+import Actions.Attack;
+import Actions.Block;
+import Actions.Capacity;
 import Items.Armor;
 import Items.Item;
 import Items.StuffItem;
@@ -25,6 +28,10 @@ public abstract class Character {
     //Fixed variables
     public final int MAXHEALTH = 100;
     public final int MAXDEXTERITY = 100;
+    public final int MAXDEFENSE = 100;
+    public final int MAXSTRENGTH = 100;
+    public final int MAXSPEED = 100;
+
     public final int MAXARMOREQUIPMENT = 2;
     public final int MAXWEAPONEQUIPMENT = 1;
     public final int MAXEQUIPMENT = 3;
@@ -122,7 +129,7 @@ public abstract class Character {
     /**
      *
      * To use Armor in the equipment against an opponent
-     * 
+     *
      * @param armor
      * @param opponent
      */
@@ -137,7 +144,7 @@ public abstract class Character {
     /**
      *
      * To use a Weapon in the equipment against an opponent
-     * 
+     *
      * @param weapon
      * @param opponent
      */
@@ -206,4 +213,40 @@ public abstract class Character {
         }
         return false;
     }
+
+    //Function to use capacity
+    public int verifySuccess(Capacity capacity) {
+        //selon la capacitié utilisée: selon ses caractéristiques et son arme (s'il en a)
+        //calcule de proba
+        if (capacity.getClass() == Attack.class) {
+            
+        } else if (capacity.getClass() == Block.class) {
+
+        } else if (capacity.getClass() == Care.class) {
+
+        } 
+        return 0;
+    }
+
+    public int measureImpact(Capacity capacity, Character opponent) {
+        //selon la capacité utilisisée
+        //// ATTAQUE
+        //// - calculer les dégâts occasionnés
+        //// - calculer la défense de l'adversaire (somme de sa valeur de défense et des armures s'il en a
+        //// - calculer le dommage: degat - defense
+        //// - soustraire impacte attaque sur la santé de l'adversaire
+        //// PARADE
+        //// - augmente défense s'il est attaqué
+        //// SOIN
+        //// - augmente santé d'une valeur fonction de la capacité de soin de ses équipements.
+        if (capacity.getClass() == Attack.class) {
+            
+        } else if (capacity.getClass() == Block.class) {
+
+        } else if (capacity.getClass() == Care.class) {
+
+        } 
+        return 0;
+    }
+
 }

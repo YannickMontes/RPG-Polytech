@@ -4,11 +4,16 @@
  * and open the template in the editor.
  */
 package Actions;
+import Entities.Character;
 
 /**
  *
  * @author yannick
  */
 public interface Block extends Capacity {
-    
+
+    public boolean block(Character opponent);
+
+    public boolean dodge(Character opponent);
+
 }

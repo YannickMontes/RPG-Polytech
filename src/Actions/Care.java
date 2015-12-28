@@ -10,5 +10,7 @@ package Actions;
  * @author yannick
  */
 public interface Care extends Capacity {
-    
+
+    public boolean nurse();
+
 }

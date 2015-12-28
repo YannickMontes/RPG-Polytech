@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Actions;
+import Entities.Character;
 
 /**
  *
@@ -11,5 +12,6 @@ package Actions;
  */
 public interface Attack extends Capacity
 {
+    public boolean strikeABlow(Character opponent);
     
 }

@@ -12,16 +12,36 @@ import Actions.Care;
  *
  * @author yannick
  */
-public class Wizard extends Character implements Care, Block{
-    
-    public Wizard(String name)
-    {
+public class Wizard extends Character implements Care, Block {
+
+    public Wizard(String name) {
         super(name);
-        this.attributes.put(Attribute.DEXTERITY, 40);
-        this.attributes.put(Attribute.DEFENSE, 30);
-        this.attributes.put(Attribute.SPEED, 20);
-        this.attributes.put(Attribute.STRENGTH, 10);
+        this.attributes.put(Attribute.DEXTERITY, 55);
+        this.attributes.put(Attribute.DEFENSE, 35);
+        this.attributes.put(Attribute.SPEED, 25);
+        this.attributes.put(Attribute.STRENGTH, 15);
         this.maxWeight = 15;
     }
-    
+
+    @Override
+    public boolean block(Character opponent) {
+        boolean success = false;
+//traitement
+        return success;
+    }
+
+    @Override
+    public boolean dodge(Character opponent) {
+        boolean success = false;
+//traitement
+        return success;
+    }
+
+    @Override
+    public boolean nurse() {
+        boolean success = false;
+//traitement
+        return success;
+    }
+
 }

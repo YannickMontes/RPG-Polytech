@@ -11,16 +11,23 @@ import Actions.Attack;
  *
  * @author yannick
  */
-public class Athlete extends Character implements Attack  {
-    
+public class Athlete extends Character implements Attack {
+
     public Athlete(String name) {
         super(name);
-        this.attributes.put(Attribute.SPEED, 30);
-        this.attributes.put(Attribute.STRENGTH, 30);
+        this.attributes.put(Attribute.SPEED, 45);
+        this.attributes.put(Attribute.STRENGTH, 45);
         this.attributes.put(Attribute.DEFENSE, 20);
         this.attributes.put(Attribute.DEXTERITY, 20);
 
         this.maxWeight = 20;
+    }
+
+    @Override
+    public boolean strikeABlow(Character opponent) {
+        boolean success = false;
+//traitement
+        return success;
     }
 
 }

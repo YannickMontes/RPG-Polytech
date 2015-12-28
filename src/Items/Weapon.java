@@ -12,13 +12,21 @@ package Items;
 public class Weapon extends StuffItem
 {
     private int damage;
+    private int handlingAbility;
     
-    public Weapon(String name, int weight, int damage) {
+    public Weapon(String name, int weight, int damage, int handlingAbility) {
         super(name, weight);
         this.damage=damage;
+        this.handlingAbility=handlingAbility;
     }
 
     public int getDamage() {
         return damage;
     }
+
+    public int getHandlingAbility() {
+        return handlingAbility;
+    }
+    
+    
 }

@@ -223,20 +223,6 @@ public abstract class Character {
         }
         return false;
     }
-
-    //Function to use capacity
-    public int verifySuccess(Capacity capacity) {
-        //selon la capacitié utilisée: selon ses caractéristiques et son arme (s'il en a)
-        //calcule de proba
-        if (capacity.getClass() == Attack.class) {
-
-        } else if (capacity.getClass() == Block.class) {
-
-        } else if (capacity.getClass() == Care.class) {
-
-        }
-        return 0;
-    }
     
     /**
      *
@@ -247,6 +233,24 @@ public abstract class Character {
     public void takeABlow(int value)
     {
         this.attributes.replace(Attribute.HEALTH, this.attributes.get(Attribute.HEALTH)-value);
+    }
+
+    //Function to use capacity
+    public int verifySuccess(Capacity capacity) {
+        //selon la capacitié utilisée: selon ses caractéristiques et son arme (s'il en a)
+        //calcule de proba
+        int probability=0;
+        if (capacity.getClass() == Attack.class) {
+            probability=this.attributes.get(Attribute.DEXTERITY);
+            for (StuffItem weapon : this.getEquipment(Weapon.class)) {
+                probability += ((Weapon) weapon).getHandlingAbility();
+            }
+        } else if (capacity.getClass() == Block.class) {
+
+        } else if (capacity.getClass() == Care.class) {
+
+        }
+        return probability;
     }
 
     public int measureImpact(Capacity capacity, Character opponent) {

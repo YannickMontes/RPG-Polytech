@@ -11,9 +11,16 @@ package Items;
  */
 public class UseableItem extends Item
 {
+    private int bonusValue;
     
-    public UseableItem(String name, int weight) {
+    public UseableItem(String name, int weight, int bonusValue) {
         super(name, weight);
+        this.bonusValue=bonusValue;
     }
+
+    public int getBonusValue() {
+        return bonusValue;
+    }
+    
     
 }

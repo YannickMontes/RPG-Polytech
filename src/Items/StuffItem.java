@@ -9,9 +9,9 @@ package Items;
  *
  * @author yannick
  */
-public class StuffItem extends Item
+public abstract class StuffItem extends Item
 {
-
+    
     public StuffItem(String name, int weight) {
         super(name, weight);
     }

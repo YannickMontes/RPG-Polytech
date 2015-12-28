@@ -5,6 +5,7 @@
  */
 package Entities;
 
+import Actions.Attack;
 import Actions.Block;
 import Actions.Care;
 
@@ -12,7 +13,7 @@ import Actions.Care;
  *
  * @author yannick
  */
-public class Wizard extends Character implements Care, Block {
+public class Wizard extends Character implements Attack, Care {
 
     public Wizard(String name) {
         super(name);
@@ -24,24 +25,15 @@ public class Wizard extends Character implements Care, Block {
     }
 
     @Override
-    public boolean block(Character opponent) {
-        boolean success = false;
-//traitement
-        return success;
-    }
-
-    @Override
-    public boolean dodge(Character opponent) {
-        boolean success = false;
-//traitement
-        return success;
-    }
-
-    @Override
     public boolean nurse() {
         boolean success = false;
 //traitement
         return success;
+    }
+
+    @Override
+    public boolean strikeABlow(Character opponent) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

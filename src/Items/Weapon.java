@@ -10,9 +10,15 @@ package Items;
  * @author yannick
  */
 public class Weapon extends StuffItem
-{    
-    public Weapon(String name, int weight) {
-        super(name, weight);
-    }
+{
+    private int damage;
     
+    public Weapon(String name, int weight, int damage) {
+        super(name, weight);
+        this.damage=damage;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
 }

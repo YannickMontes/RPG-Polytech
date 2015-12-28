@@ -126,13 +126,13 @@ public abstract class Character {
         }
     }
 
-    /**
+    /*  **
      *
      * To use Armor in the equipment against an opponent
      *
      * @param armor
      * @param opponent
-     */
+     *
     public void useArmor(Armor armor, Character opponent) {
         if (this.equipment.contains(armor)) {
             // traitement
@@ -141,13 +141,13 @@ public abstract class Character {
         }
     }
 
-    /**
+    **
      *
      * To use a Weapon in the equipment against an opponent
      *
      * @param weapon
      * @param opponent
-     */
+     *
     public void useWeapon(Weapon weapon, Character opponent) {
         if (this.equipment.contains(weapon)) {
             // traitement
@@ -155,7 +155,7 @@ public abstract class Character {
             // utilisation arme -> diminution santé adversaire
         }
     }
-
+     */
     private int numberArmorEquipment() {
         int i = 0;
         for (StuffItem stuffItem : equipment) {
@@ -173,6 +173,16 @@ public abstract class Character {
             }
         }
         return 0;
+    }
+
+    public ArrayList<StuffItem> getEquipment(Class itemType) {
+        ArrayList<StuffItem> items = new ArrayList<>();
+        for (StuffItem stuffItem : equipment) {
+            if (stuffItem.getClass() == itemType) {
+                items.add(stuffItem);
+            }
+        }
+        return items;
     }
 
     /**
@@ -219,33 +229,58 @@ public abstract class Character {
         //selon la capacitié utilisée: selon ses caractéristiques et son arme (s'il en a)
         //calcule de proba
         if (capacity.getClass() == Attack.class) {
-            
+
         } else if (capacity.getClass() == Block.class) {
 
         } else if (capacity.getClass() == Care.class) {
 
-        } 
+        }
         return 0;
+    }
+    
+    /**
+     *
+     * Take a blow after an attack
+     * 
+     * @param value
+     */
+    public void takeABlow(int value)
+    {
+        this.attributes.replace(Attribute.HEALTH, this.attributes.get(Attribute.HEALTH)-value);
     }
 
     public int measureImpact(Capacity capacity, Character opponent) {
         //selon la capacité utilisisée
         //// ATTAQUE
-        //// - calculer les dégâts occasionnés
+        //// - calculer les dégâts occasionnés (somme force attaquant et valeur degat arme s'il en a)
         //// - calculer la défense de l'adversaire (somme de sa valeur de défense et des armures s'il en a
         //// - calculer le dommage: degat - defense
         //// - soustraire impacte attaque sur la santé de l'adversaire
         //// PARADE
         //// - augmente défense s'il est attaqué
         //// SOIN
-        //// - augmente santé d'une valeur fonction de la capacité de soin de ses équipements.
+        //// - augmente santé d'une valeur de la santé en fonction de la capacité de soin de ses équipements.
         if (capacity.getClass() == Attack.class) {
+            int damage = this.attributes.get(Attribute.STRENGTH);
+            for (StuffItem weapon : this.getEquipment(Weapon.class)) {
+                damage += ((Weapon) weapon).getDamage();
+            }
+
+            int defense = opponent.attributes.get(Attribute.DEFENSE);
+            for (StuffItem armor : opponent.getEquipment(Armor.class)) {
+                defense += ((Armor) armor).getDefenseValue();
+            }
+            
+            int damages = damage-defense;
+            
+            return damages;
             
         } else if (capacity.getClass() == Block.class) {
-
+            
         } else if (capacity.getClass() == Care.class) {
-
-        } 
+            int care=0; // passer l'objet de soin en parametre
+            return care;
+        }
         return 0;
     }
 

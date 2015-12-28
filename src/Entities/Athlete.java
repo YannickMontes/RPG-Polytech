@@ -6,12 +6,13 @@
 package Entities;
 
 import Actions.Attack;
+import Actions.Block;
 
 /**
  *
  * @author yannick
  */
-public class Athlete extends Character implements Attack {
+public class Athlete extends Character implements Attack, Block {
 
     public Athlete(String name) {
         super(name);
@@ -28,6 +29,16 @@ public class Athlete extends Character implements Attack {
         boolean success = false;
 //traitement
         return success;
+    }
+
+    @Override
+    public boolean block(Character opponent) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean dodge(Character opponent) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

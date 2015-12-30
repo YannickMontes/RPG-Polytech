@@ -3,20 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Manager/RPG.java</file>
             <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Items/Item.java</file>
-            <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Entities/Warrior.java</file>
-            <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Actions/Capacity.java</file>
-            <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Items/Weapon.java</file>
-            <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Entities/Attribute.java</file>
-            <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Items/Armor.java</file>
-            <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Items/UseableItem.java</file>
-            <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Actions/Attack.java</file>
             <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Items/StuffItem.java</file>
-            <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Actions/Care.java</file>
-            <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Actions/Block.java</file>
-            <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Entities/Athlete.java</file>
+            <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Items/Weapon.java</file>
             <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Entities/Character.java</file>
-            <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Entities/Wizard.java</file>
+            <file>file:/D:/Polytech/3A/Java/rpg-polytech/src/Items/Armor.java</file>
         </group>
     </open-files>
 </project-private>

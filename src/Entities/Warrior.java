@@ -15,7 +15,7 @@ import Actions.Block;
 public class Warrior extends Character implements Attack, Block {
 
     public Warrior(String name) {
-        super(name);
+        super(name,"Guerrier");
         this.attributes.put(Attribute.STRENGTH, 50);
         this.attributes.put(Attribute.DEXTERITY, 35);
         this.attributes.put(Attribute.DEFENSE, 30);

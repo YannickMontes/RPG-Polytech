@@ -25,6 +25,12 @@ public class Fight extends Event {
     public Fight(Team team1, Team team2, int numberOfTurn) {
         this.team1 = team1;
         this.team2 = team2;
+        for (Character character1 : team1.getCharacters()) {
+            character1.restoreLife();
+        }
+        for (Character character2 : team2.getCharacters()) {
+            character2.restoreLife();
+        }
         turns = new ArrayList<>();
         this.numberOfTurn = numberOfTurn;
         initTurn();

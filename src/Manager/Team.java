@@ -23,7 +23,7 @@ public class Team {
         characters = new ArrayList<>();
     }
 
-    public void addCharacterTeam1(Character character) {
+    public void addCharacterTeam(Character character) {
         characters.add(character);
     }
 

@@ -38,6 +38,7 @@ public abstract class Character {
 
     //Attributes
     protected String name;
+    protected String className;
     protected Map<Attribute, Integer> attributes;
     protected int level;
     protected int maxWeight;
@@ -45,11 +46,14 @@ public abstract class Character {
     protected List<StuffItem> equipment;
 
     //Constructors
-    public Character(String name) {
+    public Character(String name, String className) {
         this.name = name;
+        this.level=1;
+        this.className = className;
         this.inventory = new ArrayList<>();
         this.equipment = new ArrayList<>();
         this.attributes = new HashMap<>();
+        this.attributes.put(Attribute.HEALTH, MAXHEALTH);
     }
 
     //Getters & Setters
@@ -223,35 +227,34 @@ public abstract class Character {
         }
         return false;
     }
-    
+
     /**
      *
      * Take a blow after an attack
-     * 
+     *
      * @param value
      */
-    public void takeABlow(int value)
-    {
-        this.attributes.replace(Attribute.HEALTH, this.attributes.get(Attribute.HEALTH)-value);
+    public void takeABlow(int value) {
+        this.attributes.replace(Attribute.HEALTH, this.attributes.get(Attribute.HEALTH) - value);
     }
 
     //Function to use capacity
     public int verifySuccess(Capacity capacity) {
         //selon la capacitié utilisée: selon ses caractéristiques et son arme (s'il en a)
         //calcule de proba
-        int probability=0;
+        int probability = 0;
         if (capacity.getClass() == Attack.class) {
-            probability=this.attributes.get(Attribute.DEXTERITY);
+            probability = this.attributes.get(Attribute.DEXTERITY);
             for (StuffItem weapon : this.getEquipment(Weapon.class)) {
                 probability += ((Weapon) weapon).getHandlingAbility();
             }
         } else if (capacity.getClass() == Block.class) {
-            probability=this.attributes.get(Attribute.DEFENSE);
+            probability = this.attributes.get(Attribute.DEFENSE);
             for (StuffItem armor : this.getEquipment(Armor.class)) {
                 probability += ((Armor) armor).getHandlingAbility();
             }
         } else if (capacity.getClass() == Care.class) {
-            probability=1;
+            probability = 1;
         }
         return probability;
     }
@@ -277,18 +280,39 @@ public abstract class Character {
             for (StuffItem armor : opponent.getEquipment(Armor.class)) {
                 defense += ((Armor) armor).getDefenseValue();
             }
-            
-            int damages = damage-defense;
-            
+
+            int damages = damage - defense;
+
             return damages;
-            
+
         } else if (capacity.getClass() == Block.class) {
-            
+
         } else if (capacity.getClass() == Care.class) {
-            int care=0; // passer l'objet de soin en parametre
+            int care = 0; // passer l'objet de soin en parametre
             return care;
         }
         return 0;
+    }
+
+    public void restoreLife() {
+        this.attributes.replace(Attribute.HEALTH, MAXHEALTH);
+    }
+
+    public void showData() {
+        System.out.println("--------------------");
+        System.out.println("DONNEES DE " + this.name);
+        System.out.println("Classe: " + this.className);
+        System.out.println("Niveau: " + this.level);
+        System.out.println("Niveau de santé: " + this.attributes.get(Attribute.HEALTH));
+        System.out.println("Niveau de dextérité: " + this.attributes.get(Attribute.DEXTERITY));
+        System.out.println("Niveau de défense: " + this.attributes.get(Attribute.DEFENSE));
+        System.out.println("Niveau de vitesse: " + this.attributes.get(Attribute.SPEED));
+        System.out.println("Niveau de force: " + this.attributes.get(Attribute.STRENGTH));
+        System.out.println("Nombre d'objet dans l'inventaire: " + this.inventory.size());
+        System.out.println("Equipement actuel: ");
+        for (int i = 0; i < equipment.size(); i++) {
+            System.out.println("-" + equipment.get(i).getName());
+        }
     }
 
 }

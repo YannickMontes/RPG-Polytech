@@ -15,7 +15,7 @@ import Actions.Block;
 public class Athlete extends Character implements Attack, Block {
 
     public Athlete(String name) {
-        super(name);
+        super(name,"Athlete");
         this.attributes.put(Attribute.SPEED, 45);
         this.attributes.put(Attribute.STRENGTH, 45);
         this.attributes.put(Attribute.DEFENSE, 20);
@@ -30,7 +30,7 @@ public class Athlete extends Character implements Attack, Block {
 //traitement
         return success;
     }
-
+    
     @Override
     public boolean block(Character opponent) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

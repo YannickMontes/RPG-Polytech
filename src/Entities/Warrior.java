@@ -33,7 +33,10 @@ public class Warrior extends Character implements Attack, Block, Care {
         boolean success = verifySuccess("attack");
         int damages=0;
         if(success==true)
+        {
             damages = measureImpact("attack",opponent);
+            opponent.takeABlow(damages);
+        }
         String text = attackResult(success,opponent,damages);     
         return text;
     }

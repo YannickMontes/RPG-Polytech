@@ -26,7 +26,7 @@ import Actions.Care;
 public abstract class Character {
 
     //Fixed variables
-    public final int MAXHEALTH = 100;
+    public final int MAXHEALTH = 999;
     public final int MAXDEXTERITY = 100;
     public final int MAXDEFENSE = 100;
     public final int MAXSTRENGTH = 100;
@@ -57,7 +57,7 @@ public abstract class Character {
         this.capacities = new ArrayList<>();
         this.attributes = new HashMap<>();
         this.basicAttributes = new HashMap<>();
-        this.attributes.put(Attribute.HEALTH, MAXHEALTH);
+        this.basicAttributes.put(Attribute.HEALTH, 150+2*level+3);
     }
 
     //Getters & Setters
@@ -310,10 +310,14 @@ public abstract class Character {
     }
 
     public void restoreAttributes() {
+        this.basicAttributes.put(Attribute.HEALTH, 150+2*level+3);
         attributes.put(Attribute.SPEED, basicAttributes.get(Attribute.SPEED));
         attributes.put(Attribute.DEFENSE, basicAttributes.get(Attribute.DEFENSE));
         attributes.put(Attribute.DEXTERITY, basicAttributes.get(Attribute.DEXTERITY));
         attributes.put(Attribute.STRENGTH, basicAttributes.get(Attribute.STRENGTH));
+        attributes.put(Attribute.HEALTH, basicAttributes.get(Attribute.HEALTH));
+        attributes.put(Attribute.INTELLIGENCE, basicAttributes.get(Attribute.INTELLIGENCE));
+
     }
 
     public void showData() {
@@ -326,6 +330,7 @@ public abstract class Character {
         System.out.println("Niveau de défense: " + this.attributes.get(Attribute.DEFENSE));
         System.out.println("Niveau de vitesse: " + this.attributes.get(Attribute.SPEED));
         System.out.println("Niveau de force: " + this.attributes.get(Attribute.STRENGTH));
+        System.out.println("Niveau d'intelligence: " + this.attributes.get(Attribute.INTELLIGENCE));
         System.out.println("Nombre d'objet dans l'inventaire: " + this.inventory.size());
         System.out.println("Equipement actuel: ");
         for (int i = 0; i < equipment.size(); i++) {

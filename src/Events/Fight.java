@@ -36,13 +36,12 @@ public class Fight extends Event {
 
     public void executeFight() {
         System.out.println("*** Début d'un combat ***");
-        boolean equipe=false;
-        if(team1.getTeamSpeed() > team2.getTeamSpeed()){
+        boolean equipe = false;
+        if (team1.getTeamSpeed() > team2.getTeamSpeed()) {
             equipe = true;
         }
-        
+
         do {
-            //
             executeTurn(equipe);
             equipe = !equipe;
         } while (team1.isTeamAlive() && team2.isTeamAlive());
@@ -55,7 +54,9 @@ public class Fight extends Event {
             actualTurn = new Turn(team2, team1);
         }
         System.out.println("--------------------");
-        System.out.println("C'est au tour de l'équipe " + actualTurn.getTeam());
+        System.out.println("--------------------");
+        System.out.println("--------------------");
+        System.out.println("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName());
         actualTurn.executeTurn();
     }
 

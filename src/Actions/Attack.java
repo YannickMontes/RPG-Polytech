@@ -12,6 +12,6 @@ import Entities.Character;
  */
 public interface Attack extends Capacity
 {
-    public boolean strikeABlow(Character opponent);
+    public String strikeABlow(Character opponent);
     
 }

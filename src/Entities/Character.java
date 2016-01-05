@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import Actions.Care;
+import java.util.Random;
 
 /**
  *
@@ -250,27 +251,32 @@ public abstract class Character {
     }
 
     //Function to use capacity
-    public int verifySuccess(Capacity capacity) {
+    public boolean verifySuccess(String capacity) {
         //selon la capacitié utilisée: selon ses caractéristiques et son arme (s'il en a)
         //calcule de proba
-        int probability = 0;
-        if (capacity.getClass() == Attack.class) {
-            probability = this.attributes.get(Attribute.DEXTERITY);
+        float probability = 0;
+        if ("attack".equals(capacity)) {
             for (StuffItem weapon : this.getEquipment(Weapon.class)) {
-                probability += ((Weapon) weapon).getHandlingAbility();
+                probability += (float)(((Weapon) weapon).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
             }
-        } else if (capacity.getClass() == Block.class) {
+            probability += (float)(this.attributes.get(Attribute.DEXTERITY).floatValue() / 100) * 1 - (0.2 * this.getEquipment(Armor.class).size());
+        } else if ("block".equals(capacity)) {
             probability = this.attributes.get(Attribute.DEFENSE);
             for (StuffItem armor : this.getEquipment(Armor.class)) {
-                probability += ((Armor) armor).getHandlingAbility();
+                probability += (float)(((Armor) armor).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
             }
-        } else if (capacity.getClass() == Care.class) {
+            probability += (float)(this.attributes.get(Attribute.DEFENSE).floatValue() / 100) * 1 - (0.2 * this.getEquipment(Armor.class).size());
+        } else if ("care".equals(capacity)) {
             probability = 1;
         }
-        return probability;
+        
+        int rand = (int) (Math.random() * ( 100 ));
+        if(rand<=(probability*100))
+            return true;
+        return false;
     }
 
-    public int measureImpact(Capacity capacity, Character opponent) {
+    public int measureImpact(String capacity, Character opponent) {
         //selon la capacité utilisisée
         //// ATTAQUE
         //// - calculer les dégâts occasionnés (somme force attaquant et valeur degat arme s'il en a)
@@ -281,7 +287,7 @@ public abstract class Character {
         //// - augmente défense s'il est attaqué
         //// SOIN
         //// - augmente santé d'une valeur de la santé en fonction de la capacité de soin de ses équipements.
-        if (capacity.getClass() == Attack.class) {
+        if ("attack".equals(capacity)) {
             int damage = this.attributes.get(Attribute.STRENGTH);
             for (StuffItem weapon : this.getEquipment(Weapon.class)) {
                 damage += ((Weapon) weapon).getDamage();
@@ -296,9 +302,9 @@ public abstract class Character {
 
             return damages;
 
-        } else if (capacity.getClass() == Block.class) {
+        } else if ("block".equals(capacity)) {
 
-        } else if (capacity.getClass() == Care.class) {
+        } else if ("care".equals(capacity)) {
             int care = 0; // passer l'objet de soin en parametre
             return care;
         }
@@ -331,6 +337,13 @@ public abstract class Character {
         for (int i = 0; i < equipment.size(); i++) {
             System.out.println("-" + equipment.get(i).getName());
         }
+    }
+
+    public String attackResult(boolean success, Character opponent, int damages) {
+        if (success == true) {
+            return "Vous avez infligé " + damages + " de dégâts à " + opponent.getName();
+        }
+        return "Votre attaque sur " + opponent.getName() + " a échoué";
     }
 
 }

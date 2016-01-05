@@ -23,7 +23,7 @@ public class Wizard extends Character implements Attack, Care, Block {
         this.basicAttributes.put(Attribute.STRENGTH, 15);
         this.restoreAttributes();
         this.maxWeight = 15;
-        
+
         capacities.add("Attaquer");
         capacities.add("Bloquer");
         capacities.add("Soigner");
@@ -37,8 +37,14 @@ public class Wizard extends Character implements Attack, Care, Block {
     }
 
     @Override
-    public boolean strikeABlow(Character opponent) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String strikeABlow(Character opponent) {
+        boolean success = verifySuccess("attack");
+        int damages = 0;
+        if (success == true) {
+            damages = measureImpact("attack", opponent);
+        }
+        String text = attackResult(success, opponent, damages);
+        return text;
     }
 
     @Override

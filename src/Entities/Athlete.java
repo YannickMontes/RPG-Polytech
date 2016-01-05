@@ -28,10 +28,13 @@ public class Athlete extends Character implements Attack, Block, Care {
     }
 
     @Override
-    public boolean strikeABlow(Character opponent) {
-        boolean success = false;
-//traitement
-        return success;
+    public String strikeABlow(Character opponent) {
+boolean success = verifySuccess("attack");
+        int damages=0;
+        if(success==true)
+            damages = measureImpact("attack",opponent);
+        String text = attackResult(success,opponent,damages);     
+        return text;
     }
 
     @Override

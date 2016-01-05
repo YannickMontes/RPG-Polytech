@@ -9,7 +9,6 @@ import Entities.Athlete;
 import Entities.Character;
 import Entities.Warrior;
 import Entities.Wizard;
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import java.util.Scanner;
 
 /**
@@ -51,44 +50,53 @@ public class Turn {
 
             switch (actionNumber) {
                 case 1:
-                    //choississe un adversaire
                     Character opponent = null;
-                    if(character instanceof Warrior)
-                    {
-                        ((Warrior)character).strikeABlow(opponent);
-                    }else if(character instanceof Athlete)
-                    {
-                        ((Athlete)character).strikeABlow(opponent);
-                    }else if(character instanceof Wizard)
-                    {
-                        ((Wizard)character).strikeABlow(opponent);
+                    System.out.println("Choississez un adversaire");
+                    int num = 0;
+                    int opponentNumber = 0;
+                    for (Character op : opponentsTeam.getCharacters()) {
+                        System.out.println(Integer.toString(num) + " " + op.getName());
+                        num++;
+                    }
+                    do {
+                        try {
+                            String textIn = sc.nextLine();
+                            opponentNumber = Integer.parseInt(textIn);
+                            if (opponentNumber >= 0 && opponentNumber < num) {
+                                break;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Veuillez entrer un chiffre entre 0 et " + Integer.toString(num));
+                        }
+                    } while (true);
+                    opponent = opponentsTeam.getCharacters().get(opponentNumber);
+                    if (character instanceof Warrior) {
+                        ((Warrior) character).strikeABlow(opponent);
+                    } else if (character instanceof Athlete) {
+                        ((Athlete) character).strikeABlow(opponent);
+                    } else if (character instanceof Wizard) {
+                        ((Wizard) character).strikeABlow(opponent);
                     }
                     break;
                 case 2:
-                    if(character instanceof Warrior)
-                    {
-                        ((Warrior)character).block();
-                        ((Warrior)character).dodge();
-                    }else if(character instanceof Athlete)
-                    {
-                        ((Athlete)character).block();
-                        ((Athlete)character).dodge();
-                    }else if(character instanceof Wizard)
-                    {
-                        ((Wizard)character).block();
-                        ((Wizard)character).dodge();
+                    if (character instanceof Warrior) {
+                        ((Warrior) character).block();
+                        ((Warrior) character).dodge();
+                    } else if (character instanceof Athlete) {
+                        ((Athlete) character).block();
+                        ((Athlete) character).dodge();
+                    } else if (character instanceof Wizard) {
+                        ((Wizard) character).block();
+                        ((Wizard) character).dodge();
                     }
                     break;
                 case 3:
-                    if(character instanceof Warrior)
-                    {
-                        ((Warrior)character).heal();
-                    }else if(character instanceof Athlete)
-                    {
-                        ((Athlete)character).heal();
-                    }else if(character instanceof Wizard)
-                    {
-                        ((Wizard)character).heal();
+                    if (character instanceof Warrior) {
+                        ((Warrior) character).heal();
+                    } else if (character instanceof Athlete) {
+                        ((Athlete) character).heal();
+                    } else if (character instanceof Wizard) {
+                        ((Wizard) character).heal();
                     }
                     break;
             }
@@ -96,8 +104,8 @@ public class Turn {
         return true;
     }
 
-    public Team getTeam() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Team getTeamTurn() {
+        return team;
     }
 
 }

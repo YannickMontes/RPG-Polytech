@@ -53,8 +53,7 @@ public class Fight extends Event {
         } else {
             actualTurn = new Turn(team2, team1);
         }
-        System.out.println("--------------------");
-        System.out.println("--------------------");
+        System.out.println("");
         System.out.println("--------------------");
         System.out.println("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName());
         actualTurn.executeTurn();

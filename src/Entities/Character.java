@@ -54,7 +54,12 @@ public abstract class Character {
         this.capacities = new ArrayList<>();
         this.attributes = new HashMap<>();
         this.basicAttributes = new HashMap<>();
-        this.basicAttributes.put(Attribute.HEALTH, 150+2*level+3);
+        this.attributes.put(Attribute.HEALTH, 150+2*level+3);
+        attributes.put(Attribute.SPEED, 0);
+        attributes.put(Attribute.DEFENSE, 0);
+        attributes.put(Attribute.DEXTERITY, 0);
+        attributes.put(Attribute.STRENGTH,0);
+        attributes.put(Attribute.INTELLIGENCE, 0);
     }
 
     //Getters & Setters
@@ -318,9 +323,7 @@ public abstract class Character {
         attributes.replace(Attribute.DEFENSE, basicAttributes.get(Attribute.DEFENSE));
         attributes.replace(Attribute.DEXTERITY, basicAttributes.get(Attribute.DEXTERITY));
         attributes.replace(Attribute.STRENGTH, basicAttributes.get(Attribute.STRENGTH));
-        attributes.replace(Attribute.HEALTH, basicAttributes.get(Attribute.HEALTH));
         attributes.replace(Attribute.INTELLIGENCE, basicAttributes.get(Attribute.INTELLIGENCE));
-
     }
 
     public void showData() {
@@ -343,7 +346,7 @@ public abstract class Character {
 
     public String attackResult(boolean success, Character opponent, int damages) {
         if (success == true) {
-            return "Vous avez infligé " + damages + " de dégâts à " + opponent.getName();
+            return "Vous avez infligé " + damages + " de dégâts à " + opponent.getName() + " ( Santé: " + opponent.getAttributes().get(Attribute.HEALTH) + ")";
         }
         return "Votre attaque sur " + opponent.getName() + " a échoué";
     }

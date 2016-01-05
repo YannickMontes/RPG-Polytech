@@ -11,6 +11,6 @@ package Actions;
  */
 public interface Care extends Capacity {
 
-    public boolean nurse();
+    public boolean heal();
 
 }

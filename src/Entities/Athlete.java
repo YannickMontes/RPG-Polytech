@@ -7,12 +7,13 @@ package Entities;
 
 import Actions.Attack;
 import Actions.Block;
+import Actions.Care;
 
 /**
  *
  * @author yannick
  */
-public class Athlete extends Character implements Attack, Block {
+public class Athlete extends Character implements Attack, Block, Care {
 
     public Athlete(String name) {
         super(name,"Athlete");
@@ -34,12 +35,17 @@ public class Athlete extends Character implements Attack, Block {
     }
     
     @Override
-    public boolean block(Character opponent) {
+    public boolean block() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean dodge(Character opponent) {
+    public boolean dodge() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean heal() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

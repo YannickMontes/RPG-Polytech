@@ -5,9 +5,6 @@
  */
 package Entities;
 
-import Actions.Attack;
-import Actions.Block;
-import Actions.Capacity;
 import Items.Armor;
 import Items.Item;
 import Items.StuffItem;
@@ -17,8 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import Actions.Care;
-import java.util.Random;
 
 /**
  *
@@ -32,6 +27,7 @@ public abstract class Character {
     public final int MAXDEFENSE = 100;
     public final int MAXSTRENGTH = 100;
     public final int MAXSPEED = 100;
+    public final int MAXINTELLIGENCE = 100;
 
     public final int MAXARMOREQUIPMENT = 2;
     public final int MAXWEAPONEQUIPMENT = 1;
@@ -312,17 +308,16 @@ public abstract class Character {
     }
 
     public void restoreLife() {
-        this.attributes.replace(Attribute.HEALTH, MAXHEALTH);
+        this.attributes.replace(Attribute.HEALTH, 150+2*level+3);
     }
 
     public void restoreAttributes() {
-        this.basicAttributes.put(Attribute.HEALTH, 150+2*level+3);
-        attributes.put(Attribute.SPEED, basicAttributes.get(Attribute.SPEED));
-        attributes.put(Attribute.DEFENSE, basicAttributes.get(Attribute.DEFENSE));
-        attributes.put(Attribute.DEXTERITY, basicAttributes.get(Attribute.DEXTERITY));
-        attributes.put(Attribute.STRENGTH, basicAttributes.get(Attribute.STRENGTH));
-        attributes.put(Attribute.HEALTH, basicAttributes.get(Attribute.HEALTH));
-        attributes.put(Attribute.INTELLIGENCE, basicAttributes.get(Attribute.INTELLIGENCE));
+        attributes.replace(Attribute.SPEED, basicAttributes.get(Attribute.SPEED));
+        attributes.replace(Attribute.DEFENSE, basicAttributes.get(Attribute.DEFENSE));
+        attributes.replace(Attribute.DEXTERITY, basicAttributes.get(Attribute.DEXTERITY));
+        attributes.replace(Attribute.STRENGTH, basicAttributes.get(Attribute.STRENGTH));
+        attributes.replace(Attribute.HEALTH, basicAttributes.get(Attribute.HEALTH));
+        attributes.replace(Attribute.INTELLIGENCE, basicAttributes.get(Attribute.INTELLIGENCE));
 
     }
 

@@ -16,12 +16,12 @@ import Actions.Care;
 public class Athlete extends Character implements Attack, Block, Care {
 
     public Athlete(String name) {
-        super(name,"Athlete");
-        this.attributes.put(Attribute.SPEED, 45);
-        this.attributes.put(Attribute.STRENGTH, 45);
-        this.attributes.put(Attribute.DEFENSE, 20);
-        this.attributes.put(Attribute.DEXTERITY, 20);
-
+        super(name, "Athlete");
+        this.basicAttributes.put(Attribute.SPEED, 45);
+        this.basicAttributes.put(Attribute.STRENGTH, 45);
+        this.basicAttributes.put(Attribute.DEFENSE, 20);
+        this.basicAttributes.put(Attribute.DEXTERITY, 20);
+        this.restoreAttributes();
         this.maxWeight = 20;
         capacities.add("Attaquer");
         capacities.add("Bloquer");
@@ -33,7 +33,7 @@ public class Athlete extends Character implements Attack, Block, Care {
 //traitement
         return success;
     }
-    
+
     @Override
     public boolean block() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

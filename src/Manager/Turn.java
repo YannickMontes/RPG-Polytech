@@ -28,6 +28,7 @@ public class Turn {
 
     public boolean executeTurn() {
         for (Character character : team.getCharacters()) {
+            character.restoreAttributes();
             int actionNumber = 0;
             Scanner sc = new Scanner(System.in);
             System.out.println("C'est votre tour: " + character.getName());

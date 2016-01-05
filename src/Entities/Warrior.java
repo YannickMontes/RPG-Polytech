@@ -17,10 +17,11 @@ public class Warrior extends Character implements Attack, Block, Care {
 
     public Warrior(String name) {
         super(name, "Guerrier");
-        this.attributes.put(Attribute.STRENGTH, 50);
-        this.attributes.put(Attribute.DEXTERITY, 35);
-        this.attributes.put(Attribute.DEFENSE, 30);
-        this.attributes.put(Attribute.SPEED, 15);
+        this.basicAttributes.put(Attribute.STRENGTH, 50);
+        this.basicAttributes.put(Attribute.DEXTERITY, 35);
+        this.basicAttributes.put(Attribute.DEFENSE, 30);
+        this.basicAttributes.put(Attribute.SPEED, 15);
+        this.restoreAttributes();
         this.maxWeight = 25;
 
         capacities.add("Attaquer");

@@ -17,10 +17,11 @@ public class Wizard extends Character implements Attack, Care, Block {
 
     public Wizard(String name) {
         super(name, "Magicien");
-        this.attributes.put(Attribute.DEXTERITY, 55);
-        this.attributes.put(Attribute.DEFENSE, 35);
-        this.attributes.put(Attribute.SPEED, 25);
-        this.attributes.put(Attribute.STRENGTH, 15);
+        this.basicAttributes.put(Attribute.DEXTERITY, 55);
+        this.basicAttributes.put(Attribute.DEFENSE, 35);
+        this.basicAttributes.put(Attribute.SPEED, 25);
+        this.basicAttributes.put(Attribute.STRENGTH, 15);
+        this.restoreAttributes();
         this.maxWeight = 15;
         
         capacities.add("Attaquer");

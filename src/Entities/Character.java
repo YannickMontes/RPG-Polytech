@@ -40,6 +40,7 @@ public abstract class Character {
     protected String name;
     protected String className;
     protected Map<Attribute, Integer> attributes;
+    protected Map<Attribute, Integer> basicAttributes;
     protected int level;
     protected int maxWeight;
     protected List<Item> inventory;
@@ -49,12 +50,13 @@ public abstract class Character {
     //Constructors
     public Character(String name, String className) {
         this.name = name;
-        this.level=1;
+        this.level = 1;
         this.className = className;
         this.inventory = new ArrayList<>();
         this.equipment = new ArrayList<>();
         this.capacities = new ArrayList<>();
         this.attributes = new HashMap<>();
+        this.basicAttributes = new HashMap<>();
         this.attributes.put(Attribute.HEALTH, MAXHEALTH);
     }
 
@@ -131,15 +133,13 @@ public abstract class Character {
             this.inventory.remove(useableItem);
         }
     }
-    
-    public boolean isAlive()
-    {
-        if(this.attributes.get(Attribute.HEALTH)==0)
-        {
+
+    public boolean isAlive() {
+        if (this.attributes.get(Attribute.HEALTH) == 0) {
             return false;
         }
         return true;
-    }   
+    }
 
     /*  **
      *
@@ -307,6 +307,13 @@ public abstract class Character {
 
     public void restoreLife() {
         this.attributes.replace(Attribute.HEALTH, MAXHEALTH);
+    }
+
+    public void restoreAttributes() {
+        attributes.put(Attribute.SPEED, basicAttributes.get(Attribute.SPEED));
+        attributes.put(Attribute.DEFENSE, basicAttributes.get(Attribute.DEFENSE));
+        attributes.put(Attribute.DEXTERITY, basicAttributes.get(Attribute.DEXTERITY));
+        attributes.put(Attribute.STRENGTH, basicAttributes.get(Attribute.STRENGTH));
     }
 
     public void showData() {

@@ -66,6 +66,9 @@ public class Game {
         } while (true);
         fillUpCharacters(team1, numberTeam1);
         fillUpCharacters(team2, numberTeam2);
+        
+     
+        
         for(Character character : team1.getCharacters())
         {
             character.showData();
@@ -74,6 +77,9 @@ public class Game {
         {
             character.showData();
         }
+        
+           //Temporaire
+        initEvents();
     }
 
     private void fillUpCharacters(Team team, int number) {
@@ -112,13 +118,12 @@ public class Game {
             }
             team.addCharacterTeam(character);
         }
-        //Fin
-        initEvents();
+        
 
     }
 
     private void initEvents() {
-        events.add(new Fight(team1, team2, 2));
+        events.add(new Fight(team1, team2));
     }
     
     public List<Event> getEvents() {

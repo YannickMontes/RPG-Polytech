@@ -71,11 +71,11 @@ public class Turn {
                     } while (true);
                     opponent = opponentsTeam.getCharacters().get(opponentNumber);
                     if (character instanceof Warrior) {
-                        ((Warrior) character).strikeABlow(opponent);
+                        System.out.println(((Warrior) character).strikeABlow(opponent));
                     } else if (character instanceof Athlete) {
-                        ((Athlete) character).strikeABlow(opponent);
+                        System.out.println(((Athlete) character).strikeABlow(opponent));
                     } else if (character instanceof Wizard) {
-                        ((Wizard) character).strikeABlow(opponent);
+                        System.out.println(((Wizard) character).strikeABlow(opponent));
                     }
                     break;
                 case 2:

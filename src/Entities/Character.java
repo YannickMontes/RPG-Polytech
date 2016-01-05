@@ -136,7 +136,7 @@ public abstract class Character {
     }
 
     public boolean isAlive() {
-        if (this.attributes.get(Attribute.HEALTH) == 0) {
+        if (this.attributes.get(Attribute.HEALTH) <= 0) {
             return false;
         }
         return true;
@@ -269,7 +269,8 @@ public abstract class Character {
         } else if ("care".equals(capacity)) {
             probability = 1;
         }
-        
+                    probability = 1;
+
         int rand = (int) (Math.random() * ( 100 ));
         if(rand<=(probability*100))
             return true;
@@ -299,7 +300,8 @@ public abstract class Character {
             }
 
             int damages = damage - defense;
-
+            if(damages<=0)
+                return 0;
             return damages;
 
         } else if ("block".equals(capacity)) {

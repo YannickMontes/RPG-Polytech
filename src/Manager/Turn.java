@@ -5,7 +5,11 @@
  */
 package Manager;
 
+import Entities.Athlete;
 import Entities.Character;
+import Entities.Warrior;
+import Entities.Wizard;
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import java.util.Scanner;
 
 /**
@@ -24,6 +28,7 @@ public class Turn {
 
     public boolean executeTurn() {
         for (Character character : team.getCharacters()) {
+            int actionNumber = 0;
             Scanner sc = new Scanner(System.in);
             System.out.println("C'est votre tour: " + character.getName());
             System.out.println("--------------------");
@@ -34,7 +39,7 @@ public class Turn {
             do {
                 try {
                     String textIn = sc.nextLine();
-                    int actionNumber = Integer.parseInt(textIn);
+                    actionNumber = Integer.parseInt(textIn);
                     if (actionNumber > 0 && actionNumber < 4) {
                         break;
                     }
@@ -42,7 +47,50 @@ public class Turn {
                     System.out.println("Veuillez entrer un chiffre entre 1 et 3");
                 }
             } while (true);
-            //traitement
+
+            switch (actionNumber) {
+                case 1:
+                    //choississe un adversaire
+                    Character opponent = null;
+                    if(character instanceof Warrior)
+                    {
+                        ((Warrior)character).strikeABlow(opponent);
+                    }else if(character instanceof Athlete)
+                    {
+                        ((Athlete)character).strikeABlow(opponent);
+                    }else if(character instanceof Wizard)
+                    {
+                        ((Wizard)character).strikeABlow(opponent);
+                    }
+                    break;
+                case 2:
+                    if(character instanceof Warrior)
+                    {
+                        ((Warrior)character).block();
+                        ((Warrior)character).dodge();
+                    }else if(character instanceof Athlete)
+                    {
+                        ((Athlete)character).block();
+                        ((Athlete)character).dodge();
+                    }else if(character instanceof Wizard)
+                    {
+                        ((Wizard)character).block();
+                        ((Wizard)character).dodge();
+                    }
+                    break;
+                case 3:
+                    if(character instanceof Warrior)
+                    {
+                        ((Warrior)character).heal();
+                    }else if(character instanceof Athlete)
+                    {
+                        ((Athlete)character).heal();
+                    }else if(character instanceof Wizard)
+                    {
+                        ((Wizard)character).heal();
+                    }
+                    break;
+            }
         }
         return true;
     }

@@ -36,14 +36,16 @@ public class Fight extends Event {
 
     public void executeFight() {
         System.out.println("*** Début d'un combat ***");
-        boolean equipe=true;
-        //Regarde équipe plus vitesse
-
+        boolean equipe=false;
+        if(team1.getTeamSpeed() > team2.getTeamSpeed()){
+            equipe = true;
+        }
+        
         do {
             //
             executeTurn(equipe);
             equipe = !equipe;
-        } while (true);
+        } while (team1.isTeamAlive() && team2.isTeamAlive());
     }
 
     private void executeTurn(boolean equipe) {

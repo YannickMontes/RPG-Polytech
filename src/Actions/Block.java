@@ -12,8 +12,8 @@ import Entities.Character;
  */
 public interface Block extends Capacity {
 
-    public boolean block(Character opponent);
+    public boolean block();
 
-    public boolean dodge(Character opponent);
+    public boolean dodge();
 
 }

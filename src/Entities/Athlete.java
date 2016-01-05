@@ -22,6 +22,8 @@ public class Athlete extends Character implements Attack, Block {
         this.attributes.put(Attribute.DEXTERITY, 20);
 
         this.maxWeight = 20;
+        capacities.add("Attaquer");
+        capacities.add("Bloquer");
     }
 
     @Override

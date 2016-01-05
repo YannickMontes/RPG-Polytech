@@ -44,6 +44,7 @@ public abstract class Character {
     protected int maxWeight;
     protected List<Item> inventory;
     protected List<StuffItem> equipment;
+    protected List<String> capacities;
 
     //Constructors
     public Character(String name, String className) {
@@ -52,6 +53,7 @@ public abstract class Character {
         this.className = className;
         this.inventory = new ArrayList<>();
         this.equipment = new ArrayList<>();
+        this.capacities = new ArrayList<>();
         this.attributes = new HashMap<>();
         this.attributes.put(Attribute.HEALTH, MAXHEALTH);
     }
@@ -129,6 +131,15 @@ public abstract class Character {
             this.inventory.remove(useableItem);
         }
     }
+    
+    public boolean isAlive()
+    {
+        if(this.attributes.get(Attribute.HEALTH)==0)
+        {
+            return false;
+        }
+        return true;
+    }   
 
     /*  **
      *

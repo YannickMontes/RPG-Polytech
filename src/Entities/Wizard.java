@@ -6,7 +6,6 @@
 package Entities;
 
 import Actions.Attack;
-import Actions.Block;
 import Actions.Care;
 
 /**
@@ -22,6 +21,10 @@ public class Wizard extends Character implements Attack, Care {
         this.attributes.put(Attribute.SPEED, 25);
         this.attributes.put(Attribute.STRENGTH, 15);
         this.maxWeight = 15;
+        
+        capacities.add("Attaquer");
+        capacities.add("Bloquer");
+        capacities.add("Soigner");
     }
 
     @Override

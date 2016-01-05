@@ -21,6 +21,9 @@ public class Warrior extends Character implements Attack, Block {
         this.attributes.put(Attribute.DEFENSE, 30);
         this.attributes.put(Attribute.SPEED, 15);
         this.maxWeight = 25;
+        
+        capacities.add("Attaquer");
+        capacities.add("Bloquer");
     }
 
     @Override

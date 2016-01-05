@@ -5,6 +5,7 @@
  */
 package Manager;
 
+import Entities.Attribute;
 import java.util.ArrayList;
 import java.util.List;
 import Entities.Character;
@@ -43,5 +44,25 @@ public class Team {
         this.name = name;
     }
     
+    public int getTeamSpeed()
+    {
+        int speedTot = 0;
+        for(Character ch: characters)
+        {
+            speedTot += ch.getAttributes().get(Attribute.SPEED);
+        }
+        return speedTot;
+    }
     
+    public boolean isTeamAlive()
+    {
+        for(Character ch : characters)
+        {
+            if(!ch.isAlive())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }

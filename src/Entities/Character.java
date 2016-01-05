@@ -54,11 +54,11 @@ public abstract class Character {
         this.capacities = new ArrayList<>();
         this.attributes = new HashMap<>();
         this.basicAttributes = new HashMap<>();
-        this.attributes.put(Attribute.HEALTH, 150+2*level+3);
+        this.attributes.put(Attribute.HEALTH, 150 + 2 * level + 3);
         attributes.put(Attribute.SPEED, 0);
         attributes.put(Attribute.DEFENSE, 0);
         attributes.put(Attribute.DEXTERITY, 0);
-        attributes.put(Attribute.STRENGTH,0);
+        attributes.put(Attribute.STRENGTH, 0);
         attributes.put(Attribute.INTELLIGENCE, 0);
     }
 
@@ -191,6 +191,16 @@ public abstract class Character {
         }
         return 0;
     }
+    
+    public int numberUseableItem() {
+        int i=0;
+        for (Item item : inventory) {
+            if (item instanceof UseableItem) {
+                return i++;
+            }
+        }
+        return i;
+    }
 
     public ArrayList<StuffItem> getEquipment(Class itemType) {
         ArrayList<StuffItem> items = new ArrayList<>();
@@ -258,27 +268,28 @@ public abstract class Character {
         float probability = 0;
         if ("attack".equals(capacity)) {
             for (StuffItem weapon : this.getEquipment(Weapon.class)) {
-                probability += (float)(((Weapon) weapon).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
+                probability += (float) (((Weapon) weapon).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
             }
-            probability += (float)(this.attributes.get(Attribute.DEXTERITY).floatValue() / 100) * 1 - (0.2 * this.getEquipment(Armor.class).size());
+            probability += (float) (this.attributes.get(Attribute.DEXTERITY).floatValue() / 100) * 1 - (0.2 * this.getEquipment(Armor.class).size());
         } else if ("block".equals(capacity)) {
             probability = this.attributes.get(Attribute.DEFENSE);
             for (StuffItem armor : this.getEquipment(Armor.class)) {
-                probability += (float)(((Armor) armor).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
+                probability += (float) (((Armor) armor).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
             }
-            probability += (float)(this.attributes.get(Attribute.DEFENSE).floatValue() / 100) * 1 - (0.2 * this.getEquipment(Armor.class).size());
+            probability += (float) (this.attributes.get(Attribute.DEFENSE).floatValue() / 100) * 1 - (0.2 * this.getEquipment(Armor.class).size());
         } else if ("care".equals(capacity)) {
             probability = 1;
         }
-                    probability = 1;
+        probability = 1;
 
-        int rand = (int) (Math.random() * ( 100 ));
-        if(rand<=(probability*100))
+        int rand = (int) (Math.random() * (100));
+        if (rand <= (probability * 100)) {
             return true;
+        }
         return false;
     }
 
-    public int measureImpact(String capacity, Character opponent) {
+    public int measureImpact(String capacity, Character opponent, UseableItem useableItem) {
         //selon la capacité utilisisée
         //// ATTAQUE
         //// - calculer les dégâts occasionnés (somme force attaquant et valeur degat arme s'il en a)
@@ -289,7 +300,7 @@ public abstract class Character {
         //// - augmente défense s'il est attaqué
         //// SOIN
         //// - augmente santé d'une valeur de la santé en fonction de la capacité de soin de ses équipements.
-        if ("attack".equals(capacity)) {
+        if ("attack".equals(capacity) && opponent != null) {
             int damage = this.attributes.get(Attribute.STRENGTH);
             for (StuffItem weapon : this.getEquipment(Weapon.class)) {
                 damage += ((Weapon) weapon).getDamage();
@@ -301,21 +312,21 @@ public abstract class Character {
             }
 
             int damages = damage - defense;
-            if(damages<=0)
+            if (damages <= 0) {
                 return 0;
+            }
             return damages;
 
         } else if ("block".equals(capacity)) {
 
-        } else if ("care".equals(capacity)) {
-            int care = 0; // passer l'objet de soin en parametre
-            return care;
+        } else if ("care".equals(capacity) && useableItem != null) {
+            return useableItem.getBonusValue();
         }
         return 0;
     }
 
     public void restoreLife() {
-        this.attributes.replace(Attribute.HEALTH, 150+2*level+3);
+        this.attributes.replace(Attribute.HEALTH, 150 + 2 * level + 3);
     }
 
     public void restoreAttributes() {
@@ -349,6 +360,13 @@ public abstract class Character {
             return "Vous avez infligé " + damages + " de dégâts à " + opponent.getName() + " ( Santé: " + opponent.getAttributes().get(Attribute.HEALTH) + ")";
         }
         return "Votre attaque sur " + opponent.getName() + " a échoué";
+    }
+    
+    public String careResult(boolean success, int care) {
+        if (success == true) {
+            return "Vous avez augmenté de " + care + " votre vie " + " ( Santé: " + this.getAttributes().get(Attribute.HEALTH) + ")";
+        }
+        return "Votre soin a échoué";
     }
 
 }

@@ -5,12 +5,14 @@
  */
 package Actions;
 
+import Items.UseableItem;
+
 /**
  *
  * @author yannick
  */
 public interface Care extends Capacity {
 
-    public boolean heal();
+    public String heal(UseableItem useableItem);
 
 }

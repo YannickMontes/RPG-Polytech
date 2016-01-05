@@ -9,6 +9,8 @@ import Entities.Athlete;
 import Entities.Character;
 import Entities.Warrior;
 import Entities.Wizard;
+import Items.Item;
+import Items.UseableItem;
 import java.util.Scanner;
 
 /**
@@ -91,12 +93,36 @@ public class Turn {
                     }
                     break;
                 case 3:
+                    UseableItem useableItem = null;
+                    if (character.numberUseableItem() > 0) {
+                        System.out.println("Choississez un soin");
+                        int numCare = 0;
+                        int useableNumber = 0;
+                        for (Item item : character.getInventory()) {
+                            if (item instanceof UseableItem) {
+                                System.out.println(Integer.toString(numCare) + " -> " + item.getName() + " de bonus " + ((UseableItem) item).getBonusValue());
+                            }
+                            numCare++;
+                        }
+                        do {
+                            try {
+                                String textIn = sc.nextLine();
+                                useableNumber = Integer.parseInt(textIn);
+                                if (useableNumber >= 0 && useableNumber < numCare) {
+                                    break;
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Veuillez entrer un chiffre entre 0 et " + Integer.toString(numCare));
+                            }
+                        } while (true);
+                        useableItem = (UseableItem) character.getInventory().get(useableNumber);
+                    }
                     if (character instanceof Warrior) {
-                        ((Warrior) character).heal();
+                        System.out.println(((Warrior) character).heal(useableItem));
                     } else if (character instanceof Athlete) {
-                        ((Athlete) character).heal();
+                        System.out.println(((Athlete) character).heal(useableItem));
                     } else if (character instanceof Wizard) {
-                        ((Wizard) character).heal();
+                        System.out.println(((Wizard) character).heal(useableItem));
                     }
                     break;
             }

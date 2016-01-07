@@ -5,6 +5,7 @@
  */
 package Manager;
 
+import Controller.Controller;
 import Entities.Athlete;
 import Events.Event;
 import Events.Fight;
@@ -24,51 +25,23 @@ public class Game {
     private List<Event> events;
     private Team team1;
     private Team team2;
-    private final Scanner sc = new Scanner(System.in);
+    private Controller controller;
 
     public Game() {
         events = new ArrayList<>();
+        controller = new Controller();
     }
 
     public void startGame() {
-        System.out.println("Entrer un nom pour l'équipe 1:");
-        String nameTeam1 = sc.nextLine();
-        team1 = new Team(nameTeam1);
-        System.out.println("Entrer un nom pour l'équipe 2:");
-        String nameTeam2 = sc.nextLine();
-        team2 = new Team(nameTeam2);
+        team1 = new Team(controller.askText("Entrer un nom pour l'équipe 1:"));
+        team2 = new Team(controller.askText("Entrer un nom pour l'équipe 2:"));
 
-        int numberTeam1 = 0, numberTeam2 = 0;
-        System.out.println("Entrer un nombre de joueur pour l'équipe 1:");
-        do {
-            try {
-                String numberTeam1String = sc.nextLine();
-                numberTeam1 = Integer.parseInt(numberTeam1String);
-                if (numberTeam1 > 0) {
-                    break;
-                }
-            } catch (Exception e) {
-                System.out.println("Veuillez entrer un chiffre supérieur à 0");
-            }
-        } while (true);
+        int numberTeam1 = controller.askNumberBetween("Entrer un nombre de joueur pour l'équipe 1:", 1, 5);
+        int numberTeam2 = controller.askNumberBetween("Entrer un nombre de joueur pour l'équipe 2:", 1, 5);
 
-        System.out.println("Entrer un nombre de joueur pour l'équipe 2:");
-        do {
-            try {
-                String numberTeam2String = sc.nextLine();
-                numberTeam2 = Integer.parseInt(numberTeam2String);
-                if (numberTeam2 > 0) {
-                    break;
-                }
-            } catch (Exception e) {
-                System.out.println("Veuillez entrer un chiffre supérieur à 0");
-            }
-        } while (true);
         fillUpCharacters(team1, numberTeam1);
         fillUpCharacters(team2, numberTeam2);
-        
-     
-        
+                
         for(Character character : team1.getCharacters())
         {
             character.showData();
@@ -83,27 +56,15 @@ public class Game {
     }
 
     private void fillUpCharacters(Team team, int number) {
-        int classe = 1;
         System.out.println("Entrer le nom des " + number + " joueurs ainsi que leur classe pour l'équipe " + team.getName() + " :");
         for (int i = 0; i < number; i++) {
             System.out.println("--------------------");
-            System.out.println("Choississez un nom pour le personnage n°" + (i + 1));
-            String name = sc.nextLine();
-            System.out.println("Choississez une classe pour " + name + " ?");
-            System.out.println("1 -> Athlete");
-            System.out.println("2 -> Guerrier");
-            System.out.println("3 -> Magicien");
-            do {
-                try {
-                    String classeString = sc.nextLine();
-                    classe = Integer.parseInt(classeString);
-                    if (classe > 0 && classe < 4) {
-                        break;
-                    }
-                } catch (Exception e) {
-                }
-                System.out.println("Veuillez entrer un chiffre entre 1 et 3");
-            } while (true);
+            String name = controller.askText("Choississez un nom pour le personnage n°" + (i + 1));
+            String textClass = "Choississez une classe pour " + name + " ?\n"
+            + "1 -> Athlete\n"
+            + "2 -> Guerrier\n"
+            + "3 -> Magicien";
+            int classe = controller.askNumberBetween(textClass, 1, 3);
             Character character = null;
             switch (classe) {
                 case 1:
@@ -118,8 +79,6 @@ public class Game {
             }
             team.addCharacterTeam(character);
         }
-        
-
     }
 
     private void initEvents() {

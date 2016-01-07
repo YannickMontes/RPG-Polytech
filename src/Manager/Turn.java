@@ -12,6 +12,7 @@ import Entities.Wizard;
 import Items.Item;
 import Items.UseableItem;
 import java.util.Scanner;
+import Controller.Controller;
 
 /**
  *
@@ -21,56 +22,35 @@ public class Turn {
 
     private Team team;
     private Team opponentsTeam;
+    private Controller controller;
 
     public Turn(Team team, Team opponentsTeam) {
         this.team = team;
         this.opponentsTeam = opponentsTeam;
+        this.controller = new Controller();
     }
 
     public boolean executeTurn() {
         for (Character character : team.getCharacters()) {
             character.restoreAttributes();
-            int actionNumber = 0;
-            Scanner sc = new Scanner(System.in);
-            System.out.println("C'est votre tour: " + character.getName());
-            System.out.println("--------------------");
-            System.out.println("Quel action voulez-vous réaliser ?");
-            System.out.println("1 -> Attaquer un personnage");
-            System.out.println("2 -> Utiliser une parade");
-            System.out.println("3 -> Utiliser un soin");
-            do {
-                try {
-                    String textIn = sc.nextLine();
-                    actionNumber = Integer.parseInt(textIn);
-                    if (actionNumber > 0 && actionNumber < 4) {
-                        break;
-                    }
-                } catch (Exception e) {
-                    System.out.println("Veuillez entrer un chiffre entre 1 et 3");
-                }
-            } while (true);
-
+            String text = "C'est votre tour: " + character.getName() + "\n"
+            + "--------------------\n"
+            + "Quel action voulez-vous réaliser ?\n"
+            + "1 -> Attaquer un personnage\n"
+            + "2 -> Utiliser une parade\n"
+            + "3 -> Utiliser un soin";
+            int actionNumber = controller.askNumberBetween(text, 1, 3);
             switch (actionNumber) {
                 case 1:
                     Character opponent = null;
-                    System.out.println("Choississez un adversaire");
+                    String actionText = "Choississez un adversaire\n";
                     int num = 0;
-                    int opponentNumber = 0;
                     for (Character op : opponentsTeam.getCharacters()) {
-                        System.out.println(Integer.toString(num) + " " + op.getName());
+                        actionText += Integer.toString(num) + " -> " + op.getName() + "\n";
                         num++;
                     }
-                    do {
-                        try {
-                            String textIn = sc.nextLine();
-                            opponentNumber = Integer.parseInt(textIn);
-                            if (opponentNumber >= 0 && opponentNumber < num) {
-                                break;
-                            }
-                        } catch (Exception e) {
-                            System.out.println("Veuillez entrer un chiffre entre 0 et " + Integer.toString(num));
-                        }
-                    } while (true);
+                    int opponentNumber = controller.askNumberBetween(actionText,0, num);
+
                     opponent = opponentsTeam.getCharacters().get(opponentNumber);
                     if (character instanceof Warrior) {
                         System.out.println(((Warrior) character).strikeABlow(opponent));
@@ -95,26 +75,15 @@ public class Turn {
                 case 3:
                     UseableItem useableItem = null;
                     if (character.numberUseableItem() > 0) {
-                        System.out.println("Choississez un soin");
+                        String careText = "Choississez un soin";
                         int numCare = 0;
-                        int useableNumber = 0;
                         for (Item item : character.getInventory()) {
                             if (item instanceof UseableItem) {
                                 System.out.println(Integer.toString(numCare) + " -> " + item.getName() + " de bonus " + ((UseableItem) item).getBonusValue());
                             }
                             numCare++;
                         }
-                        do {
-                            try {
-                                String textIn = sc.nextLine();
-                                useableNumber = Integer.parseInt(textIn);
-                                if (useableNumber >= 0 && useableNumber < numCare) {
-                                    break;
-                                }
-                            } catch (Exception e) {
-                                System.out.println("Veuillez entrer un chiffre entre 0 et " + Integer.toString(numCare));
-                            }
-                        } while (true);
+                        int useableNumber = controller.askNumberBetween(careText,0, numCare);
                         useableItem = (UseableItem) character.getInventory().get(useableNumber);
                     }
                     if (character instanceof Warrior) {

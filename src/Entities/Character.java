@@ -49,8 +49,8 @@ public abstract class Character {
         this.basicAttributes = new Attributes();
         
         attributes.put(Attribute.STRENGTH, 0);
-                attributes.put(Attribute.SPEED, 0);
-attributes.put(Attribute.DEFENSE, 0);
+        attributes.put(Attribute.SPEED, 0);
+        attributes.put(Attribute.DEFENSE, 0);
         attributes.put(Attribute.DEXTERITY, 0);
         attributes.put(Attribute.MANA, 0);
         attributes.put(Attribute.HEALTH, 150 + 2 * level + 3);

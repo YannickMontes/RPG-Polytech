@@ -11,9 +11,7 @@ import Items.StuffItem;
 import Items.UseableItem;
 import Items.Weapon;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -22,14 +20,6 @@ import java.util.Map;
 public abstract class Character {
 
     //Fixed variables
-    public final int MAXHEALTH = 999;
-    public final int MAXDEXTERITY = 100;
-    public final int MAXDEFENSE = 100;
-    public final int MAXSTRENGTH = 100;
-    public final int MAXSPEED = 100;
-    public final int MAXINTELLIGENCE = 100;
-    public final int MAXMANA = 150;
-    
     public final int MAXARMOREQUIPMENT = 2;
     public final int MAXWEAPONEQUIPMENT = 1;
     public final int MAXEQUIPMENT = 3;
@@ -37,8 +27,8 @@ public abstract class Character {
     //Attributesattributes
     protected String name;
     protected String className;
-    protected Map<Attribute, Integer> attributes;
-    protected Map<Attribute, Integer> basicAttributes;
+    protected Attributes attributes;
+    protected Attributes basicAttributes;
     protected int level;
     protected int maxWeight;
     protected List<Item> inventory;
@@ -53,8 +43,8 @@ public abstract class Character {
         this.inventory = new ArrayList<>();
         this.equipment = new ArrayList<>();
         this.capacities = new ArrayList<>();
-        this.attributes = new HashMap<>();
-        this.basicAttributes = new HashMap<>();
+        this.attributes = new Attributes();
+        this.basicAttributes = new Attributes();
         this.attributes.put(Attribute.HEALTH, 150 + 2 * level + 3);
         attributes.put(Attribute.SPEED, 0);
         attributes.put(Attribute.DEFENSE, 0);
@@ -72,12 +62,8 @@ public abstract class Character {
         this.name = name;
     }
 
-    public Map<Attribute, Integer> getAttributes() {
+    public Attributes getAttributes() {
         return attributes;
-    }
-
-    public void setAttributes(Map<Attribute, Integer> characs) {
-        this.attributes = attributes;
     }
 
     public int getLevel() {

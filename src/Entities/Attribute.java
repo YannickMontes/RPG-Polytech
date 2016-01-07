@@ -16,5 +16,6 @@ public enum Attribute
     HEALTH,
     DEFENSE,
     SPEED,
-    INTELLIGENCE
+    INTELLIGENCE, 
+    MANA
 }

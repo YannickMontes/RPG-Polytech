@@ -1,5 +1,8 @@
 /nbproject/private/private.xml
 /build/
-.xml
-.mf
-.properties
+*.xml
+*.mf
+*.properties
+/dist/
+*.*~
+private.xml

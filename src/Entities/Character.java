@@ -58,6 +58,7 @@ public abstract class Character {
      */
     public Character(String n, int l) {
         this.level = l;
+        this.name = n;
         int nbPoints = (level - 1) * NBPOINTLEVELUP;
         while (nbPoints > 0) {
             int randomNumber = (int) (Math.random() * Attribute.values().length - 1);

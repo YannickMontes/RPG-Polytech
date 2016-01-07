@@ -9,7 +9,6 @@ import Actions.Attack;
 import Actions.Block;
 import Actions.Care;
 import Items.UseableItem;
-import Entities.Character;
 
 /**
  *
@@ -23,7 +22,6 @@ public class Athlete extends Character implements Attack, Block, Care {
         this.basicAttributes.put(Attribute.STRENGTH, 30);
         this.basicAttributes.put(Attribute.DEFENSE, 20);
         this.basicAttributes.put(Attribute.DEXTERITY, 30);
-        this.basicAttributes.put(Attribute.INTELLIGENCE, 0);
         this.restoreAttributes();
 
         capacities.add("Attaquer");

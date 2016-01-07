@@ -9,7 +9,6 @@ import Actions.Attack;
 import Actions.Block;
 import Actions.Care;
 import Items.UseableItem;
-import Entities.Character;
 
 /**
  *
@@ -23,7 +22,6 @@ public class Wizard extends Character implements Attack, Care, Block {
         this.basicAttributes.put(Attribute.DEFENSE, 15);
         this.basicAttributes.put(Attribute.SPEED, 20);
         this.basicAttributes.put(Attribute.STRENGTH, 0);
-        this.basicAttributes.put(Attribute.INTELLIGENCE, 45);
         this.restoreAttributes();
 
         capacities.add("Attaquer");
@@ -34,7 +32,7 @@ public class Wizard extends Character implements Attack, Care, Block {
     @Override
     public void putRandomPoint()
     {
-        this.basicAttributes.replace(Attribute.INTELLIGENCE, this.basicAttributes.get(Attribute.INTELLIGENCE)+1);
+        this.basicAttributes.replace(Attribute.SPEED, this.basicAttributes.get(Attribute.SPEED)+1);
     }
 
     @Override

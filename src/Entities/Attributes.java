@@ -18,15 +18,15 @@ public class Attributes extends HashMap<Attribute, Integer>
     public final static int MAXDEFENSE = 100;
     public final static int MAXSTRENGTH = 100;
     public final static int MAXSPEED = 100;
-    public final static int MAXINTELLIGENCE = 100;
     public final static int MAXMANA = 150;
     
     @Override
     public Integer put(Attribute key, Integer value)
     {
-        if(!verifyExcess(key, value))
+        String message = verifyExcess(key, value);
+        if(!message.equals(""))
         {
-            throw new IllegalArgumentException("L'attribut suivant à dépassé sa valeur maximale: "+key);
+            throw new IllegalArgumentException(message);
         }
         return super.put(key, value); 
     }    
@@ -34,71 +34,81 @@ public class Attributes extends HashMap<Attribute, Integer>
     @Override
     public Integer replace(Attribute key, Integer value)
     {
-        if(!verifyExcess(key, value))
+        String message = verifyExcess(key, value);
+        if(!message.equals(""))
         {
             throw new IllegalArgumentException("L'attribut suivant à dépassé sa valeur maximale: "+key);
         }
         return super.replace(key, value);
     }
     
-    private boolean verifyExcess(Attribute key, Integer value)
+    private String verifyExcess(Attribute key, Integer value)
     {
-        boolean correct = true;
+        String message = "";
         switch (key)
         {
             case DEFENSE:
                 if(value>MAXDEFENSE)
                 {
-                    correct = false;
+                    message = "L'attribut suivant à dépassé sa valeur maximale: "+key;
                 }   
+                else if(value > (int)(this.get(Attribute.STRENGTH)*2) || value > (int)(this.get(Attribute.DEXTERITY)*2))
+                {
+                    message = "Il n'est pas possible d'augmenter votre défense d'une valeur supérieure à 2 fois votre force ou 2 fois votre dextérité.";
+                }
                 break;
                 
             case DEXTERITY:
                 if(value>MAXDEXTERITY)
                 {
-                    correct = false;
+                    message = "L'attribut suivant à dépassé sa valeur maximale: "+key;
                 }   
+                else if(value > (int)(this.get(Attribute.STRENGTH)*2))
+                {
+                    message = "Il n'est pas possible d'augmenter votre vitesse d'une valeur supérieure à 2 fois votre force.";
+                }
                 break;
             
             case SPEED:
                 if(value>MAXSPEED)
                 {
-                    correct = false;
+                    message = "L'attribut suivant à dépassé sa valeur maximale: "+key;
                 }   
+                else if(value > (int)(this.get(Attribute.STRENGTH)*1.5) || value > (int)(this.get(Attribute.DEXTERITY)*1.5))
+                {
+                    message = "Il n'est pas possible d'augmenter votre vitesse d'une valeur supérieure à 1,5 fois votre force et dextérité.";
+                }
                 break;
             
             case STRENGTH:
                 if(value>MAXSTRENGTH)
                 {
-                    correct = false;
+                    message = "L'attribut suivant à dépassé sa valeur maximale: "+key;
                 }   
-                break;
-            
-            case INTELLIGENCE:
-                if(value>MAXINTELLIGENCE)
+                else if(value > (int)(this.get(Attribute.DEFENSE)*1.5) || value > (int)(this.get(Attribute.DEXTERITY)*2))
                 {
-                    correct = false;
-                }   
+                    message = "Il n'est pas possible d'augmenter votre force d'une valeur supérieure à 2 fois votre dextérité, ou 1,5 fois votre défense.";
+                }
                 break;
             
             case HEALTH:
                 if(value>MAXHEALTH)
                 {
-                    correct = false;
+                    message = "L'attribut suivant à dépassé sa valeur maximale: "+key;
                 }   
                 break;
             
             case MANA:
                 if(value>MAXMANA)
                 {
-                    correct = false;
+                    message = "L'attribut suivant à dépassé sa valeur maximale: "+key;
                 }   
                 break;
             
             default:
                 break;
         }
-        return correct;
+        return message;
     }
     
     

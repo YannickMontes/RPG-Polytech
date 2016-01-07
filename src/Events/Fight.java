@@ -5,6 +5,7 @@
  */
 package Events;
 
+import Entities.Attribute;
 import Manager.Turn;
 import Entities.Character;
 import Manager.Team;
@@ -52,7 +53,6 @@ public class Fight extends Event {
             System.out.println("--------------------");
             System.out.println("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName());
             actualTurn.executeTurn();
-
         } else {
             actualTurn = new Turn(team2, team1);
             System.out.println("");

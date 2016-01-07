@@ -101,6 +101,10 @@ public abstract class Character {
         this.maxWeight = maxWeight;
     }
 
+    public List<String> getCapacities() {
+        return capacities;
+    }
+    
     public List<StuffItem> getEquipment() {
         return equipment;
     }
@@ -322,9 +326,9 @@ public abstract class Character {
                 return 0;
             }
             return damages;
-
         } else if ("block".equals(capacity)) {
-
+            this.attributes.replace(Attribute.DEFENSE, (int)(this.attributes.get(Attribute.DEFENSE)+0.5*this.attributes.get(Attribute.STRENGTH)));
+            return (int)(0.5*this.attributes.get(Attribute.STRENGTH));
         } else if ("care".equals(capacity) && useableItem != null) {
             return useableItem.getBonusValue();
         }
@@ -367,16 +371,23 @@ public abstract class Character {
 
     public String attackResult(boolean success, Character opponent, int damages) {
         if (success == true) {
-            return "Vous avez infligé " + damages + " de dégâts à " + opponent.getName() + " ( Santé: " + opponent.getAttributes().get(Attribute.HEALTH) + ")";
+            return "Vous avez infligé " + damages + " de dégâts à " + opponent.getName() + " (Santé: " + opponent.getAttributes().get(Attribute.HEALTH) + ")";
         }
         return "Votre attaque sur " + opponent.getName() + " a échoué";
     }
 
     public String careResult(boolean success, int care) {
         if (success == true) {
-            return "Vous avez augmenté de " + care + " votre vie " + " ( Santé: " + this.getAttributes().get(Attribute.HEALTH) + ")";
+            return "Vous avez augmenté de " + care + " votre vie " + " (Santé: " + this.getAttributes().get(Attribute.HEALTH) + ")";
         }
         return "Votre soin a échoué";
+    }
+    
+    public String blockResult(boolean success, int blockValue) {
+        if (success == true) {
+            return "Vous avez augmenté de " + blockValue + " votre défense " + " (Défense: " + this.getAttributes().get(Attribute.DEFENSE) + ")";
+        }
+        return "Votre blocage a échoué";
     }
 
     public void putRandomPoint() {

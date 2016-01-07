@@ -65,4 +65,27 @@ public class Team {
         }
         return true;
     }
+    
+    public int getTeamLevel()
+    {
+        int lvlTot = 0;
+        for(Character ch : characters)
+        {
+            lvlTot += ch.getLevel();
+        }
+        return lvlTot;
+    }
+    
+    public int getLevelMaxInTeam()
+    {
+        int lvlMax = Integer.MIN_VALUE;
+        for(Character ch : characters)
+        {
+            if(ch.getLevel()>lvlMax)
+            {
+                lvlMax = ch.getLevel();
+            }
+        }
+        return lvlMax;
+    }
 }

@@ -34,6 +34,11 @@ public class Thief extends Character implements Attack, Care, Block {
         capacities.add("Soigner");
     }
     
+    public Thief(String n, int l)
+    {
+        super(n, l);
+    }
+    
     @Override
     public void putRandomPoint()
     {

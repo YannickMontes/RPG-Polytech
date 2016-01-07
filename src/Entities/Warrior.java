@@ -33,6 +33,11 @@ public class Warrior extends Character implements Attack, Block, Care {
         capacities.add("Bloquer");
         capacities.add("Soigner");
     }
+    
+    public Warrior(String n, int l)
+    {
+        super(n, l);
+    }
 
     @Override
     public void putRandomPoint()

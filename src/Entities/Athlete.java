@@ -34,6 +34,11 @@ public class Athlete extends Character implements Attack, Block, Care {
         capacities.add("Soigner");
     }
     
+    public Athlete(String n, int l)
+    {
+        super(n, l);
+    }
+    
     @Override
     public void putRandomPoint()
     {

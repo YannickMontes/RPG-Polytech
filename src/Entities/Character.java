@@ -24,7 +24,7 @@ public abstract class Character {
     public final static int MAXWEAPONEQUIPMENT = 1;
     public final static int MAXEQUIPMENT = 3;
     public final static int NBCLASSES = 3;
-    public final static int NBPOINTLEVELUP = 2;
+    public final static int NBPOINTLEVELUP = 3;
 
     //Attributesattributes
     protected String name;
@@ -68,7 +68,7 @@ public abstract class Character {
         while (nbPoints > 0) {
             int randomNumber = (int) (Math.random() * Attribute.values().length - 1);
             putRandomPoint();
-            nbPoints--;
+            nbPoints-=NBPOINTLEVELUP;
         }
     }
 

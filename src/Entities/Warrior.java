@@ -31,7 +31,17 @@ public class Warrior extends Character implements Attack, Block, Care {
     @Override
     public void putRandomPoint()
     {
-        this.basicAttributes.replace(Attribute.STRENGTH, this.basicAttributes.get(Attribute.STRENGTH)+1);
+        if(this.level%2 == 0)//Si le niveau est pair
+        {
+            this.basicAttributes.replace(Attribute.STRENGTH, this.basicAttributes.get(Attribute.STRENGTH)+Character.NBPOINTLEVELUP-1);
+            this.basicAttributes.replace(Attribute.DEFENSE, this.basicAttributes.get(Attribute.DEFENSE)+Character.NBPOINTLEVELUP-2);
+        }
+        else
+        {
+            this.basicAttributes.replace(Attribute.DEXTERITY, this.basicAttributes.get(Attribute.DEXTERITY)+1);
+            this.basicAttributes.replace(Attribute.STRENGTH, this.basicAttributes.get(Attribute.STRENGTH)+1);
+            this.basicAttributes.replace(Attribute.DEFENSE, this.basicAttributes.get(Attribute.DEFENSE)+1);
+        }
     }
     
     @Override

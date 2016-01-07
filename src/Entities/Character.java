@@ -54,24 +54,24 @@ public abstract class Character {
         attributes.put(Attribute.STRENGTH, 0);
         attributes.put(Attribute.INTELLIGENCE, 0);
     }
-    
+
     /**
-     * Ce constructeur permet de créer un personnage équilibré selon sa classe, à partir d'un nom et d'un niveau.
+     * Ce constructeur permet de créer un personnage équilibré selon sa classe,
+     * à partir d'un nom et d'un niveau.
+     *
      * @param n Nom du pesonnage
      * @param l Niveau du personnage
      */
-    public Character(String n, int l)
-    {
+    public Character(String n, int l) {
         this.level = l;
-        int nbPoints = (level-1)*NBPOINTLEVELUP;
-        while(nbPoints>0)
-        {
-            int randomNumber = (int)(Math.random()*Attribute.values().length-1);
+        int nbPoints = (level - 1) * NBPOINTLEVELUP;
+        while (nbPoints > 0) {
+            int randomNumber = (int) (Math.random() * Attribute.values().length - 1);
             putRandomPoint();
             nbPoints--;
         }
     }
-    
+
     //Getters & Setters
     public String getName() {
         return name;
@@ -197,9 +197,9 @@ public abstract class Character {
         }
         return 0;
     }
-    
+
     public int numberUseableItem() {
-        int i=0;
+        int i = 0;
         for (Item item : inventory) {
             if (item instanceof UseableItem) {
                 return i++;
@@ -276,13 +276,13 @@ public abstract class Character {
             for (StuffItem weapon : this.getEquipment(Weapon.class)) {
                 probability += (float) (((Weapon) weapon).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
             }
-            probability += (float) (this.attributes.get(Attribute.DEXTERITY).floatValue() / 100) * 1 - (0.2 * this.getEquipment(Armor.class).size());
+            probability += (float) (this.attributes.get(Attribute.DEXTERITY).floatValue() / 100) * (1 - (0.2 * this.getEquipment(Weapon.class).size()));
         } else if ("block".equals(capacity)) {
             probability = this.attributes.get(Attribute.DEFENSE);
             for (StuffItem armor : this.getEquipment(Armor.class)) {
                 probability += (float) (((Armor) armor).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
             }
-            probability += (float) (this.attributes.get(Attribute.DEFENSE).floatValue() / 100) * 1 - (0.2 * this.getEquipment(Armor.class).size());
+            probability += (float) (this.attributes.get(Attribute.DEFENSE).floatValue() / 100) * (1 - (0.2 * this.getEquipment(Armor.class).size()));
         } else if ("care".equals(capacity)) {
             probability = 1;
         }
@@ -335,12 +335,16 @@ public abstract class Character {
         this.attributes.replace(Attribute.HEALTH, 150 + 2 * level + 3);
     }
 
+    public void restoreAttribute(Attribute attribute) {
+        attributes.replace(attribute, basicAttributes.get(attribute));
+    }
+
     public void restoreAttributes() {
-        attributes.replace(Attribute.SPEED, basicAttributes.get(Attribute.SPEED));
-        attributes.replace(Attribute.DEFENSE, basicAttributes.get(Attribute.DEFENSE));
-        attributes.replace(Attribute.DEXTERITY, basicAttributes.get(Attribute.DEXTERITY));
-        attributes.replace(Attribute.STRENGTH, basicAttributes.get(Attribute.STRENGTH));
-        attributes.replace(Attribute.INTELLIGENCE, basicAttributes.get(Attribute.INTELLIGENCE));
+        restoreAttribute(Attribute.SPEED);
+        restoreAttribute(Attribute.DEFENSE);
+        restoreAttribute(Attribute.DEXTERITY);
+        restoreAttribute(Attribute.INTELLIGENCE);
+        restoreAttribute(Attribute.STRENGTH);
     }
 
     public void showData() {
@@ -367,7 +371,7 @@ public abstract class Character {
         }
         return "Votre attaque sur " + opponent.getName() + " a échoué";
     }
-    
+
     public String careResult(boolean success, int care) {
         if (success == true) {
             return "Vous avez augmenté de " + care + " votre vie " + " ( Santé: " + this.getAttributes().get(Attribute.HEALTH) + ")";
@@ -375,6 +379,7 @@ public abstract class Character {
         return "Votre soin a échoué";
     }
 
-    
-    public void putRandomPoint(){};
+    public void putRandomPoint() {
+    }
+;
 }

@@ -45,11 +45,11 @@ public class Wizard extends Character implements Attack, Care, Block {
                     String text = careResult(success, care);
                     return text;
                 }
-                return "Vous ne possédez pas la capacité de soigner actuellement";
+                return "Vous ne possedez pas la capacité de soigner actuellement";
             }
-            return "Vous ne posséder pas cet objet dans votre inventaire";
+            return "Vous ne possedez pas cet objet dans votre inventaire";
         }
-        return "Vous ne posséder pas d'objets utilisables dans votre inventaire";
+        return "Vous ne possedez pas d'objets utilisables dans votre inventaire";
     }
 
     @Override

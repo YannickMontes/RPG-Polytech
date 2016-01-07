@@ -32,6 +32,12 @@ public class Warrior extends Character implements Attack, Block, Care {
     }
 
     @Override
+    public void putRandomPoint()
+    {
+        this.basicAttributes.put(Attribute.STRENGTH, this.basicAttributes.get(Attribute.STRENGTH)+1);
+    }
+    
+    @Override
     public String strikeABlow(Character opponent) {
         if (opponent != null) {
             if (capacities.contains("Attaquer")) {

@@ -20,9 +20,11 @@ import java.util.List;
 public abstract class Character {
 
     //Fixed variables
-    public final int MAXARMOREQUIPMENT = 2;
-    public final int MAXWEAPONEQUIPMENT = 1;
-    public final int MAXEQUIPMENT = 3;
+    public final static int MAXARMOREQUIPMENT = 2;
+    public final static int MAXWEAPONEQUIPMENT = 1;
+    public final static int MAXEQUIPMENT = 3;
+    public final static int NBCLASSES = 3;
+    public final static int NBPOINTLEVELUP = 2;
 
     //Attributesattributes
     protected String name;
@@ -52,7 +54,24 @@ public abstract class Character {
         attributes.put(Attribute.STRENGTH, 0);
         attributes.put(Attribute.INTELLIGENCE, 0);
     }
-
+    
+    /**
+     * Ce constructeur permet de créer un personnage équilibré selon sa classe, à partir d'un nom et d'un niveau.
+     * @param n Nom du pesonnage
+     * @param l Niveau du personnage
+     */
+    public Character(String n, int l)
+    {
+        this.level = l;
+        int nbPoints = (level-1)*NBPOINTLEVELUP;
+        while(nbPoints>0)
+        {
+            int randomNumber = (int)(Math.random()*Attribute.values().length-1);
+            putRandomPoint();
+            nbPoints--;
+        }
+    }
+    
     //Getters & Setters
     public String getName() {
         return name;
@@ -356,4 +375,6 @@ public abstract class Character {
         return "Votre soin a échoué";
     }
 
+    
+    public void putRandomPoint(){};
 }

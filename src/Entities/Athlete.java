@@ -9,6 +9,7 @@ import Actions.Attack;
 import Actions.Block;
 import Actions.Care;
 import Items.UseableItem;
+import Entities.Character;
 
 /**
  *

@@ -13,70 +13,75 @@ import java.util.HashMap;
  */
 public class Attributes extends HashMap<Attribute, Integer>
 {
-    public final int MAXHEALTH = 999;
-    public final int MAXDEXTERITY = 100;
-    public final int MAXDEFENSE = 100;
-    public final int MAXSTRENGTH = 100;
-    public final int MAXSPEED = 100;
-    public final int MAXINTELLIGENCE = 100;
-    public final int MAXMANA = 150;
+    public final static int MAXHEALTH = 999;
+    public final static int MAXDEXTERITY = 100;
+    public final static int MAXDEFENSE = 100;
+    public final static int MAXSTRENGTH = 100;
+    public final static int MAXSPEED = 100;
+    public final static int MAXINTELLIGENCE = 100;
+    public final static int MAXMANA = 150;
     
     @Override
     public Integer put(Attribute key, Integer value)
     {
         boolean correct = true;
-        if(key == Attribute.DEFENSE)
+        switch (key)
         {
-            if(value>MAXDEFENSE)
-            {
-                correct = false;
-            }
-        }
-        else if(key == Attribute.DEXTERITY)
-        {
-            if(value>MAXDEXTERITY)
-            {
-                correct = false;
-            }
-        }
-        else if(key == Attribute.SPEED)
-        {
-            if(value>MAXSPEED)
-            {
-                correct = false;
-            }
-        }
-        else if(key == Attribute.STRENGTH)
-        {
-            if(value>MAXSTRENGTH)
-            {
-                correct = false;
-            }
-        }
-        else if(key == Attribute.INTELLIGENCE)
-        {
-            if(value>MAXINTELLIGENCE)
-            {
-                correct = false;
-            }
-        }
-        else if(key == Attribute.HEALTH)
-        {
-            if(value>MAXHEALTH)
-            {
-                correct = false;
-            }
-        }
-        else if(key == Attribute.MANA)
-        {
-            if(value>MAXMANA)
-            {
-                correct = false;
-            }
+            case DEFENSE:
+                if(value>MAXDEFENSE)
+                {
+                    correct = false;
+                }   
+                break;
+                
+            case DEXTERITY:
+                if(value>MAXDEXTERITY)
+                {
+                    correct = false;
+                }   
+                break;
+            
+            case SPEED:
+                if(value>MAXSPEED)
+                {
+                    correct = false;
+                }   
+                break;
+            
+            case STRENGTH:
+                if(value>MAXSTRENGTH)
+                {
+                    correct = false;
+                }   
+                break;
+            
+            case INTELLIGENCE:
+                if(value>MAXINTELLIGENCE)
+                {
+                    correct = false;
+                }   
+                break;
+            
+            case HEALTH:
+                if(value>MAXHEALTH)
+                {
+                    correct = false;
+                }   
+                break;
+            
+            case MANA:
+                if(value>MAXMANA)
+                {
+                    correct = false;
+                }   
+                break;
+            
+            default:
+                break;
         }
         if(!correct)
         {
-            throw new IllegalArgumentException("La valeur suivante à dépassé sa valeur:"+key);
+            throw new IllegalArgumentException("L'attribut suivant à dépassé sa valeur maximale: "+key);
         }
         return super.put(key, value); 
         

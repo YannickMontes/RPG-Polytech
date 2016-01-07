@@ -53,6 +53,7 @@ public abstract class Character {
         attributes.put(Attribute.DEXTERITY, 0);
         attributes.put(Attribute.STRENGTH, 0);
         attributes.put(Attribute.INTELLIGENCE, 0);
+        attributes.put(Attribute.MANA, 0);
     }
     
     /**
@@ -341,6 +342,7 @@ public abstract class Character {
         attributes.replace(Attribute.DEXTERITY, basicAttributes.get(Attribute.DEXTERITY));
         attributes.replace(Attribute.STRENGTH, basicAttributes.get(Attribute.STRENGTH));
         attributes.replace(Attribute.INTELLIGENCE, basicAttributes.get(Attribute.INTELLIGENCE));
+        this.maxWeight = (int)(attributes.get(Attribute.STRENGTH)*2.5);
     }
 
     public void showData() {

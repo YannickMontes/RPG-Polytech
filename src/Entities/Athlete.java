@@ -19,15 +19,21 @@ public class Athlete extends Character implements Attack, Block, Care {
 
     public Athlete(String name) {
         super(name, "Athlete");
-        this.basicAttributes.put(Attribute.SPEED, 45);
-        this.basicAttributes.put(Attribute.STRENGTH, 40);
-        this.basicAttributes.put(Attribute.DEFENSE, 30);
+        this.basicAttributes.put(Attribute.SPEED, 20);
+        this.basicAttributes.put(Attribute.STRENGTH, 30);
+        this.basicAttributes.put(Attribute.DEFENSE, 20);
         this.basicAttributes.put(Attribute.DEXTERITY, 30);
-        this.basicAttributes.put(Attribute.INTELLIGENCE, 5);
+        this.basicAttributes.put(Attribute.INTELLIGENCE, 0);
         this.restoreAttributes();
-        this.maxWeight = 20;
+
         capacities.add("Attaquer");
         capacities.add("Bloquer");
+    }
+    
+    @Override
+    public void putRandomPoint()
+    {
+        this.basicAttributes.replace(Attribute.SPEED, this.basicAttributes.get(Attribute.SPEED)+1);
     }
 
     @Override

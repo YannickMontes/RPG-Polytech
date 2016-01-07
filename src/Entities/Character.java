@@ -62,7 +62,7 @@ public abstract class Character {
         while (nbPoints > 0) {
             int randomNumber = (int) (Math.random() * Attribute.values().length - 1);
             putRandomPoint();
-            nbPoints-=NBPOINTLEVELUP;
+            nbPoints -= NBPOINTLEVELUP;
         }
     }
 
@@ -98,7 +98,7 @@ public abstract class Character {
     public List<String> getCapacities() {
         return capacities;
     }
-    
+
     public List<StuffItem> getEquipment() {
         return equipment;
     }
@@ -276,11 +276,17 @@ public abstract class Character {
             }
             probability += (float) (this.attributes.get(Attribute.DEXTERITY).floatValue() / 100) * (1 - (0.2 * this.getEquipment(Weapon.class).size()));
         } else if ("block".equals(capacity)) {
-            probability = this.attributes.get(Attribute.DEFENSE);
+            //probability = this.attributes.get(Attribute.DEFENSE);
             for (StuffItem armor : this.getEquipment(Armor.class)) {
                 probability += (float) (((Armor) armor).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
             }
             probability += (float) (this.attributes.get(Attribute.DEFENSE).floatValue() / 100) * (1 - (0.2 * this.getEquipment(Armor.class).size()));
+        }else if ("dodge".equals(capacity)) {
+            //probability = this.attributes.get(Attribute.SPEED);
+            for (StuffItem armor : this.getEquipment(Armor.class)) {
+                probability += (float) (((Armor) armor).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
+            }
+            probability += (float) (this.attributes.get(Attribute.SPEED).floatValue() / 100) * (1 - (0.2 * this.getEquipment(Armor.class).size()));
         } else if ("care".equals(capacity)) {
             probability = 1;
         }
@@ -321,8 +327,8 @@ public abstract class Character {
             }
             return damages;
         } else if ("block".equals(capacity)) {
-            this.attributes.replace(Attribute.DEFENSE, (int)(this.attributes.get(Attribute.DEFENSE)+0.5*this.attributes.get(Attribute.STRENGTH)));
-            return (int)(0.5*this.attributes.get(Attribute.STRENGTH));
+            this.attributes.replace(Attribute.DEFENSE, (int) (this.attributes.get(Attribute.DEFENSE) + 0.5 * this.attributes.get(Attribute.STRENGTH)));
+            return (int) (0.5 * this.attributes.get(Attribute.STRENGTH));
         } else if ("care".equals(capacity) && useableItem != null) {
             return useableItem.getBonusValue();
         }
@@ -374,7 +380,7 @@ public abstract class Character {
         }
         return "Votre soin a échoué";
     }
-    
+
     public String blockResult(boolean success, int blockValue) {
         if (success == true) {
             return "Vous avez augmenté de " + blockValue + " votre défense " + " (Défense: " + this.getAttributes().get(Attribute.DEFENSE) + ")";

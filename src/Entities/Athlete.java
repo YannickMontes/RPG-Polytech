@@ -28,6 +28,7 @@ public class Athlete extends Character implements Attack, Block, Care {
         this.maxWeight = 20;
         capacities.add("Attaquer");
         capacities.add("Bloquer");
+        capacities.add("Soigner");
     }
 
     @Override
@@ -49,13 +50,22 @@ public class Athlete extends Character implements Attack, Block, Care {
     }
 
     @Override
-    public boolean block() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String block() {
+        if (capacities.contains("Bloquer")) {
+            boolean success = verifySuccess("block");
+            int upBlock = 0;
+            if (success == true) {
+                upBlock = measureImpact("attack", null, null);
+            }
+            String text = blockResult(success, upBlock);
+            return text;
+        }
+        return "Vous ne possédez pas la capacité d'attaque actuellement";
     }
 
     @Override
-    public boolean dodge() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String dodge() {
+        return "";
     }
 
     @Override

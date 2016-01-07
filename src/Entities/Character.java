@@ -28,12 +28,13 @@ public abstract class Character {
     public final int MAXSTRENGTH = 100;
     public final int MAXSPEED = 100;
     public final int MAXINTELLIGENCE = 100;
-
+    public final int MAXMANA = 150;
+    
     public final int MAXARMOREQUIPMENT = 2;
     public final int MAXWEAPONEQUIPMENT = 1;
     public final int MAXEQUIPMENT = 3;
 
-    //Attributes
+    //Attributesattributes
     protected String name;
     protected String className;
     protected Map<Attribute, Integer> attributes;

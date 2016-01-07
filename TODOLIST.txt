@@ -1,0 +1,16 @@
+Personnage:
+	-Gestion du niveau avec gain d'expérience en fin de combat + découverte
+	-Imposer des contraintes sur les caractéristiques
+	-Gérer les points de caracatéristiques
+
+
+Attributs:
+	-Faire une classe qui extend de map, et qui surcharge les fonctions put, set et ect pour ne pas dépasser les bornes des caractéristiques
+	-Trouver un équilibre pour chaque classe (=imposer des contraintes)
+
+Controleur:
+	-Remplacer tout les appels a Sout dans les classe par un appel au controleur, qui demande a l'utilisateur et vérifie si ce qu'entre l'user est bien correct
+
+Items (Drop & Découverte):
+	-Fichiers JSON qui référence les items
+	

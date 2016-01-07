@@ -24,6 +24,25 @@ public class Attributes extends HashMap<Attribute, Integer>
     @Override
     public Integer put(Attribute key, Integer value)
     {
+        if(!verifyExcess(key, value))
+        {
+            throw new IllegalArgumentException("L'attribut suivant à dépassé sa valeur maximale: "+key);
+        }
+        return super.put(key, value); 
+    }    
+
+    @Override
+    public Integer replace(Attribute key, Integer value)
+    {
+        if(!verifyExcess(key, value))
+        {
+            throw new IllegalArgumentException("L'attribut suivant à dépassé sa valeur maximale: "+key);
+        }
+        return super.replace(key, value);
+    }
+    
+    private boolean verifyExcess(Attribute key, Integer value)
+    {
         boolean correct = true;
         switch (key)
         {
@@ -79,11 +98,8 @@ public class Attributes extends HashMap<Attribute, Integer>
             default:
                 break;
         }
-        if(!correct)
-        {
-            throw new IllegalArgumentException("L'attribut suivant à dépassé sa valeur maximale: "+key);
-        }
-        return super.put(key, value); 
-        
-    }    
+        return correct;
+    }
+    
+    
 }

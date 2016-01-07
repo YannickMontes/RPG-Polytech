@@ -50,15 +50,37 @@ public class Turn {
     }
 
     public void turnDefense(Character character) {
+        String text = "Quelle parade voulez-vous utiliser ? \n"
+                + "1 -> Blocage\n"
+                + "2 -> Esquive\n";
+        int blockNumber = controller.askNumberBetween(text, 1, 2);
         if (character instanceof Warrior) {
-            ((Warrior) character).block();
-            ((Warrior) character).dodge();
+            switch (blockNumber) {
+                case 1:
+                    ((Warrior) character).block();
+                    break;
+                case 2:
+                    ((Warrior) character).dodge();
+                    break;
+            }
         } else if (character instanceof Athlete) {
-            ((Athlete) character).block();
-            ((Athlete) character).dodge();
+            switch (blockNumber) {
+                case 1:
+                    ((Athlete) character).block();
+                    break;
+                case 2:
+                    ((Athlete) character).dodge();
+                    break;
+            }
         } else if (character instanceof Thief) {
-            ((Thief) character).block();
-            ((Thief) character).dodge();
+            switch (blockNumber) {
+                case 1:
+                    ((Thief) character).block();
+                    break;
+                case 2:
+                    ((Thief) character).dodge();
+                    break;
+            }
         }
     }
 
@@ -87,16 +109,21 @@ public class Turn {
 
     public void turnOf(Character character) {
         character.restoreAttributes();
-        int limitAction = 2;
+        int limitAction = 1;
         String text = "C'est votre tour: " + character.getName() + "\n"
                 + "--------------------\n"
-                + "Quel action voulez-vous réaliser ?\n"
-                + "1 -> Attaquer un personnage\n"
-                + "2 -> Utiliser une parade\n";
-        if (character.numberUseableItem() != 0) {
-            text += "3 -> Utiliser un soin";
-            limitAction = 3;
+                + "Quel action voulez-vous réaliser ?\n";
+        for (String capacity : character.getCapacities()) {
+            if (capacity.equals("Attaquer")) {
+                text += "1 -> Attaquer un personnage\n";
+            } else if (capacity.equals("Bloquer")) {
+                text += "2 -> Utiliser une parade\n";;
+            } else if (capacity.equals("Soigner") && character.numberUseableItem() != 0) {
+                text += "3 -> Utiliser un soin";
+            }
+            limitAction++;
         }
+
         int actionNumber = controller.askNumberBetween(text, 1, limitAction);
         switch (actionNumber) {
             case 1:

@@ -45,7 +45,7 @@ public class Thief extends Character implements Attack, Care, Block {
             this.basicAttributes.replace(Attribute.STRENGTH, this.basicAttributes.get(Attribute.STRENGTH)+1);
         }
     }
-
+    
     @Override
     public String heal(UseableItem useableItem) {
         if (useableItem != null) {
@@ -86,13 +86,21 @@ public class Thief extends Character implements Attack, Care, Block {
     }
 
     @Override
-    public boolean block() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String block() {
+        if (capacities.contains("Bloquer")) {
+            boolean success = verifySuccess("block");
+            int upBlock=0;
+            if (success == true) {
+                upBlock = measureImpact("attack", null, null);
+            }
+            String text = blockResult(success, upBlock);
+            return text;
+        }
+        return "Vous ne possédez pas la capacité d'attaque actuellement";
     }
 
     @Override
-    public boolean dodge() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String dodge() {
+        return "";
     }
-
 }

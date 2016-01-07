@@ -26,6 +26,7 @@ public class Warrior extends Character implements Attack, Block, Care {
 
         capacities.add("Attaquer");
         capacities.add("Bloquer");
+        capacities.add("Soigner");
     }
 
     @Override
@@ -43,7 +44,7 @@ public class Warrior extends Character implements Attack, Block, Care {
             this.basicAttributes.replace(Attribute.DEFENSE, this.basicAttributes.get(Attribute.DEFENSE)+1);
         }
     }
-    
+
     @Override
     public String strikeABlow(Character opponent) {
         if (opponent != null) {
@@ -63,22 +64,27 @@ public class Warrior extends Character implements Attack, Block, Care {
     }
 
     @Override
-    public boolean block() {
-        boolean success = false;
-//traitement
-        return success;
+    public String block() {
+        if (capacities.contains("Bloquer")) {
+            boolean success = verifySuccess("block");
+            int upBlock = 0;
+            if (success == true) {
+                upBlock = measureImpact("attack", null, null);
+            }
+            String text = blockResult(success, upBlock);
+            return text;
+        }
+        return "Vous ne possédez pas la capacité d'attaque actuellement";
     }
 
     @Override
-    public boolean dodge() {
-        boolean success = false;
-//traitement
-        return success;
+    public String dodge() {
+        return "";
     }
 
     @Override
     public String heal(UseableItem useableItem) {
-       if (useableItem != null) {
+        if (useableItem != null) {
             if (inventory.contains(useableItem)) {
                 if (capacities.contains("Soigner")) {
                     boolean success = verifySuccess("care");

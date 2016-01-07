@@ -274,24 +274,28 @@ public abstract class Character {
             for (StuffItem weapon : this.getEquipment(Weapon.class)) {
                 probability += (float) (((Weapon) weapon).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
             }
-            probability += (float) (this.attributes.get(Attribute.DEXTERITY).floatValue() / 100) * (1 - (0.2 * this.getEquipment(Weapon.class).size()));
+            probability += (float) (this.attributes.get(Attribute.DEXTERITY).floatValue() / 100)/* * (1 - (0.2 * this.getEquipment(Weapon.class).size()))*/;
         } else if ("block".equals(capacity)) {
             //probability = this.attributes.get(Attribute.DEFENSE);
             for (StuffItem armor : this.getEquipment(Armor.class)) {
                 probability += (float) (((Armor) armor).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
             }
-            probability += (float) (this.attributes.get(Attribute.DEFENSE).floatValue() / 100) * (1 - (0.2 * this.getEquipment(Armor.class).size()));
+            probability += (float) (this.attributes.get(Attribute.DEFENSE).floatValue() / 100)/* * (1 - (0.2 * this.getEquipment(Armor.class).size()))*/;
         }else if ("dodge".equals(capacity)) {
-            //probability = this.attributes.get(Attribute.SPEED);
-            for (StuffItem armor : this.getEquipment(Armor.class)) {
-                probability += (float) (((Armor) armor).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
+            for (StuffItem stuffItem : this.getEquipment()) {
+                probability -= (float) (stuffItem.getWeight())/3;
             }
-            probability += (float) (this.attributes.get(Attribute.SPEED).floatValue() / 100) * (1 - (0.2 * this.getEquipment(Armor.class).size()));
+            probability += (float) (this.attributes.get(Attribute.SPEED).floatValue() / 100)/* * (1 - (0.2 * this.getEquipment().size()))*/;
         } else if ("care".equals(capacity)) {
             probability = 1;
         }
-        probability = 1;
-
+        
+        if(probability > 1){
+            probability=1;
+        }else if(probability < 0){
+            probability=0;
+        }
+        
         int rand = (int) (Math.random() * (100));
         if (rand <= (probability * 100)) {
             return true;

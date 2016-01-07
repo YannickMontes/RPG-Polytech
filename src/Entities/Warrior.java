@@ -23,10 +23,8 @@ public class Warrior extends Character implements Attack, Block, Care {
         this.basicAttributes.put(Attribute.DEXTERITY, 35);
         this.basicAttributes.put(Attribute.DEFENSE, 50);
         this.basicAttributes.put(Attribute.SPEED, 15);
-        this.basicAttributes.put(Attribute.INTELLIGENCE, 0);
         this.restoreAttributes();
-        this.maxWeight = 25;
-
+        
         capacities.add("Attaquer");
         capacities.add("Bloquer");
         capacities.add("Soigner");

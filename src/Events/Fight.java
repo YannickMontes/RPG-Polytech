@@ -6,8 +6,6 @@
 package Events;
 
 import Manager.Turn;
-import java.util.ArrayList;
-import java.util.List;
 import Entities.Character;
 import Manager.Team;
 
@@ -23,6 +21,7 @@ public class Fight extends Event {
     Turn actualTurn;
 
     public Fight(Team team1, Team team2) {
+        this.name="Combat";
         this.team1 = team1;
         this.team2 = team2;
         for (Character character1 : team1.getCharacters()) {
@@ -34,7 +33,7 @@ public class Fight extends Event {
         executeFight();
     }
 
-    public void executeFight() {
+    private void executeFight() {
         System.out.println("*** Début d'un combat ***");
         boolean equipe = false;
         if (team1.getTeamSpeed() > team2.getTeamSpeed()) {

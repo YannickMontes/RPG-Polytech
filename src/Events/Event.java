@@ -11,5 +11,10 @@ package Events;
  */
 public abstract class Event
 {
+    String name;
     
+    public String getName()
+    {
+        return this.name;
+    }
 }

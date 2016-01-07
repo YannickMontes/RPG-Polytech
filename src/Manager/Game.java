@@ -24,7 +24,6 @@ public class Game {
 
     private List<Event> events;
     private Team team1;
-    private Team team2;
     private Controller controller;
 
     public Game() {
@@ -34,19 +33,12 @@ public class Game {
 
     public void startGame() {
         team1 = new Team(controller.askText("Entrer un nom pour l'équipe 1:"));
-        team2 = new Team(controller.askText("Entrer un nom pour l'équipe 2:"));
 
         int numberTeam1 = controller.askNumberBetween("Entrer un nombre de joueur pour l'équipe 1:", 1, 5);
-        int numberTeam2 = controller.askNumberBetween("Entrer un nombre de joueur pour l'équipe 2:", 1, 5);
 
         fillUpCharacters(team1, numberTeam1);
-        fillUpCharacters(team2, numberTeam2);
                 
         for(Character character : team1.getCharacters())
-        {
-            character.showData();
-        }
-        for(Character character : team2.getCharacters())
         {
             character.showData();
         }
@@ -82,7 +74,9 @@ public class Game {
     }
 
     private void initEvents() {
-        events.add(new Fight(team1, team2));
+        Team temp = new Team("nom");
+        temp.addCharacterTeam(new Warrior("Peter"));
+        events.add(new Fight(team1, temp));
     }
     
     public List<Event> getEvents() {
@@ -100,13 +94,4 @@ public class Game {
     public void setTeam1(Team team1) {
         this.team1 = team1;
     }
-
-    public Team getTeam2() {
-        return team2;
-    }
-
-    public void setTeam2(Team team2) {
-        this.team2 = team2;
-    }
-
 }

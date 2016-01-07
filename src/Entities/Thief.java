@@ -14,14 +14,14 @@ import Items.UseableItem;
  *
  * @author yannick
  */
-public class Wizard extends Character implements Attack, Care, Block {
+public class Thief extends Character implements Attack, Care, Block {
 
-    public Wizard(String name) {
-        super(name, "Magicien");
-        this.basicAttributes.put(Attribute.DEXTERITY, 20);
+    public Thief(String name) {
+        super(name, "Voleur");
+        this.basicAttributes.put(Attribute.DEXTERITY, 30);
         this.basicAttributes.put(Attribute.DEFENSE, 15);
-        this.basicAttributes.put(Attribute.SPEED, 20);
-        this.basicAttributes.put(Attribute.STRENGTH, 0);
+        this.basicAttributes.put(Attribute.SPEED, 30);
+        this.basicAttributes.put(Attribute.STRENGTH, 25);
         this.restoreAttributes();
 
         capacities.add("Attaquer");

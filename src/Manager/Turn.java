@@ -8,7 +8,7 @@ package Manager;
 import Entities.Athlete;
 import Entities.Character;
 import Entities.Warrior;
-import Entities.Wizard;
+import Entities.Thief;
 import Items.Item;
 import Items.UseableItem;
 import Controller.Controller;
@@ -44,8 +44,8 @@ public class Turn {
             System.out.println(((Warrior) character).strikeABlow(opponent));
         } else if (character instanceof Athlete) {
             System.out.println(((Athlete) character).strikeABlow(opponent));
-        } else if (character instanceof Wizard) {
-            System.out.println(((Wizard) character).strikeABlow(opponent));
+        } else if (character instanceof Thief) {
+            System.out.println(((Thief) character).strikeABlow(opponent));
         }
     }
 
@@ -56,9 +56,9 @@ public class Turn {
         } else if (character instanceof Athlete) {
             ((Athlete) character).block();
             ((Athlete) character).dodge();
-        } else if (character instanceof Wizard) {
-            ((Wizard) character).block();
-            ((Wizard) character).dodge();
+        } else if (character instanceof Thief) {
+            ((Thief) character).block();
+            ((Thief) character).dodge();
         }
     }
 
@@ -80,8 +80,8 @@ public class Turn {
             System.out.println(((Warrior) character).heal(useableItem));
         } else if (character instanceof Athlete) {
             System.out.println(((Athlete) character).heal(useableItem));
-        } else if (character instanceof Wizard) {
-            System.out.println(((Wizard) character).heal(useableItem));
+        } else if (character instanceof Thief) {
+            System.out.println(((Thief) character).heal(useableItem));
         }
     }
 
@@ -157,8 +157,8 @@ public class Turn {
                             System.out.println(((Warrior) character).strikeABlow(opponent));
                         } else if (character instanceof Athlete) {
                             System.out.println(((Athlete) character).strikeABlow(opponent));
-                        } else if (character instanceof Wizard) {
-                            System.out.println(((Wizard) character).strikeABlow(opponent));
+                        } else if (character instanceof Thief) {
+                            System.out.println(((Thief) character).strikeABlow(opponent));
                         }
                         break;
                     case 2:
@@ -170,9 +170,9 @@ public class Turn {
                         } else if (character instanceof Athlete) {
                             ((Athlete) character).block();
                             ((Athlete) character).dodge();
-                        } else if (character instanceof Wizard) {
-                            ((Wizard) character).block();
-                            ((Wizard) character).dodge();
+                        } else if (character instanceof Thief) {
+                            ((Thief) character).block();
+                            ((Thief) character).dodge();
                         }
                         break;
                     case 3:
@@ -193,8 +193,8 @@ public class Turn {
                                 System.out.println(((Warrior) character).heal(useableItem));
                             } else if (character instanceof Athlete) {
                                 System.out.println(((Athlete) character).heal(useableItem));
-                            } else if (character instanceof Wizard) {
-                                System.out.println(((Wizard) character).heal(useableItem));
+                            } else if (character instanceof Thief) {
+                                System.out.println(((Thief) character).heal(useableItem));
                             }
                         } else {
 

@@ -11,7 +11,7 @@ import Events.Event;
 import Events.Fight;
 import Entities.Character;
 import Entities.Warrior;
-import Entities.Wizard;
+import Entities.Thief;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -66,7 +66,7 @@ public class Game {
                     character = new Warrior(name);
                     break;
                 case 3:
-                    character = new Wizard(name);
+                    character = new Thief(name);
                     break;
             }
             team.addCharacterTeam(character);

@@ -97,7 +97,7 @@ public class Attributes extends HashMap<Attribute, Integer>
                 }
                 else if (this.containsKey(Attribute.STRENGTH))
                 {
-                    if (value >= (int) (this.get(Attribute.DEFENSE) * 1.5) || value >= (int) (this.get(Attribute.DEXTERITY) * 2))
+                    if (value >= (int) (this.get(Attribute.DEFENSE) * 2) || value >= (int) (this.get(Attribute.DEXTERITY) * 2))
                     {
                         message = "Il n'est pas possible d'augmenter votre force d'une valeur supérieure à 2 fois votre dextérité, ou 1,5 fois votre défense.";
                     }

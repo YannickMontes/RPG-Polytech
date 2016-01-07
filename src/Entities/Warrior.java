@@ -22,7 +22,12 @@ public class Warrior extends Character implements Attack, Block, Care {
         this.basicAttributes.put(Attribute.DEXTERITY, 22);
         this.basicAttributes.put(Attribute.DEFENSE, 23);
         this.basicAttributes.put(Attribute.SPEED, 15);
-        this.restoreAttributes();
+        this.attributes.put(Attribute.SPEED, 15);
+        this.attributes.put(Attribute.STRENGTH, 35);
+        this.attributes.put(Attribute.DEFENSE, 23);
+        this.attributes.put(Attribute.DEXTERITY, 22);
+        this.attributes.put(Attribute.HEALTH, 150 + 2 * level + 3);
+        this.attributes.put(Attribute.MANA, 20 + 2 * level + 3);
 
         capacities.add("Attaquer");
         capacities.add("Bloquer");

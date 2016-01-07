@@ -22,7 +22,12 @@ public class Thief extends Character implements Attack, Care, Block {
         this.basicAttributes.put(Attribute.DEFENSE, 15);
         this.basicAttributes.put(Attribute.SPEED, 30);
         this.basicAttributes.put(Attribute.STRENGTH, 25);
-        this.restoreAttributes();
+        this.attributes.put(Attribute.SPEED, 30);
+        this.attributes.put(Attribute.STRENGTH, 25);
+        this.attributes.put(Attribute.DEFENSE, 15);
+        this.attributes.put(Attribute.DEXTERITY, 30);
+        this.attributes.put(Attribute.HEALTH, 150 + 2 * level + 3);
+        this.attributes.put(Attribute.MANA, 20 + 2 * level + 3);
 
         capacities.add("Attaquer");
         capacities.add("Bloquer");

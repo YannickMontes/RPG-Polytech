@@ -22,7 +22,12 @@ public class Athlete extends Character implements Attack, Block, Care {
         this.basicAttributes.put(Attribute.STRENGTH, 30);
         this.basicAttributes.put(Attribute.DEFENSE, 20);
         this.basicAttributes.put(Attribute.DEXTERITY, 30);
-        this.restoreAttributes();
+        this.attributes.put(Attribute.SPEED, 20);
+        this.attributes.put(Attribute.STRENGTH, 30);
+        this.attributes.put(Attribute.DEFENSE, 20);
+        this.attributes.put(Attribute.DEXTERITY, 30);
+        this.attributes.put(Attribute.HEALTH, 150 + 2 * level + 3);
+        this.attributes.put(Attribute.MANA, 20 + 2 * level + 3);
 
         capacities.add("Attaquer");
         capacities.add("Bloquer");

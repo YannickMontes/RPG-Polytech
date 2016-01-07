@@ -47,12 +47,6 @@ public abstract class Character {
         this.capacities = new ArrayList<>();
         this.attributes = new Attributes();
         this.basicAttributes = new Attributes();
-        this.attributes.put(Attribute.HEALTH, 150 + 2 * level + 3);
-        attributes.put(Attribute.SPEED, 0);
-        attributes.put(Attribute.DEFENSE, 0);
-        attributes.put(Attribute.DEXTERITY, 0);
-        attributes.put(Attribute.STRENGTH, 0);
-        attributes.put(Attribute.MANA, 0);
     }
 
     /**

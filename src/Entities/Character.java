@@ -52,7 +52,7 @@ public abstract class Character {
         attributes.put(Attribute.DEFENSE, 0);
         attributes.put(Attribute.DEXTERITY, 0);
         attributes.put(Attribute.STRENGTH, 0);
-        attributes.put(Attribute.INTELLIGENCE, 0);
+        attributes.put(Attribute.MANA, 0);
     }
 
     /**
@@ -347,7 +347,6 @@ public abstract class Character {
         restoreAttribute(Attribute.SPEED);
         restoreAttribute(Attribute.DEFENSE);
         restoreAttribute(Attribute.DEXTERITY);
-        restoreAttribute(Attribute.INTELLIGENCE);
         restoreAttribute(Attribute.STRENGTH);
     }
 
@@ -361,7 +360,6 @@ public abstract class Character {
         System.out.println("Niveau de défense: " + this.attributes.get(Attribute.DEFENSE));
         System.out.println("Niveau de vitesse: " + this.attributes.get(Attribute.SPEED));
         System.out.println("Niveau de force: " + this.attributes.get(Attribute.STRENGTH));
-        System.out.println("Niveau d'intelligence: " + this.attributes.get(Attribute.INTELLIGENCE));
         System.out.println("Nombre d'objet dans l'inventaire: " + this.inventory.size());
         System.out.println("Equipement actuel: ");
         for (int i = 0; i < equipment.size(); i++) {

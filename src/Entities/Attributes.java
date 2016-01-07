@@ -52,7 +52,7 @@ public class Attributes extends HashMap<Attribute, Integer>
                 {
                     message = "L'attribut suivant à dépassé sa valeur maximale: "+key;
                 }   
-                else if(value > (int)(this.get(Attribute.STRENGTH)*2) || value > (int)(this.get(Attribute.DEXTERITY)*2))
+                else if(value >= (int)(this.get(Attribute.STRENGTH)*2) || value >= (int)(this.get(Attribute.DEXTERITY)*2))
                 {
                     message = "Il n'est pas possible d'augmenter votre défense d'une valeur supérieure à 2 fois votre force ou 2 fois votre dextérité.";
                 }
@@ -63,7 +63,7 @@ public class Attributes extends HashMap<Attribute, Integer>
                 {
                     message = "L'attribut suivant à dépassé sa valeur maximale: "+key;
                 }   
-                else if(value > (int)(this.get(Attribute.STRENGTH)*2))
+                else if(value >= (int)(this.get(Attribute.STRENGTH)*2))
                 {
                     message = "Il n'est pas possible d'augmenter votre vitesse d'une valeur supérieure à 2 fois votre force.";
                 }
@@ -74,7 +74,7 @@ public class Attributes extends HashMap<Attribute, Integer>
                 {
                     message = "L'attribut suivant à dépassé sa valeur maximale: "+key;
                 }   
-                else if(value > (int)(this.get(Attribute.STRENGTH)*1.5) || value > (int)(this.get(Attribute.DEXTERITY)*1.5))
+                else if(value >= (int)(this.get(Attribute.STRENGTH)*1.5) || value >= (int)(this.get(Attribute.DEXTERITY)*1.5))
                 {
                     message = "Il n'est pas possible d'augmenter votre vitesse d'une valeur supérieure à 1,5 fois votre force et dextérité.";
                 }
@@ -85,7 +85,7 @@ public class Attributes extends HashMap<Attribute, Integer>
                 {
                     message = "L'attribut suivant à dépassé sa valeur maximale: "+key;
                 }   
-                else if(value > (int)(this.get(Attribute.DEFENSE)*1.5) || value > (int)(this.get(Attribute.DEXTERITY)*2))
+                else if(value >= (int)(this.get(Attribute.DEFENSE)*1.5) || value >= (int)(this.get(Attribute.DEXTERITY)*2))
                 {
                     message = "Il n'est pas possible d'augmenter votre force d'une valeur supérieure à 2 fois votre dextérité, ou 1,5 fois votre défense.";
                 }

@@ -34,6 +34,12 @@ public class Athlete extends Character implements Attack, Block, Care {
     {
         this.basicAttributes.replace(Attribute.SPEED, this.basicAttributes.get(Attribute.SPEED)+1);
     }
+    
+    @Override
+    public void putRandomPoint()
+    {
+        this.basicAttributes.replace(Attribute.SPEED, this.basicAttributes.get(Attribute.SPEED)+1);
+    }
 
     @Override
     public String strikeABlow(Character opponent) {

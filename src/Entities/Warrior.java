@@ -9,7 +9,6 @@ import Actions.Attack;
 import Actions.Block;
 import Actions.Care;
 import Items.UseableItem;
-import Entities.Character;
 
 /**
  *
@@ -19,20 +18,21 @@ public class Warrior extends Character implements Attack, Block, Care {
 
     public Warrior(String name) {
         super(name, "Guerrier");
-        this.basicAttributes.put(Attribute.STRENGTH, 50);
-        this.basicAttributes.put(Attribute.DEXTERITY, 35);
-        this.basicAttributes.put(Attribute.DEFENSE, 50);
+        this.basicAttributes.put(Attribute.STRENGTH, 35);
+        this.basicAttributes.put(Attribute.DEXTERITY, 22);
+        this.basicAttributes.put(Attribute.DEFENSE, 23);
         this.basicAttributes.put(Attribute.SPEED, 15);
         this.restoreAttributes();
-        
+
         capacities.add("Attaquer");
         capacities.add("Bloquer");
         capacities.add("Soigner");
     }
 
     @Override
-    public void putRandomPoint() {
-        this.basicAttributes.put(Attribute.STRENGTH, this.basicAttributes.get(Attribute.STRENGTH) + 1);
+    public void putRandomPoint()
+    {
+        this.basicAttributes.replace(Attribute.STRENGTH, this.basicAttributes.get(Attribute.STRENGTH)+1);
     }
 
     @Override

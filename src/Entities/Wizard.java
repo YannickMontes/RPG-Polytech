@@ -34,7 +34,7 @@ public class Wizard extends Character implements Attack, Care, Block {
     {
         this.basicAttributes.replace(Attribute.SPEED, this.basicAttributes.get(Attribute.SPEED)+1);
     }
-
+    
     @Override
     public String heal(UseableItem useableItem) {
         if (useableItem != null) {

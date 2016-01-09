@@ -33,25 +33,21 @@ public class Athlete extends Character implements Attack, Block, Care {
         capacities.add("Bloquer");
         capacities.add("Soigner");
     }
-    
-    public Athlete(String n, int l)
-    {
+
+    public Athlete(String n, int l) {
         super(n, l);
     }
-    
+
     @Override
-    public void putRandomPoint()
-    {
-        if(this.level%2 == 0)//Si le niveau est pair
+    public void putRandomPoint() {
+        if (this.level % 2 == 0)//Si le niveau est pair
         {
-            this.basicAttributes.replace(Attribute.STRENGTH, this.basicAttributes.get(Attribute.STRENGTH)+Character.NBPOINTLEVELUP-1);
-            this.basicAttributes.replace(Attribute.DEXTERITY, this.basicAttributes.get(Attribute.DEXTERITY)+Character.NBPOINTLEVELUP-2);
-        }
-        else
-        {
-            this.basicAttributes.replace(Attribute.DEFENSE, this.basicAttributes.get(Attribute.DEFENSE)+1);
-            this.basicAttributes.replace(Attribute.DEXTERITY, this.basicAttributes.get(Attribute.DEXTERITY)+1);
-            this.basicAttributes.replace(Attribute.STRENGTH, this.basicAttributes.get(Attribute.STRENGTH)+1);
+            this.basicAttributes.replace(Attribute.STRENGTH, this.basicAttributes.get(Attribute.STRENGTH) + Character.NBPOINTLEVELUP - 1);
+            this.basicAttributes.replace(Attribute.DEXTERITY, this.basicAttributes.get(Attribute.DEXTERITY) + Character.NBPOINTLEVELUP - 2);
+        } else {
+            this.basicAttributes.replace(Attribute.DEFENSE, this.basicAttributes.get(Attribute.DEFENSE) + 1);
+            this.basicAttributes.replace(Attribute.DEXTERITY, this.basicAttributes.get(Attribute.DEXTERITY) + 1);
+            this.basicAttributes.replace(Attribute.STRENGTH, this.basicAttributes.get(Attribute.STRENGTH) + 1);
         }
     }
 
@@ -79,17 +75,26 @@ public class Athlete extends Character implements Attack, Block, Care {
             boolean success = verifySuccess("block");
             int upBlock = 0;
             if (success == true) {
-                upBlock = measureImpact("attack", null, null);
+                upBlock = measureImpact("block", null, null);
             }
             String text = blockResult(success, upBlock);
             return text;
         }
-        return "Vous ne possédez pas la capacité d'attaque actuellement";
+        return "Vous ne possédez pas la capacité de bloque actuellement";
     }
 
     @Override
     public String dodge() {
-        return "";
+        if (capacities.contains("Bloquer")) {
+            boolean success = verifySuccess("dodge");
+            int upDodge = 0;
+            if (success == true) {
+                upDodge = measureImpact("dodge", null, null);
+            }
+            String text = dodgeResult(success, upDodge);
+            return text;
+        }
+        return "Vous ne possédez pas la capacité d'esquive actuellement";
     }
 
     @Override

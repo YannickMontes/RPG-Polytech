@@ -60,28 +60,28 @@ public class Turn {
         if (character instanceof Warrior) {
             switch (blockNumber) {
                 case 1:
-                    ((Warrior) character).block();
+                    System.out.println(((Warrior) character).block());
                     break;
                 case 2:
-                    ((Warrior) character).dodge();
+                    System.out.println(((Warrior) character).dodge());
                     break;
             }
         } else if (character instanceof Athlete) {
             switch (blockNumber) {
                 case 1:
-                    ((Athlete) character).block();
+                    System.out.println(((Athlete) character).block());
                     break;
                 case 2:
-                    ((Athlete) character).dodge();
+                    System.out.println(((Athlete) character).dodge());
                     break;
             }
         } else if (character instanceof Thief) {
             switch (blockNumber) {
                 case 1:
-                    ((Thief) character).block();
+                    System.out.println(((Thief) character).block());
                     break;
                 case 2:
-                    ((Thief) character).dodge();
+                    System.out.println(((Thief) character).dodge());
                     break;
             }
         }
@@ -182,15 +182,19 @@ public class Turn {
                         int probaOpponent = (int) (Math.random() * (opponentsTeam.getCharacters().size() * 100));
                         opponentNumber = probaOpponent / 100;
                         opponent = opponentsTeam.getCharacters().get(opponentNumber);
+                        String resultAttack = "";
                         if (character instanceof Warrior) {
-                            attacks.add("-Une attaque a été effectuée contre " + opponent.getName() + " -> " + ((Warrior) character).strikeABlow(opponent));
-                            Log.i(((Warrior) character).strikeABlow(opponent));
+                            resultAttack = ((Warrior) character).strikeABlow(opponent);
+                            attacks.add("-Une attaque a été effectuée contre " + opponent.getName() + " -> " + resultAttack);
+                            Log.i(resultAttack);
                         } else if (character instanceof Athlete) {
-                            attacks.add("-Une attaque a été effectuée contre " + opponent.getName() + " -> " + ((Athlete) character).strikeABlow(opponent));
-                            Log.i(((Athlete) character).strikeABlow(opponent));
+                            resultAttack = ((Athlete) character).strikeABlow(opponent);
+                            attacks.add("-Une attaque a été effectuée contre " + opponent.getName() + " -> " + resultAttack);
+                            Log.i(resultAttack);
                         } else if (character instanceof Thief) {
-                            attacks.add("-Une attaque a été effectuée contre " + opponent.getName() + " -> " + ((Thief) character).strikeABlow(opponent));
-                            Log.i(((Thief) character).strikeABlow(opponent));
+                            resultAttack = ((Thief) character).strikeABlow(opponent);
+                            attacks.add("-Une attaque a été effectuée contre " + opponent.getName() + " -> " + resultAttack);
+                            Log.i(resultAttack);
                         }
                         break;
                     case 2:
@@ -206,28 +210,28 @@ public class Turn {
                         if (character instanceof Warrior) {
                             switch (blockNumber) {
                                 case 1:
-                                    ((Warrior) character).block();
+                                    Log.i(((Warrior) character).block());
                                     break;
                                 case 2:
-                                    ((Warrior) character).dodge();
+                                    Log.i(((Warrior) character).dodge());
                                     break;
                             }
                         } else if (character instanceof Athlete) {
                             switch (blockNumber) {
                                 case 1:
-                                    ((Athlete) character).block();
+                                    Log.i(((Athlete) character).block());
                                     break;
                                 case 2:
-                                    ((Athlete) character).dodge();
+                                    Log.i(((Athlete) character).dodge());
                                     break;
                             }
                         } else if (character instanceof Thief) {
                             switch (blockNumber) {
                                 case 1:
-                                    ((Thief) character).block();
+                                    Log.i(((Thief) character).block());
                                     break;
                                 case 2:
-                                    ((Thief) character).dodge();
+                                    Log.i(((Thief) character).dodge());
                                     break;
                             }
                         }

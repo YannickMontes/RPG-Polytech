@@ -99,18 +99,27 @@ public class Thief extends Character implements Attack, Care, Block {
     public String block() {
         if (capacities.contains("Bloquer")) {
             boolean success = verifySuccess("block");
-            int upBlock=0;
+            int upBlock = 0;
             if (success == true) {
-                upBlock = measureImpact("attack", null, null);
+                upBlock = measureImpact("block", null, null);
             }
             String text = blockResult(success, upBlock);
             return text;
         }
-        return "Vous ne possédez pas la capacité d'attaque actuellement";
+        return "Vous ne possédez pas la capacité de bloque actuellement";
     }
 
     @Override
     public String dodge() {
-        return "";
+        if (capacities.contains("Bloquer")) {
+            boolean success = verifySuccess("dodge");
+            int upDodge = 0;
+            if (success == true) {
+                upDodge = measureImpact("dodge", null, null);
+            }
+            String text = dodgeResult(success, upDodge);
+            return text;
+        }
+        return "Vous ne possédez pas la capacité d'esquive actuellement";
     }
 }

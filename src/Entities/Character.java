@@ -404,6 +404,13 @@ public abstract class Character {
         }
         return "Votre blocage a échoué";
     }
+    
+    public String dodgeResult(boolean success, int blockValue) {
+        if (success == true) {
+            return "Vous avez augmenté de " + blockValue + " votre défense " + " (Défense: " + this.getAttributes().get(Attribute.DEFENSE) + ")";
+        }
+        return "Votre esquive a échoué";
+    }
 
     public void putRandomPoint() {
     }

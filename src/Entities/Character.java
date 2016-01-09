@@ -282,21 +282,21 @@ public abstract class Character {
                 probability += (float) (((Armor) armor).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
             }
             probability += (float) (this.attributes.get(Attribute.DEFENSE).floatValue() / 100)/* * (1 - (0.2 * this.getEquipment(Armor.class).size()))*/;
-        }else if ("dodge".equals(capacity)) {
+        } else if ("dodge".equals(capacity)) {
             for (StuffItem stuffItem : this.getEquipment()) {
-                probability -= (float) (stuffItem.getWeight())/3;
+                probability -= (float) (stuffItem.getWeight()) / 3;
             }
             probability += (float) (this.attributes.get(Attribute.SPEED).floatValue() / 100)/* * (1 - (0.2 * this.getEquipment().size()))*/;
         } else if ("care".equals(capacity)) {
             probability = 1;
         }
-        
-        if(probability > 1){
-            probability=1;
-        }else if(probability < 0){
-            probability=0;
+
+        if (probability > 1) {
+            probability = 1;
+        } else if (probability < 0) {
+            probability = 0;
         }
-        
+
         int rand = (int) (Math.random() * (100));
         if (rand <= (probability * 100)) {
             return true;
@@ -361,14 +361,26 @@ public abstract class Character {
         System.out.println("Classe: " + this.className);
         System.out.println("Niveau: " + this.level);
         System.out.println("Niveau de santé: " + this.attributes.get(Attribute.HEALTH));
+        System.out.println("Niveau de mana: " + this.attributes.get(Attribute.MANA));
         System.out.println("Niveau de dextérité: " + this.attributes.get(Attribute.DEXTERITY));
         System.out.println("Niveau de défense: " + this.attributes.get(Attribute.DEFENSE));
         System.out.println("Niveau de vitesse: " + this.attributes.get(Attribute.SPEED));
         System.out.println("Niveau de force: " + this.attributes.get(Attribute.STRENGTH));
         System.out.println("Nombre d'objet dans l'inventaire: " + this.inventory.size());
         System.out.println("Equipement actuel: ");
-        for (int i = 0; i < equipment.size(); i++) {
-            System.out.println("-" + equipment.get(i).getName());
+        for (StuffItem stuffItem : equipment) {
+            System.out.println("-" + stuffItem.getName() + " Poids: " + stuffItem.getWeight() + " Maniabilité:" + stuffItem.getHandlingAbility());
+        }
+    }
+
+    public void showInventary() {
+        for (Item item : inventory) {
+            System.out.print("-" + item.getName() + " (" + item.getClass() + ") Poids: " + item.getWeight());
+            if (item instanceof UseableItem) {
+                System.out.println(" Valeur de bonus:" + ((UseableItem) item).getBonusValue());
+            } else if (item instanceof StuffItem) {
+                System.out.println(" Maniabilité:" + ((StuffItem) item).getHandlingAbility());
+            }
         }
     }
 
@@ -395,5 +407,29 @@ public abstract class Character {
 
     public void putRandomPoint() {
     }
-;
+
+    ;
+
+    public void upLevel() {
+        int upMana = 0, upDexterity = 0, upDefense = 0, upSpeed = 0, upStrength = 0;
+        System.out.println("---- " + this.name + " ----");
+        this.level++;
+        restoreAttributes();
+        /*DEMANDER CE QU'IL VEUT AUGMENTER*/
+        System.out.println("Vos nouvelles statistiques");
+        System.out.println("Classe: " + this.className);
+        System.out.println("Niveau: " + this.level + "(+1)");
+        System.out.println("Niveau de santé: " + this.attributes.get(Attribute.HEALTH));
+        System.out.println("Niveau de mana: " + this.attributes.get(Attribute.MANA) + "(+" + upMana + ")");
+        System.out.println("Niveau de dextérité: " + this.attributes.get(Attribute.DEXTERITY) + "(+" + upDexterity + ")");
+        System.out.println("Niveau de défense: " + this.attributes.get(Attribute.DEFENSE) + "(+" + upDefense + ")");
+        System.out.println("Niveau de vitesse: " + this.attributes.get(Attribute.SPEED) + "(+" + upSpeed + ")");
+        System.out.println("Niveau de force: " + this.attributes.get(Attribute.STRENGTH) + "(+" + upStrength + ")");
+        System.out.println("Nombre d'objet dans l'inventaire: " + this.inventory.size());
+        System.out.println("Equipement actuel: ");
+        for (int i = 0; i < equipment.size(); i++) {
+            System.out.println("-" + equipment.get(i).getName());
+        }
+    }
+
 }

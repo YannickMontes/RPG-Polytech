@@ -12,6 +12,9 @@ import Entities.Thief;
 import Items.Item;
 import Items.UseableItem;
 import Controller.Controller;
+import java.util.ArrayList;
+import java.util.List;
+import me.grea.antoine.utils.Log;
 
 /**
  *
@@ -154,11 +157,11 @@ public class Turn {
     }
 
     public boolean executeTurnAuto() {
+        List<String> attacks = new ArrayList<>();
         for (Character character : team.getCharacters()) {
             if (character.isAlive()) {
                 character.restoreAttributes();
-                System.out.println("Le joueur " + character.getName() + " a joué.");
-
+                Log.i("Le joueur " + character.getName() + " a joué.");
                 int limitProbaAction = 90;
                 if (character.numberUseableItem() != 0) {
                     limitProbaAction = 100;
@@ -179,32 +182,60 @@ public class Turn {
                         int probaOpponent = (int) (Math.random() * (opponentsTeam.getCharacters().size() * 100));
                         opponentNumber = probaOpponent / 100;
                         opponent = opponentsTeam.getCharacters().get(opponentNumber);
-                        System.out.println("Il a attaqué " + opponent.getName());
                         if (character instanceof Warrior) {
-                            System.out.println(((Warrior) character).strikeABlow(opponent));
+                            attacks.add("-Une attaque a été effectuée contre " + opponent.getName() + " -> " + ((Warrior) character).strikeABlow(opponent));
+                            Log.i(((Warrior) character).strikeABlow(opponent));
                         } else if (character instanceof Athlete) {
-                            System.out.println(((Athlete) character).strikeABlow(opponent));
+                            attacks.add("-Une attaque a été effectuée contre " + opponent.getName() + " -> " + ((Athlete) character).strikeABlow(opponent));
+                            Log.i(((Athlete) character).strikeABlow(opponent));
                         } else if (character instanceof Thief) {
-                            System.out.println(((Thief) character).strikeABlow(opponent));
+                            attacks.add("-Une attaque a été effectuée contre " + opponent.getName() + " -> " + ((Thief) character).strikeABlow(opponent));
+                            Log.i(((Thief) character).strikeABlow(opponent));
                         }
                         break;
                     case 2:
-                        /*System.out.println("Il a utilisé un ? ");
+                        int blockNumber = (int) (1 + Math.random());
+                        switch (blockNumber) {
+                            case 1:
+                                Log.i("Utilistation bloque");
+                                break;
+                            case 2:
+                                Log.i("Utilistation esquive");
+                                break;
+                        }
                         if (character instanceof Warrior) {
-                            ((Warrior) character).block();
-                            ((Warrior) character).dodge();
+                            switch (blockNumber) {
+                                case 1:
+                                    ((Warrior) character).block();
+                                    break;
+                                case 2:
+                                    ((Warrior) character).dodge();
+                                    break;
+                            }
                         } else if (character instanceof Athlete) {
-                            ((Athlete) character).block();
-                            ((Athlete) character).dodge();
+                            switch (blockNumber) {
+                                case 1:
+                                    ((Athlete) character).block();
+                                    break;
+                                case 2:
+                                    ((Athlete) character).dodge();
+                                    break;
+                            }
                         } else if (character instanceof Thief) {
-                            ((Thief) character).block();
-                            ((Thief) character).dodge();
-                        }*/
+                            switch (blockNumber) {
+                                case 1:
+                                    ((Thief) character).block();
+                                    break;
+                                case 2:
+                                    ((Thief) character).dodge();
+                                    break;
+                            }
+                        }
                         break;
                     case 3:
                         UseableItem useableItem = null;
                         if (character.numberUseableItem() > 0) {
-                            System.out.println("Il a utilisé un soin");
+                            Log.i("Utilistation soin");
                             if (character instanceof Warrior) {
                                 System.out.println(((Warrior) character).heal(useableItem));
                             } else if (character instanceof Athlete) {
@@ -220,6 +251,10 @@ public class Turn {
             } else {
                 System.out.println("Le joueur " + character.getName() + " est mort !");
             }
+        }
+        System.out.println("Liste des attaques réalisées par l'équipe " + team.getName());
+        for (String text : attacks) {
+            System.out.println(text);
         }
         return true;
     }

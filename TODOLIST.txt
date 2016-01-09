@@ -9,7 +9,7 @@ Attributs:
 	-Trouver un équilibre pour chaque classe (=imposer des contraintes)
 
 Controleur:
-	-Remplacer tout les appels a Sout dans les classe par un appel au controleur, qui demande a l'utilisateur et vérifie si ce qu'entre l'user est bien correct
+	<i>-Remplacer tout les appels a Sout dans les classe par un appel au controleur, qui demande a l'utilisateur et vérifie si ce qu'entre l'user est bien correct</i>
 
 Items (Drop & Découverte):
 	-Fichiers JSON qui référence les items

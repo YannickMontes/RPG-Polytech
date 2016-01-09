@@ -12,9 +12,17 @@ import Events.Fight;
 import Entities.Character;
 import Entities.Warrior;
 import Entities.Thief;
+import Items.Armor;
+import Items.Item;
+import Items.UseableItem;
+import Items.Weapon;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Scanner;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 /**
  *
@@ -23,27 +31,29 @@ import java.util.Scanner;
 public class Game {
 
     private List<Event> events;
-    private Team team1;
+    private List<Item> itemEvents;
+    private Team team;
     private Controller controller;
 
     public Game() {
         events = new ArrayList<>();
         controller = new Controller();
+        this.itemEvents = new ArrayList<>();
     }
 
     public void startGame() {
-        team1 = new Team(controller.askText("Entrer un nom pour l'équipe 1:"));
+        initItem();
+
+        team = new Team(controller.askText("Entrer un nom pour l'équipe 1:"));
 
         int numberTeam1 = controller.askNumberBetween("Entrer un nombre de joueur pour l'équipe 1:", 1, 5);
 
-        fillUpCharacters(team1, numberTeam1);
-                
-        for(Character character : team1.getCharacters())
-        {
+        fillUpCharacters(team, numberTeam1);
+
+        for (Character character : team.getCharacters()) {
             character.showData();
         }
-        
-           //Temporaire
+        //Temporaire
         initEvents();
     }
 
@@ -53,9 +63,9 @@ public class Game {
             System.out.println("--------------------");
             String name = controller.askText("Choississez un nom pour le personnage n°" + (i + 1));
             String textClass = "Choississez une classe pour " + name + " ?\n"
-            + "1 -> Athlete\n"
-            + "2 -> Guerrier\n"
-            + "3 -> Magicien";
+                    + "1 -> Athlete\n"
+                    + "2 -> Guerrier\n"
+                    + "3 -> Magicien";
             int classe = controller.askNumberBetween(textClass, 1, 3);
             Character character = null;
             switch (classe) {
@@ -76,9 +86,55 @@ public class Game {
     private void initEvents() {
         Team temp = new Team("nom");
         temp.addCharacterTeam(new Warrior("Peter"));
-        events.add(new Fight(team1, temp));
+        events.add(new Fight(team, temp));
     }
-    
+
+    private void initItem() {
+        JSONParser parser = new JSONParser();
+
+        try {
+
+            Object obj = parser.parse(new FileReader("item.json"));
+
+            JSONObject jsonObject = (JSONObject) obj;
+
+            JSONArray useableItems = (JSONArray) jsonObject.get("Useable Item");
+            JSONArray armors = (JSONArray) jsonObject.get("Armor");
+            JSONArray weapons = (JSONArray) jsonObject.get("Weapon");
+
+            Iterator<JSONObject> iterator = useableItems.iterator();
+            while (iterator.hasNext()) {
+                JSONObject objTemp = iterator.next();
+                String name = (String) objTemp.get("name");
+                long weight = (long) objTemp.get("weight");
+                long bonus = (long) objTemp.get("bonus");
+                this.itemEvents.add(new UseableItem(name, (int)weight, (int)bonus));
+            }
+            iterator = armors.iterator();
+            while (iterator.hasNext()) {
+                JSONObject objTemp = iterator.next();
+                String name = (String) objTemp.get("name");
+                long weight = (long) objTemp.get("weight");
+                long handlingAbility = (long) objTemp.get("handlingability");
+                long defensevalue = (long) objTemp.get("defensevalue");
+                this.itemEvents.add(new Armor(name, (int)weight, (int)handlingAbility, (int)defensevalue));
+            }
+            iterator = weapons.iterator();
+            while (iterator.hasNext()) {
+                JSONObject objTemp = iterator.next();
+                String name = (String) objTemp.get("name");
+                long weight = (long) objTemp.get("weight");
+                long handlingAbility = (long) objTemp.get("handlingability");
+                long attackvalue = (long) objTemp.get("attackvalue");
+                this.itemEvents.add(new Weapon(name, (int)weight, (int)handlingAbility, (int)attackvalue));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public List<Event> getEvents() {
         return events;
     }
@@ -87,11 +143,11 @@ public class Game {
         this.events = events;
     }
 
-    public Team getTeam1() {
-        return team1;
+    public Team getTeam() {
+        return team;
     }
 
-    public void setTeam1(Team team1) {
-        this.team1 = team1;
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }

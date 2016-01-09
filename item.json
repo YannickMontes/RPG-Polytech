@@ -1,0 +1,12 @@
+{
+"Useable Item":[
+{ "name":"nom1", "weight":1, "bonus":2 },
+{ "name":"nom2", "weight":3, "bonus":2 }
+],
+"Armor": [
+    {"name":"Armure 1", "weight":7, "handlingability":5, "defensevalue": 5}
+],
+"Weapon":  [
+    {"name":"excalibure", "weight":10, "handlingability":10, "attackvalue": 20}
+]
+}

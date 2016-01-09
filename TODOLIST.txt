@@ -1,5 +1,5 @@
 Personnage:
-	-Gestion du niveau avec gain d'expérience en fin de combat + découverte
+DEBUT DE FONCTION POUR LE GAIN DANS CHARACTER	-Gestion du niveau avec gain d'expérience en fin de combat + découverte
 	-Imposer des contraintes sur les caractéristiques
 	-Gérer les points de caracatéristiques
 
@@ -9,8 +9,8 @@ Attributs:
 	-Trouver un équilibre pour chaque classe (=imposer des contraintes)
 
 Controleur:
-	<i>-Remplacer tout les appels a Sout dans les classe par un appel au controleur, qui demande a l'utilisateur et vérifie si ce qu'entre l'user est bien correct</i>
+FAIT	-Remplacer tout les appels a Sout dans les classe par un appel au controleur, qui demande a l'utilisateur et vérifie si ce qu'entre l'user est bien correct
 
 Items (Drop & Découverte):
-	-Fichiers JSON qui référence les items
+FAIT	-Fichiers JSON qui référence les items
 	

@@ -189,8 +189,7 @@ public class Turn {
                         }
                         break;
                     case 2:
-                        System.out.println("Il a utilisé un ? ");
-
+                        /*System.out.println("Il a utilisé un ? ");
                         if (character instanceof Warrior) {
                             ((Warrior) character).block();
                             ((Warrior) character).dodge();
@@ -200,22 +199,12 @@ public class Turn {
                         } else if (character instanceof Thief) {
                             ((Thief) character).block();
                             ((Thief) character).dodge();
-                        }
+                        }*/
                         break;
                     case 3:
                         UseableItem useableItem = null;
                         if (character.numberUseableItem() > 0) {
                             System.out.println("Il a utilisé un soin");
-                            /*String careText = "Choississez un soin";
-                            int numCare = 0;
-                            for (Item item : character.getInventory()) {
-                                if (item instanceof UseableItem) {
-                                    System.out.println(Integer.toString(numCare) + " -> " + item.getName() + " de bonus " + ((UseableItem) item).getBonusValue());
-                                }
-                                numCare++;
-                            }
-                            int useableNumber = controller.askNumberBetween(careText, 0, numCare);
-                            useableItem = (UseableItem) character.getInventory().get(useableNumber);*/
                             if (character instanceof Warrior) {
                                 System.out.println(((Warrior) character).heal(useableItem));
                             } else if (character instanceof Athlete) {

@@ -44,6 +44,11 @@ public class Fight extends Event {
             executeTurn(equipe);
             equipe = !equipe;
         } while (team1.isTeamAlive() && team2.isTeamAlive());
+        if (team1.isTeamAlive()) {
+            endFight(team1);
+        } else {
+            endFight(team2);
+        }
     }
 
     private void executeTurn(boolean equipe) {
@@ -63,4 +68,12 @@ public class Fight extends Event {
 
     }
 
+    private void endFight(Team winner) {
+        System.out.println("--------------------");
+        System.out.println("Victoire de l'équipe " + winner.getName());
+        System.out.println("Vous allez pouvoir répartir vos points acquis !");
+        for (Character character : winner.getCharacters()) {
+            character.upLevel();
+        }
+    }
 }

@@ -19,7 +19,8 @@ import me.grea.antoine.utils.Log;
  *
  * @author yannick
  */
-public abstract class Character {
+public abstract class Character
+{
 
     //Fixed variables
     public final static int MAXARMOREQUIPMENT = 2;
@@ -40,13 +41,14 @@ public abstract class Character {
     protected List<String> capacities;
 
     //Constructors
-    public Character(String name, String className) {
+    public Character(String name, String className)
+    {
         this.name = name;
         this.level = 1;
         this.className = className;
         this.initVars();
         this.initStats();
-        
+
     }
 
     /**
@@ -57,16 +59,18 @@ public abstract class Character {
      * @param l Niveau du personnage
      * @param className Nom de la classe du personnage
      */
-    public Character(String n, int l, String className) {        
+    public Character(String n, int l, String className)
+    {
         this.className = className;
         this.level = l;
         this.name = n;
-        
+
         this.initVars();
         this.initStats();
-        
+
         int nbPoints = (level - 1) * NBPOINTLEVELUP;
-        while (nbPoints > 0) {
+        while (nbPoints > 0)
+        {
             int randomNumber = (int) (Math.random() * Attribute.values().length - 1);
             putRandomPoint();
             nbPoints -= NBPOINTLEVELUP;
@@ -83,74 +87,92 @@ public abstract class Character {
         this.attributes = new Attributes();
         this.basicAttributes = new Attributes();
     }
-    
+
     //Getters & Setters
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public Attributes getAttributes() {
+    public Attributes getAttributes()
+    {
         return attributes;
     }
 
-    public int getLevel() {
+    public int getLevel()
+    {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(int level)
+    {
         this.level = level;
     }
 
-    public int getMaxWeight() {
+    public int getMaxWeight()
+    {
         return maxWeight;
     }
 
-    public void setMaxWeight(int maxWeight) {
+    public void setMaxWeight(int maxWeight)
+    {
         this.maxWeight = maxWeight;
     }
 
-    public List<String> getCapacities() {
+    public List<String> getCapacities()
+    {
         return capacities;
     }
 
-    public List<StuffItem> getEquipment() {
+    public List<StuffItem> getEquipment()
+    {
         return equipment;
     }
 
-    public void setEquipment(List<StuffItem> equipment) {
+    public void setEquipment(List<StuffItem> equipment)
+    {
         this.equipment = equipment;
     }
 
-    public List<Item> getInventory() {
+    public List<Item> getInventory()
+    {
         return inventory;
     }
 
-    public void setInventory(List<Item> inventory) {
+    public void setInventory(List<Item> inventory)
+    {
         this.inventory = inventory;
     }
 
-    protected int inventoryWeight() {
+    protected int inventoryWeight()
+    {
         int weight = 0;
-        for (Item item : inventory) {
+        for (Item item : inventory)
+        {
             weight += item.getWeight();
         }
         return weight;
     }
 
-    public boolean addInventory(Item item) {
-        if (item.getWeight() + inventoryWeight() <= maxWeight) {
+    public boolean addInventory(Item item)
+    {
+        if (item.getWeight() + inventoryWeight() <= maxWeight)
+        {
             this.inventory.add(item);
             return true;
         }
         return false;
     }
 
-    public void useUseableItem(UseableItem useableItem) {
-        if (this.inventory.contains(useableItem)) {
+    public void useUseableItem(UseableItem useableItem)
+    {
+        if (this.inventory.contains(useableItem))
+        {
             // traitement
             // utilisation = influence sur caratéristiques
             // utilisation potion -> augmentation santé perso
@@ -158,8 +180,10 @@ public abstract class Character {
         }
     }
 
-    public boolean isAlive() {
-        if (this.attributes.get(Attribute.HEALTH) <= 0) {
+    public boolean isAlive()
+    {
+        if (this.attributes.get(Attribute.HEALTH) <= 0)
+        {
             return false;
         }
         return true;
@@ -195,39 +219,51 @@ public abstract class Character {
         }
     }
      */
-    private int numberArmorEquipment() {
+    private int numberArmorEquipment()
+    {
         int i = 0;
-        for (StuffItem stuffItem : equipment) {
-            if (stuffItem.getClass() == Armor.class) {
+        for (StuffItem stuffItem : equipment)
+        {
+            if (stuffItem.getClass() == Armor.class)
+            {
                 i++;
             }
         }
         return i;
     }
 
-    private int numberWeaponEquipment() {
-        for (StuffItem stuffItem : equipment) {
-            if (stuffItem.getClass() == Weapon.class) {
+    private int numberWeaponEquipment()
+    {
+        for (StuffItem stuffItem : equipment)
+        {
+            if (stuffItem.getClass() == Weapon.class)
+            {
                 return 1;
             }
         }
         return 0;
     }
 
-    public int numberUseableItem() {
+    public int numberUseableItem()
+    {
         int i = 0;
-        for (Item item : inventory) {
-            if (item instanceof UseableItem) {
+        for (Item item : inventory)
+        {
+            if (item instanceof UseableItem)
+            {
                 return i++;
             }
         }
         return i;
     }
 
-    public ArrayList<StuffItem> getEquipment(Class itemType) {
+    public ArrayList<StuffItem> getEquipment(Class itemType)
+    {
         ArrayList<StuffItem> items = new ArrayList<>();
-        for (StuffItem stuffItem : equipment) {
-            if (stuffItem.getClass() == itemType) {
+        for (StuffItem stuffItem : equipment)
+        {
+            if (stuffItem.getClass() == itemType)
+            {
                 items.add(stuffItem);
             }
         }
@@ -241,9 +277,12 @@ public abstract class Character {
      * @param stuffItem
      * @return
      */
-    public boolean equipMe(StuffItem stuffItem) {
-        if (equipment.size() < MAXEQUIPMENT && inventory.contains(stuffItem)) { //if character owns stuff item and his equipment contains less than MAXEQUIPMENT stuff items
-            if ((stuffItem.getClass() == Weapon.class && numberWeaponEquipment() < MAXWEAPONEQUIPMENT) || (stuffItem.getClass() == Armor.class && numberArmorEquipment() < MAXARMOREQUIPMENT)) {
+    public boolean equipMe(StuffItem stuffItem)
+    {
+        if (equipment.size() < MAXEQUIPMENT && inventory.contains(stuffItem))
+        { //if character owns stuff item and his equipment contains less than MAXEQUIPMENT stuff items
+            if ((stuffItem.getClass() == Weapon.class && numberWeaponEquipment() < MAXWEAPONEQUIPMENT) || (stuffItem.getClass() == Armor.class && numberArmorEquipment() < MAXARMOREQUIPMENT))
+            {
                 //if number of weapon in equiment is less than MAXWEAPONEQUIPMENT and the stuff item is a weapon 
                 //OR if number of armor in equiment is less than MAXARMOREQUIPMENT and the stuff item is an armor 
                 equipment.add(stuffItem);
@@ -261,12 +300,17 @@ public abstract class Character {
      * @param removeStuffItem
      * @return
      */
-    public boolean equipMe(StuffItem newStuffItem, StuffItem removeStuffItem) {
-        if (equipment.size() <= MAXEQUIPMENT && inventory.contains(newStuffItem) && equipment.contains(removeStuffItem)) { //if character owns the new stuff item and his equipment contains the replacement stuff item and his equipment contains less than MAXEQUIPMENT stuff items
+    public boolean equipMe(StuffItem newStuffItem, StuffItem removeStuffItem)
+    {
+        if (equipment.size() <= MAXEQUIPMENT && inventory.contains(newStuffItem) && equipment.contains(removeStuffItem))
+        { //if character owns the new stuff item and his equipment contains the replacement stuff item and his equipment contains less than MAXEQUIPMENT stuff items
             equipment.remove(removeStuffItem);
-            if (equipMe(newStuffItem) == true) {
+            if (equipMe(newStuffItem) == true)
+            {
                 return true;
-            } else {
+            }
+            else
+            {
                 equipment.add(removeStuffItem);
             }
         }
@@ -279,49 +323,66 @@ public abstract class Character {
      *
      * @param value
      */
-    public void takeABlow(int value) {
+    public void takeABlow(int value)
+    {
         this.attributes.replace(Attribute.HEALTH, this.attributes.get(Attribute.HEALTH) - value);
     }
 
     //Function to use capacity
-    public boolean verifySuccess(String capacity) {
+    public boolean verifySuccess(String capacity)
+    {
         //selon la capacitié utilisée: selon ses caractéristiques et son arme (s'il en a)
         //calcule de proba
         float probability = 0;
-        if ("attack".equals(capacity)) {
-            for (StuffItem weapon : this.getEquipment(Weapon.class)) {
+        if ("attack".equals(capacity))
+        {
+            for (StuffItem weapon : this.getEquipment(Weapon.class))
+            {
                 probability += (float) (((Weapon) weapon).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
             }
             probability += (float) (this.attributes.get(Attribute.DEXTERITY).floatValue() / 100)/* * (1 - (0.2 * this.getEquipment(Weapon.class).size()))*/;
-        } else if ("block".equals(capacity)) {
+        }
+        else if ("block".equals(capacity))
+        {
             //probability = this.attributes.get(Attribute.DEFENSE);
-            for (StuffItem armor : this.getEquipment(Armor.class)) {
+            for (StuffItem armor : this.getEquipment(Armor.class))
+            {
                 probability += (float) (((Armor) armor).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
             }
             probability += (float) (this.attributes.get(Attribute.DEFENSE).floatValue() / 100)/* * (1 - (0.2 * this.getEquipment(Armor.class).size()))*/;
-        } else if ("dodge".equals(capacity)) {
-            for (StuffItem stuffItem : this.getEquipment()) {
+        }
+        else if ("dodge".equals(capacity))
+        {
+            for (StuffItem stuffItem : this.getEquipment())
+            {
                 probability -= (float) (stuffItem.getWeight()) / 3;
             }
             probability += (float) (this.attributes.get(Attribute.SPEED).floatValue() / 100)/* * (1 - (0.2 * this.getEquipment().size()))*/;
-        } else if ("care".equals(capacity)) {
+        }
+        else if ("care".equals(capacity))
+        {
             probability = 1;
         }
 
-        if (probability > 1) {
+        if (probability > 1)
+        {
             probability = 1;
-        } else if (probability < 0) {
+        }
+        else if (probability < 0)
+        {
             probability = 0;
         }
 
         int rand = (int) (Math.random() * (100));
-        if (rand <= (probability * 100)) {
+        if (rand <= (probability * 100))
+        {
             return true;
         }
         return false;
     }
 
-    public int measureImpact(String capacity, Character opponent, UseableItem useableItem) {
+    public int measureImpact(String capacity, Character opponent, UseableItem useableItem)
+    {
         //selon la capacité utilisisée
         //// ATTAQUE
         //// - calculer les dégâts occasionnés (somme force attaquant et valeur degat arme s'il en a)
@@ -332,74 +393,80 @@ public abstract class Character {
         //// - augmente défense s'il est attaqué
         //// SOIN
         //// - augmente santé d'une valeur de la santé en fonction de la capacité de soin de ses équipements.
-        if ("attack".equals(capacity) && opponent != null) {
+        if ("attack".equals(capacity) && opponent != null)
+        {
             int damage = this.attributes.get(Attribute.STRENGTH);
-            for (StuffItem weapon : this.getEquipment(Weapon.class)) {
+            for (StuffItem weapon : this.getEquipment(Weapon.class))
+            {
                 damage += ((Weapon) weapon).getDamage();
             }
 
             int defense = opponent.attributes.get(Attribute.DEFENSE);
-            for (StuffItem armor : opponent.getEquipment(Armor.class)) {
+            for (StuffItem armor : opponent.getEquipment(Armor.class))
+            {
                 defense += ((Armor) armor).getDefenseValue();
             }
 
             int damages = damage - defense;
-            if (damages <= 0) {
+            if (damages <= 0)
+            {
                 return 0;
             }
             return damages;
-        } else if ("block".equals(capacity)) {
+        }
+        else if ("block".equals(capacity))
+        {
             this.attributes.replace(Attribute.DEFENSE, (int) (this.attributes.get(Attribute.DEFENSE) + 0.5 * this.attributes.get(Attribute.STRENGTH)));
             return (int) (0.5 * this.attributes.get(Attribute.STRENGTH));
-        } else if ("care".equals(capacity) && useableItem != null) {
+        }
+        else if ("care".equals(capacity) && useableItem != null)
+        {
             return useableItem.getBonusValue();
         }
         return 0;
     }
 
-    public void restoreLife() {
+    public void restoreLife()
+    {
         this.attributes.replace(Attribute.HEALTH, 150 + 2 * level + 3);
     }
 
-    public void restoreAttribute(Attribute attribute) {
+    public void restoreAttribute(Attribute attribute)
+    {
         attributes.replace(attribute, basicAttributes.get(attribute));
     }
-    
+
     /**
-     * Cette fonction gère le traitement de l'exception en fonction des contraintes sur les caractéristiques.
+     * Cette fonction gère le traitement de l'exception en fonction des
+     * contraintes sur les caractéristiques.
+     *
      * @param attribute L'attribute concerné
      * @param value La valeur dont on veut l'augmenter
-     * @return 0 si tout s'est bien passé, 1 si l'attribut est a sa valeur max, 2 si l'attribut ne respecte pas les contraintes.
+     * @return Une chaine vide ("") si tout s'est bien passé, l'erreur de l'exception sinon.
      */
-    public int increaseAttribute(Attribute attribute, int value)
+    public String increaseAttribute(Attribute attribute, int value)
     {
         try
         {
-            this.basicAttributes.replace(attribute, this.basicAttributes.get(attribute)+value);
+            this.basicAttributes.replace(attribute, this.basicAttributes.get(attribute) + value);
             this.restoreAttribute(attribute);
-            return 0;
-        }
-        catch(IllegalArgumentException ex)
+            return "";
+        } catch (IllegalArgumentException ex)
         {
-            if(ex.getMessage().contains("L'attribut suivant à dépassé sa valeur maximale:"))
-            {
-                return 1;
-            }
-            else
-            {
-                return 2;
-            }
+            return ex.getMessage() + "\n";
         }
     }
 
-    public void restoreAttributes() {
+    public void restoreAttributes()
+    {
         restoreAttribute(Attribute.SPEED);
         restoreAttribute(Attribute.DEFENSE);
         restoreAttribute(Attribute.DEXTERITY);
         restoreAttribute(Attribute.STRENGTH);
     }
 
-    public void showData() {
+    public void showData()
+    {
         System.out.println("--------------------");
         System.out.println("DONNEES DE " + this.name);
         System.out.println("Classe: " + this.className);
@@ -412,114 +479,159 @@ public abstract class Character {
         System.out.println("Niveau de force: " + this.attributes.get(Attribute.STRENGTH));
         System.out.println("Nombre d'objet dans l'inventaire: " + this.inventory.size());
         System.out.println("Equipement actuel: ");
-        for (StuffItem stuffItem : equipment) {
+        for (StuffItem stuffItem : equipment)
+        {
             System.out.println("-" + stuffItem.getName() + " Poids: " + stuffItem.getWeight() + " Maniabilité:" + stuffItem.getHandlingAbility());
         }
     }
 
-    public void showInventary() {
-        for (Item item : inventory) {
+    public void showInventary()
+    {
+        for (Item item : inventory)
+        {
             System.out.print("-" + item.getName() + " (" + item.getClass() + ") Poids: " + item.getWeight());
-            if (item instanceof UseableItem) {
+            if (item instanceof UseableItem)
+            {
                 System.out.println(" Valeur de bonus:" + ((UseableItem) item).getBonusValue());
-            } else if (item instanceof StuffItem) {
+            }
+            else if (item instanceof StuffItem)
+            {
                 System.out.println(" Maniabilité:" + ((StuffItem) item).getHandlingAbility());
             }
         }
     }
 
-    public String attackResult(boolean success, Character opponent, int damages) {
-        if (success == true) {
+    public String attackResult(boolean success, Character opponent, int damages)
+    {
+        if (success == true)
+        {
             return "Vous avez infligé " + damages + " de dégâts à " + opponent.getName() + " (Santé: " + opponent.getAttributes().get(Attribute.HEALTH) + ")";
         }
         return "Votre attaque sur " + opponent.getName() + " a échoué";
     }
 
-    public String careResult(boolean success, int care) {
-        if (success == true) {
+    public String careResult(boolean success, int care)
+    {
+        if (success == true)
+        {
             return "Vous avez augmenté de " + care + " votre vie " + " (Santé: " + this.getAttributes().get(Attribute.HEALTH) + ")";
         }
         return "Votre soin a échoué";
     }
 
-    public String blockResult(boolean success, int blockValue) {
-        if (success == true) {
+    public String blockResult(boolean success, int blockValue)
+    {
+        if (success == true)
+        {
             return "Vous avez augmenté de " + blockValue + " votre défense " + " (Défense: " + this.getAttributes().get(Attribute.DEFENSE) + ")";
         }
         return "Votre blocage a échoué";
     }
-    
-    public String dodgeResult(boolean success, int blockValue) {
-        if (success == true) {
+
+    public String dodgeResult(boolean success, int blockValue)
+    {
+        if (success == true)
+        {
             return "Vous avez augmenté de " + blockValue + " votre défense " + " (Défense: " + this.getAttributes().get(Attribute.DEFENSE) + ")";
         }
         return "Votre esquive a échoué";
     }
 
-    public void putRandomPoint() {}
-    
-    public void initStats() {}
+    public void putRandomPoint()
+    {
+    }
+
+    public void initStats()
+    {
+    }
 
     @Override
     public String toString()
     {
-        return "\nNom: "+this.name
-                + "\nClasse: "+this.className
-                + "\nNiveau: "+this.level
-                + "\nSanté: "+this.attributes.get(Attribute.HEALTH)
-                + "\nMana: "+this.attributes.get(Attribute.MANA)
-                + "\nForce: "+this.attributes.get(Attribute.STRENGTH)
-                + "\nDéfense: "+this.attributes.get(Attribute.DEFENSE)
-                + "\nDextérité: "+this.attributes.get(Attribute.DEXTERITY)
-                + "\nVitesse: "+this.attributes.get(Attribute.SPEED)
+        return "\nNom: " + this.name
+                + "\nClasse: " + this.className
+                + "\nNiveau: " + this.level
+                + "\nSanté: " + this.attributes.get(Attribute.HEALTH)
+                + "\nMana: " + this.attributes.get(Attribute.MANA)
+                + "\nForce: " + this.attributes.get(Attribute.STRENGTH)
+                + "\nDéfense: " + this.attributes.get(Attribute.DEFENSE)
+                + "\nDextérité: " + this.attributes.get(Attribute.DEXTERITY)
+                + "\nVitesse: " + this.attributes.get(Attribute.SPEED)
                 + "\n";
     }
 
-
-    public void upLevel(Controller controller) {
-        int upDexterity = 0, upDefense = 0, upSpeed = 0, upStrength = 0;
+    public void upLevel(Controller controller)
+    {
         this.level++;
         restoreAttributes();
-        
+
         String text = "Passage au niveau supérieur!\n"
-                + "Vos caractéristiques actuelles:\n"+this.toString()
-                + "Vous pouvez répartir "+NBPOINTLEVELUP+" points de compétence supplémentaires!\n"
+                + "Vos caractéristiques actuelles:\n" + this.toString()
+                + "Vous pouvez répartir " + NBPOINTLEVELUP + " points de compétence supplémentaires!\n"
                 + "1 -> Force\n"
                 + "2 -> Défense\n"
                 + "3 -> Dextérité\n"
                 + "4 -> Vitesse\n";
-        
-        for(int i=0; i<NBPOINTLEVELUP; i++)
+
+        int cpt = NBPOINTLEVELUP;
+        String res;
+        while (cpt > 0)
         {
-            switch(controller.askNumberBetween(text, 1, 4))
+            switch (controller.askNumberBetween(text, 1, 4))
             {
                 case 1:
-                    upStrength++;
+                    res = this.increaseAttribute(Attribute.STRENGTH, 1);
+                    if (res.equals(""))//Tout s'est bien passé
+                    {
+                        cpt--;
+                    }
+                    else
+                    {
+                        text = res;
+                    }
                     break;
                 case 2:
-                    upDefense++;
+                    res = this.increaseAttribute(Attribute.DEFENSE, 1);
+                    if (res.equals(""))//Tout s'est bien passé
+                    {
+                        cpt--;
+                    }
+                    else
+                    {
+                        text = res;
+                    }
                     break;
                 case 3:
-                    upDexterity++;
+                    res = this.increaseAttribute(Attribute.DEXTERITY, 1);
+                    if (res.equals(""))//Tout s'est bien passé
+                    {
+                        cpt--;
+                    }
+                    else
+                    {
+                        text = res;
+                    }
                     break;
                 case 4:
-                    upSpeed++;
+                    res = this.increaseAttribute(Attribute.SPEED, 1);
+                    if (res.equals(""))//Tout s'est bien passé
+                    {
+                        cpt--;
+                    }
+                    else
+                    {
+                        text = res;
+                    }
                     break;
             }
-            text = "Réitérer l'opréation encore "+(NBPOINTLEVELUP-i)+" fois:\n"
-                    + "1 -> Dextérité\n"
+            text += "Réitérez l'opréation encore " + cpt + " fois:\n"
+                    + "1 -> Force\n"
                     + "2 -> Défense\n"
-                    + "3 -> Vitesse\n"
-                    + "4 -> Force\n";
+                    + "3 -> Dextérité\n"
+                    + "4 -> Vitesse\n";
         }
-                
-        
-        this.increaseAttribute(Attribute.STRENGTH, upStrength);
-        this.increaseAttribute(Attribute.DEFENSE, upDefense);
-        this.increaseAttribute(Attribute.DEXTERITY, upDexterity);
-        this.increaseAttribute(Attribute.SPEED, upSpeed);
-        
-        System.out.println("Vos nouvelles statistiques:\n"+this.toString());
+
+        System.out.println("Vos nouvelles statistiques:\n" + this.toString());
     }
 
 }

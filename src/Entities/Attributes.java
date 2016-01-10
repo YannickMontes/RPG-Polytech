@@ -15,11 +15,11 @@ public class Attributes extends HashMap<Attribute, Integer>
 {
 
     public final static int MAXHEALTH = 999;
-    public final static int MAXDEXTERITY = 100;
-    public final static int MAXDEFENSE = 100;
-    public final static int MAXSTRENGTH = 100;
-    public final static int MAXSPEED = 100;
-    public final static int MAXMANA = 150;
+    public final static int MAXDEXTERITY = 99;
+    public final static int MAXDEFENSE = 99;
+    public final static int MAXSTRENGTH = 99;
+    public final static int MAXSPEED = 99;
+    public final static int MAXMANA = 999;
 
     @Override
     public Integer put(Attribute key, Integer value)
@@ -38,7 +38,7 @@ public class Attributes extends HashMap<Attribute, Integer>
         String message = verifyExcess(key, value);
         if (!message.equals(""))
         {
-            throw new IllegalArgumentException(message + key);
+            throw new IllegalArgumentException(message);
         }
         return super.replace(key, value);
     }
@@ -69,9 +69,9 @@ public class Attributes extends HashMap<Attribute, Integer>
                 }
                 else if (this.containsKey(Attribute.DEXTERITY))
                 {
-                    if (value >= (int) (this.get(Attribute.STRENGTH) * 2))
+                    if (value >= (int) (this.get(Attribute.STRENGTH) * 2.5))
                     {
-                        message = "Il n'est pas possible d'augmenter votre vitesse d'une valeur supérieure à 2 fois votre force.";
+                        message = "Il n'est pas possible d'augmenter votre vitesse d'une valeur supérieure à 2,5 fois votre force.";
                     }
                 }
                 break;
@@ -83,9 +83,9 @@ public class Attributes extends HashMap<Attribute, Integer>
                 }
                 else if (this.containsKey(Attribute.SPEED))
                 {
-                    if (value >= (int) (this.get(Attribute.STRENGTH) * 1.5) || value >= (int) (this.get(Attribute.DEXTERITY) * 1.5))
+                    if (value >= (int) (this.get(Attribute.STRENGTH) * 2.5) || value >= (int) (this.get(Attribute.DEXTERITY) * 2.5))
                     {
-                        message = "Il n'est pas possible d'augmenter votre vitesse d'une valeur supérieure à 1,5 fois votre force et dextérité.";
+                        message = "Il n'est pas possible d'augmenter votre vitesse d'une valeur supérieure à 2,5 fois votre force et dextérité.";
                     }
                 }
                 break;
@@ -97,9 +97,9 @@ public class Attributes extends HashMap<Attribute, Integer>
                 }
                 else if (this.containsKey(Attribute.STRENGTH))
                 {
-                    if (value >= (int) (this.get(Attribute.DEFENSE) * 2) || value >= (int) (this.get(Attribute.DEXTERITY) * 2))
+                    if (value >= (int) (this.get(Attribute.DEFENSE) * 2.5) || value >= (int) (this.get(Attribute.DEXTERITY) * 2.5))
                     {
-                        message = "Il n'est pas possible d'augmenter votre force d'une valeur supérieure à 2 fois votre dextérité, ou 1,5 fois votre défense.";
+                        message = "Il n'est pas possible d'augmenter votre force d'une valeur supérieure à 2,5 fois votre dextérité, ou 2,5 fois votre défense.";
                     }
                 }
                 break;

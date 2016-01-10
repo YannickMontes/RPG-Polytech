@@ -106,6 +106,20 @@ public class Team {
         }
         return sum/characters.size();
     }
+
+    @Override
+    public String toString()
+    {
+        String text = "Equipe "+this.name+":\n"
+                + "Nombre de personnages: "+this.getNbCharacters()+"\n";
+        
+        for(Character c : this.characters)
+        {
+            text+=c.toString();
+        }
+        
+        return text;
+    }
     
     /**
      * Fonction permettant de générer aléatoirement une équipe, en fonction de l'équipe du joueur.
@@ -115,10 +129,9 @@ public class Team {
      */
     public void generateRandomTeam(Team playerTeam)
     {
-        //On commence par regarder combien de personnages l'équipe adverse va contenir. De manière aléatoire, a + ou - 1.
-        int deltaNbPlayer = (int)(Math.random()*2)-1;
-        
-        int sumLevel = 0;
+        //On commence par regarder combien de personnages l'équipe adverse va contenir.
+        //On génère + ou - 1 le même nombre de personnages que l'équipe du joueur.
+        int deltaNbPlayer = (int)(Math.random()*3)-1;
         
         //On boucle pour créer le nombre de joueurs aléatoire défini. 
         for(int i=0; i<playerTeam.getNbCharacters()+deltaNbPlayer; i++)
@@ -127,11 +140,27 @@ public class Team {
             
             String name = "Zazie"; //TO DO: ALLER CHERCHER PARMI LES NOMS ALEATOIRE EN JSON
             
-            //Random pour choisir la classe du personnage
-            int randomNumberClass = (int)(Math.random()*Character.NBPOINTLEVELUP-1);
+            //Random maitrisé pour le niveau du personnage.
+            int level=0;
+            switch (deltaNbPlayer)
+            {
+                case 0://Si il y a le même nombre de personnages, alors on prends le niveau moyen + ou - 1.
+                    level = (int)(Math.random()*3)-1 + playerTeam.getAverageLevel();
+                    break;
+                case -1://Si il y a un personnage de moins, alors on met leur niveau un peu plus haut.
+                    level = (int)(Math.random()*3)-1 + ((playerTeam.getTeamLevel()/(playerTeam.getNbCharacters()+deltaNbPlayer)));
+                    level -= playerTeam.getAverageLevel()/3;
+                    break;
+                case 1://Si il y a un joueur de plus, leur niveau sont plus bas. 
+                    level = (int)(Math.random()*3)-1 + ((playerTeam.getTeamLevel()/(playerTeam.getNbCharacters()+deltaNbPlayer)));
+                    break;
+            }
             
-            //Random pour choisir le niveau du personnage
-            int level = (int)(Math.random()*2)-1 + playerTeam.getAverageLevel();
+            //Le niveau de la team reste quasiment toujours le même, sauf en cas d'infériorité numérique, car un niveau représente
+            //beaucoup de caractéristiques supplémentaires, donc il ne faut pas que les adversaire soit trop forts.
+            
+            //Random pour choisir la classe du personnage
+            int randomNumberClass = (int)(Math.random()*3);
             
             switch(randomNumberClass)
             {
@@ -145,8 +174,8 @@ public class Team {
                     newChar = new Warrior(name, level);
                     break;
             }
-            
-            sumLevel += level;
+
+            //TO DO: Stuffer le perso aléatoirement.
             
             this.addCharacterTeam(newChar);
         }

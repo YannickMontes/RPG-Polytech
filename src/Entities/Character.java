@@ -12,6 +12,7 @@ import Items.UseableItem;
 import Items.Weapon;
 import java.util.ArrayList;
 import java.util.List;
+import Controller.Controller;
 
 /**
  *
@@ -347,6 +348,12 @@ public abstract class Character {
     public void restoreAttribute(Attribute attribute) {
         attributes.replace(attribute, basicAttributes.get(attribute));
     }
+    
+    public void setAttribute(Attribute attribute, int value)
+    {
+        this.basicAttributes.replace(attribute, value);
+        this.restoreAttribute(attribute);
+    }
 
     public void restoreAttributes() {
         restoreAttribute(Attribute.SPEED);
@@ -415,28 +422,66 @@ public abstract class Character {
     public void putRandomPoint() {
     }
 
-    ;
+    @Override
+    public String toString()
+    {
+        return "Nom: "+this.name
+                + "Classe: "+this.className
+                + "Niveau: "+this.level
+                + "Santé: "+this.attributes.get(Attribute.HEALTH)
+                + "Mana: "+this.attributes.get(Attribute.MANA)
+                + "Force: "+this.attributes.get(Attribute.STRENGTH)
+                + "Défense: "+this.attributes.get(Attribute.DEFENSE)
+                + "Dextérité: "+this.attributes.get(Attribute.DEXTERITY)
+                + "Vitesse: "+this.attributes.get(Attribute.SPEED)
+                + "\n";
+    }
 
-    public void upLevel() {
-        int upMana = 0, upDexterity = 0, upDefense = 0, upSpeed = 0, upStrength = 0;
-        System.out.println("---- " + this.name + " ----");
+
+    public void upLevel(Controller controller) {
+        int upDexterity = 0, upDefense = 0, upSpeed = 0, upStrength = 0;
         this.level++;
         restoreAttributes();
-        /*DEMANDER CE QU'IL VEUT AUGMENTER*/
-        System.out.println("Vos nouvelles statistiques");
-        System.out.println("Classe: " + this.className);
-        System.out.println("Niveau: " + this.level + "(+1)");
-        System.out.println("Niveau de santé: " + this.attributes.get(Attribute.HEALTH));
-        System.out.println("Niveau de mana: " + this.attributes.get(Attribute.MANA) + "(+" + upMana + ")");
-        System.out.println("Niveau de dextérité: " + this.attributes.get(Attribute.DEXTERITY) + "(+" + upDexterity + ")");
-        System.out.println("Niveau de défense: " + this.attributes.get(Attribute.DEFENSE) + "(+" + upDefense + ")");
-        System.out.println("Niveau de vitesse: " + this.attributes.get(Attribute.SPEED) + "(+" + upSpeed + ")");
-        System.out.println("Niveau de force: " + this.attributes.get(Attribute.STRENGTH) + "(+" + upStrength + ")");
-        System.out.println("Nombre d'objet dans l'inventaire: " + this.inventory.size());
-        System.out.println("Equipement actuel: ");
-        for (int i = 0; i < equipment.size(); i++) {
-            System.out.println("-" + equipment.get(i).getName());
+        
+        String text = "Passage au niveau supérieur!\n"
+                + "Vos caractéristiques actuelles:\n"+this.toString()
+                + "Vous pouvez répartir "+NBPOINTLEVELUP+" points de compétence supplémentaires!\n"
+                + "1 -> Force\n"
+                + "2 -> Défense\n"
+                + "3 -> Dextérité\n"
+                + "4 -> Vitesse\n";
+        
+        for(int i=0; i<NBPOINTLEVELUP; i++)
+        {
+            switch(controller.askNumberBetween(text, 1, 4))
+            {
+                case 1:
+                    upStrength++;
+                    break;
+                case 2:
+                    upDefense++;
+                    break;
+                case 3:
+                    upDexterity++;
+                    break;
+                case 4:
+                    upSpeed++;
+                    break;
+            }
+            text = "Réitérer l'opréation encore "+(NBPOINTLEVELUP-i)+" fois:\n"
+                    + "1 -> Dextérité\n"
+                    + "2 -> Défense\n"
+                    + "3 -> Vitesse\n"
+                    + "4 -> Force\n";
         }
+                
+        
+        this.setAttribute(Attribute.STRENGTH, upStrength);
+        this.setAttribute(Attribute.DEFENSE, upDefense);
+        this.setAttribute(Attribute.DEXTERITY, upDexterity);
+        this.setAttribute(Attribute.SPEED, upSpeed);
+        
+        System.out.println("Vos nouvelles statistiques:\n"+this.toString());
     }
 
 }

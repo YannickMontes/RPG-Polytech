@@ -106,7 +106,7 @@ public class Team {
         }
         return sum/characters.size();
     }
-
+    
     @Override
     public String toString()
     {

@@ -14,10 +14,22 @@ import Items.UseableItem;
  *
  * @author yannick
  */
-public class Warrior extends Character implements Attack, Block, Care {
+public class Warrior extends Character implements Attack, Block, Care
+{
 
-    public Warrior(String name) {
+    public Warrior(String name)
+    {
         super(name, "Guerrier");
+    }
+
+    public Warrior(String n, int l)
+    {
+        super(n, l, "Guerrier");
+    }
+
+    @Override
+    public void initStats()
+    {
         this.basicAttributes.put(Attribute.STRENGTH, 35);
         this.basicAttributes.put(Attribute.DEXTERITY, 22);
         this.basicAttributes.put(Attribute.DEFENSE, 23);
@@ -26,42 +38,79 @@ public class Warrior extends Character implements Attack, Block, Care {
         this.attributes.put(Attribute.STRENGTH, 35);
         this.attributes.put(Attribute.DEFENSE, 23);
         this.attributes.put(Attribute.DEXTERITY, 22);
-        this.attributes.put(Attribute.HEALTH, 150 + 2 * level + 3);
-        this.attributes.put(Attribute.MANA, 20 + 2 * level + 3);
+        this.attributes.put(Attribute.HEALTH, 150 + 4 * level + 3);
+        this.attributes.put(Attribute.MANA, 20 + 3 * level + 3);
 
         capacities.add("Attaquer");
         capacities.add("Bloquer");
         capacities.add("Soigner");
     }
-    
-    public Warrior(String n, int l)
-    {
-        super(n, l);
-    }
 
     @Override
     public void putRandomPoint()
     {
-        if(this.level%2 == 0)//Si le niveau est pair
+        int cpt = NBPOINTLEVELUP;
+        if (this.level % 10 == 0)//Tout les 10 lvl, 3 en speed.
         {
-            this.basicAttributes.replace(Attribute.STRENGTH, this.basicAttributes.get(Attribute.STRENGTH)+Character.NBPOINTLEVELUP-1);
-            this.basicAttributes.replace(Attribute.DEFENSE, this.basicAttributes.get(Attribute.DEFENSE)+Character.NBPOINTLEVELUP-2);
+            if (this.increaseAttribute(Attribute.SPEED, 3) == 0)
+            {
+                cpt -= 3;
+            }
         }
-        else
+        else if (this.level % 2 == 0)//Tout les lvl pairs
         {
-            this.basicAttributes.replace(Attribute.DEXTERITY, this.basicAttributes.get(Attribute.DEXTERITY)+1);
-            this.basicAttributes.replace(Attribute.STRENGTH, this.basicAttributes.get(Attribute.STRENGTH)+1);
-            this.basicAttributes.replace(Attribute.DEFENSE, this.basicAttributes.get(Attribute.DEFENSE)+1);
+            if (this.increaseAttribute(Attribute.STRENGTH, 2) == 0)
+            {
+                cpt -= 2;
+            }
+            if (this.increaseAttribute(Attribute.DEXTERITY, 1) == 0)
+            {
+                cpt -= 1;
+            }
+        }
+        else//Tout les lvl impairs
+        {
+            if (this.increaseAttribute(Attribute.DEFENSE, 2) == 0)
+            {
+                cpt -= 2;
+            }
+            if (this.increaseAttribute(Attribute.DEXTERITY, 1) == 0)
+            {
+                cpt -= 1;
+            }
+        }
+        if (cpt > 0)
+        {
+            if (this.increaseAttribute(Attribute.STRENGTH, cpt) == 0)
+            {
+                cpt = 0;
+            }
+            if (this.increaseAttribute(Attribute.DEFENSE, cpt) == 0)
+            {
+                cpt = 0;
+            }
+            if (this.increaseAttribute(Attribute.DEXTERITY, cpt) == 0)
+            {
+                cpt = 0;
+            }
+            if (this.increaseAttribute(Attribute.SPEED, cpt) == 0)
+            {
+                cpt = 0;
+            }
         }
     }
 
     @Override
-    public String strikeABlow(Character opponent) {
-        if (opponent != null) {
-            if (capacities.contains("Attaquer")) {
+    public String strikeABlow(Character opponent)
+    {
+        if (opponent != null)
+        {
+            if (capacities.contains("Attaquer"))
+            {
                 boolean success = verifySuccess("attack");
                 int damages = 0;
-                if (success == true) {
+                if (success == true)
+                {
                     damages = measureImpact("attack", opponent, null);
                     opponent.takeABlow(damages);
                 }
@@ -74,11 +123,14 @@ public class Warrior extends Character implements Attack, Block, Care {
     }
 
     @Override
-    public String block() {
-        if (capacities.contains("Bloquer")) {
+    public String block()
+    {
+        if (capacities.contains("Bloquer"))
+        {
             boolean success = verifySuccess("block");
             int upBlock = 0;
-            if (success == true) {
+            if (success == true)
+            {
                 upBlock = measureImpact("block", null, null);
             }
             String text = blockResult(success, upBlock);
@@ -88,11 +140,14 @@ public class Warrior extends Character implements Attack, Block, Care {
     }
 
     @Override
-    public String dodge() {
-        if (capacities.contains("Bloquer")) {
+    public String dodge()
+    {
+        if (capacities.contains("Bloquer"))
+        {
             boolean success = verifySuccess("dodge");
             int upDodge = 0;
-            if (success == true) {
+            if (success == true)
+            {
                 upDodge = measureImpact("dodge", null, null);
             }
             String text = dodgeResult(success, upDodge);
@@ -102,13 +157,18 @@ public class Warrior extends Character implements Attack, Block, Care {
     }
 
     @Override
-    public String heal(UseableItem useableItem) {
-        if (useableItem != null) {
-            if (inventory.contains(useableItem)) {
-                if (capacities.contains("Soigner")) {
+    public String heal(UseableItem useableItem)
+    {
+        if (useableItem != null)
+        {
+            if (inventory.contains(useableItem))
+            {
+                if (capacities.contains("Soigner"))
+                {
                     boolean success = verifySuccess("care");
                     int care = 0;
-                    if (success == true) {
+                    if (success == true)
+                    {
                         care = measureImpact("care", null, useableItem);
                         this.attributes.replace(Attribute.HEALTH, this.attributes.get(Attribute.HEALTH) + care);
                     }

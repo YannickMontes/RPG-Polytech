@@ -13,6 +13,7 @@ import Items.Weapon;
 import java.util.ArrayList;
 import java.util.List;
 import Controller.Controller;
+import me.grea.antoine.utils.Log;
 
 /**
  *
@@ -43,11 +44,9 @@ public abstract class Character {
         this.name = name;
         this.level = 1;
         this.className = className;
-        this.inventory = new ArrayList<>();
-        this.equipment = new ArrayList<>();
-        this.capacities = new ArrayList<>();
-        this.attributes = new Attributes();
-        this.basicAttributes = new Attributes();
+        this.initVars();
+        this.initStats();
+        
     }
 
     /**
@@ -56,18 +55,35 @@ public abstract class Character {
      *
      * @param n Nom du pesonnage
      * @param l Niveau du personnage
+     * @param className Nom de la classe du personnage
      */
-    public Character(String n, int l) {
+    public Character(String n, int l, String className) {        
+        this.className = className;
         this.level = l;
         this.name = n;
+        
+        this.initVars();
+        this.initStats();
+        
         int nbPoints = (level - 1) * NBPOINTLEVELUP;
         while (nbPoints > 0) {
             int randomNumber = (int) (Math.random() * Attribute.values().length - 1);
             putRandomPoint();
             nbPoints -= NBPOINTLEVELUP;
+            this.level--;
         }
+        this.level = l;
     }
 
+    private void initVars()
+    {
+        this.inventory = new ArrayList<>();
+        this.equipment = new ArrayList<>();
+        this.capacities = new ArrayList<>();
+        this.attributes = new Attributes();
+        this.basicAttributes = new Attributes();
+    }
+    
     //Getters & Setters
     public String getName() {
         return name;
@@ -349,10 +365,31 @@ public abstract class Character {
         attributes.replace(attribute, basicAttributes.get(attribute));
     }
     
-    public void setAttribute(Attribute attribute, int value)
+    /**
+     * Cette fonction gère le traitement de l'exception en fonction des contraintes sur les caractéristiques.
+     * @param attribute L'attribute concerné
+     * @param value La valeur dont on veut l'augmenter
+     * @return 0 si tout s'est bien passé, 1 si l'attribut est a sa valeur max, 2 si l'attribut ne respecte pas les contraintes.
+     */
+    public int increaseAttribute(Attribute attribute, int value)
     {
-        this.basicAttributes.replace(attribute, value);
-        this.restoreAttribute(attribute);
+        try
+        {
+            this.basicAttributes.replace(attribute, this.basicAttributes.get(attribute)+value);
+            this.restoreAttribute(attribute);
+            return 0;
+        }
+        catch(IllegalArgumentException ex)
+        {
+            if(ex.getMessage().contains("L'attribut suivant à dépassé sa valeur maximale:"))
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
+        }
     }
 
     public void restoreAttributes() {
@@ -419,21 +456,22 @@ public abstract class Character {
         return "Votre esquive a échoué";
     }
 
-    public void putRandomPoint() {
-    }
+    public void putRandomPoint() {}
+    
+    public void initStats() {}
 
     @Override
     public String toString()
     {
-        return "Nom: "+this.name
-                + "Classe: "+this.className
-                + "Niveau: "+this.level
-                + "Santé: "+this.attributes.get(Attribute.HEALTH)
-                + "Mana: "+this.attributes.get(Attribute.MANA)
-                + "Force: "+this.attributes.get(Attribute.STRENGTH)
-                + "Défense: "+this.attributes.get(Attribute.DEFENSE)
-                + "Dextérité: "+this.attributes.get(Attribute.DEXTERITY)
-                + "Vitesse: "+this.attributes.get(Attribute.SPEED)
+        return "\nNom: "+this.name
+                + "\nClasse: "+this.className
+                + "\nNiveau: "+this.level
+                + "\nSanté: "+this.attributes.get(Attribute.HEALTH)
+                + "\nMana: "+this.attributes.get(Attribute.MANA)
+                + "\nForce: "+this.attributes.get(Attribute.STRENGTH)
+                + "\nDéfense: "+this.attributes.get(Attribute.DEFENSE)
+                + "\nDextérité: "+this.attributes.get(Attribute.DEXTERITY)
+                + "\nVitesse: "+this.attributes.get(Attribute.SPEED)
                 + "\n";
     }
 
@@ -476,10 +514,10 @@ public abstract class Character {
         }
                 
         
-        this.setAttribute(Attribute.STRENGTH, upStrength);
-        this.setAttribute(Attribute.DEFENSE, upDefense);
-        this.setAttribute(Attribute.DEXTERITY, upDexterity);
-        this.setAttribute(Attribute.SPEED, upSpeed);
+        this.increaseAttribute(Attribute.STRENGTH, upStrength);
+        this.increaseAttribute(Attribute.DEFENSE, upDefense);
+        this.increaseAttribute(Attribute.DEXTERITY, upDexterity);
+        this.increaseAttribute(Attribute.SPEED, upSpeed);
         
         System.out.println("Vos nouvelles statistiques:\n"+this.toString());
     }

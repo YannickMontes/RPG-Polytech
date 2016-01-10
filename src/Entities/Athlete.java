@@ -52,37 +52,37 @@ public class Athlete extends Character implements Attack, Block, Care
         int cpt = NBPOINTLEVELUP;
         if (this.level % 10 == 0)//Tout les 10 lvl 
         {
-            if (this.increaseAttribute(Attribute.SPEED, 2) == 0)
+            if (this.increaseAttribute(Attribute.SPEED, 2).equals(""))
             {
                 cpt -= 2;
             }
-            if (this.increaseAttribute(Attribute.DEXTERITY, 1) == 0)
+            if (this.increaseAttribute(Attribute.DEXTERITY, 1).equals(""))
             {
                 cpt -= 1;
             }
         }
         else if (this.level % 2 == 0)//Tout les lvl pairs 
         {
-            if (this.increaseAttribute(Attribute.STRENGTH, 2) == 0)
+            if (this.increaseAttribute(Attribute.STRENGTH, 2).equals(""))
             {
                 cpt -= 2;
             }
-            if (this.increaseAttribute(Attribute.SPEED, 1) == 0)
+            if (this.increaseAttribute(Attribute.SPEED, 1).equals(""))
             {
                 cpt -= 1;
             }
         }
         else//Tout les lvl impairs
         {
-            if (this.increaseAttribute(Attribute.STRENGTH, 1) == 0)
+            if (this.increaseAttribute(Attribute.STRENGTH, 1).equals(""))
             {
                 cpt -= 1;
             }
-            if (this.increaseAttribute(Attribute.DEXTERITY, 1) == 0)
+            if (this.increaseAttribute(Attribute.DEXTERITY, 1).equals(""))
             {
                 cpt -= 1;
             }
-            if (this.increaseAttribute(Attribute.DEFENSE, 1) == 0)
+            if (this.increaseAttribute(Attribute.DEFENSE, 1).equals(""))
             {
                 cpt -= 1;
             }
@@ -90,19 +90,19 @@ public class Athlete extends Character implements Attack, Block, Care
 
         if (cpt > 0)
         {
-            if (this.increaseAttribute(Attribute.STRENGTH, cpt) == 0)
+            if (this.increaseAttribute(Attribute.STRENGTH, cpt).equals(""))
             {
                 cpt = 0;
             }
-            if (this.increaseAttribute(Attribute.DEFENSE, cpt) == 0)
+            if (this.increaseAttribute(Attribute.DEFENSE, cpt).equals(""))
             {
                 cpt = 0;
             }
-            if (this.increaseAttribute(Attribute.DEXTERITY, cpt) == 0)
+            if (this.increaseAttribute(Attribute.DEXTERITY, cpt).equals(""))
             {
                 cpt = 0;
             }
-            if (this.increaseAttribute(Attribute.SPEED, cpt) == 0)
+            if (this.increaseAttribute(Attribute.SPEED, cpt).equals(""))
             {
                 cpt = 0;
             }

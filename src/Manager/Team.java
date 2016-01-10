@@ -5,10 +5,13 @@
  */
 package Manager;
 
+import Entities.Athlete;
 import Entities.Attribute;
 import java.util.ArrayList;
 import java.util.List;
 import Entities.Character;
+import Entities.Thief;
+import Entities.Warrior;
 
 /**
  *
@@ -87,5 +90,65 @@ public class Team {
             }
         }
         return lvlMax;
+    }
+    
+    public int getNbCharacters()
+    {
+        return this.characters.size();
+    }
+    
+    public int getAverageLevel()
+    {
+        int sum = 0;
+        for(Character ch : characters)
+        {
+            sum += ch.getLevel();
+        }
+        return sum/characters.size();
+    }
+    
+    /**
+     * Fonction permettant de générer aléatoirement une équipe, en fonction de l'équipe du joueur.
+     * Le niveau total de l'équipe généré sera le niveau total de l'équipe du joueur +/- 1.
+     * Chaque personnage aura un stuff généré également aléatoirement. 
+     * @param playerTeam Equipe du joueur.
+     */
+    public void generateRandomTeam(Team playerTeam)
+    {
+        //On commence par regarder combien de personnages l'équipe adverse va contenir. De manière aléatoire, a + ou - 1.
+        int deltaNbPlayer = (int)(Math.random()*2)-1;
+        
+        int sumLevel = 0;
+        
+        //On boucle pour créer le nombre de joueurs aléatoire défini. 
+        for(int i=0; i<playerTeam.getNbCharacters()+deltaNbPlayer; i++)
+        {
+            Character newChar = null;
+            
+            String name = "Zazie"; //TO DO: ALLER CHERCHER PARMI LES NOMS ALEATOIRE EN JSON
+            
+            //Random pour choisir la classe du personnage
+            int randomNumberClass = (int)(Math.random()*Character.NBPOINTLEVELUP-1);
+            
+            //Random pour choisir le niveau du personnage
+            int level = (int)(Math.random()*2)-1 + playerTeam.getAverageLevel();
+            
+            switch(randomNumberClass)
+            {
+                case 0:
+                    newChar = new Athlete(name, level);
+                    break;
+                case 1:
+                    newChar = new Thief(name, level);
+                    break;
+                case 2:
+                    newChar = new Warrior(name, level);
+                    break;
+            }
+            
+            sumLevel += level;
+            
+            this.addCharacterTeam(newChar);
+        }
     }
 }

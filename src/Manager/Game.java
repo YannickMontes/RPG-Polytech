@@ -14,6 +14,7 @@ import Entities.Warrior;
 import Entities.Thief;
 import Items.Armor;
 import Items.Item;
+import Items.Rarity;
 import Items.UseableItem;
 import Items.Weapon;
 import java.io.FileReader;
@@ -106,7 +107,8 @@ public class Game {
                 String name = (String) objTemp.get("name");
                 long weight = (long) objTemp.get("weight");
                 long bonus = (long) objTemp.get("bonus");
-                this.itemEvents.add(new UseableItem(name, (int)weight, (int)bonus));
+                long rarity = (long) objTemp.get("rarity");
+                this.itemEvents.add(new UseableItem(name, (int)weight, (int)bonus, (int)rarity));
             }
             iterator = armors.iterator();
             while (iterator.hasNext()) {
@@ -115,7 +117,8 @@ public class Game {
                 long weight = (long) objTemp.get("weight");
                 long handlingAbility = (long) objTemp.get("handlingability");
                 long defensevalue = (long) objTemp.get("defensevalue");
-                this.itemEvents.add(new Armor(name, (int)weight, (int)handlingAbility, (int)defensevalue));
+                long rarity = (long) objTemp.get("rarity");
+                this.itemEvents.add(new Armor(name, (int)weight, (int)handlingAbility, (int)defensevalue, (int)rarity));
             }
             iterator = weapons.iterator();
             while (iterator.hasNext()) {
@@ -124,7 +127,8 @@ public class Game {
                 long weight = (long) objTemp.get("weight");
                 long handlingAbility = (long) objTemp.get("handlingability");
                 long attackvalue = (long) objTemp.get("attackvalue");
-                this.itemEvents.add(new Weapon(name, (int)weight, (int)handlingAbility, (int)attackvalue));
+                long rarity = (long) objTemp.get("rarity");
+                this.itemEvents.add(new Weapon(name, (int)weight, (int)handlingAbility, (int)attackvalue, (int)rarity));
             }
 
         } catch (Exception e) {

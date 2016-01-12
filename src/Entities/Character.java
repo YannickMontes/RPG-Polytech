@@ -465,7 +465,7 @@ public abstract class Character
         System.out.println("--------------------");
         System.out.println("DONNEES DE " + this.name);
         System.out.println("Classe: " + this.className);
-        System.out.println("Niveau: " + this.level);
+        System.out.println("Niveau: " + this.level.getLevel());
         System.out.println("Niveau de santé: " + this.attributes.get(Attribute.HEALTH));
         System.out.println("Niveau de mana: " + this.attributes.get(Attribute.MANA));
         System.out.println("Niveau de dextérité: " + this.attributes.get(Attribute.DEXTERITY));
@@ -545,7 +545,7 @@ public abstract class Character
     {
         return "\nNom: " + this.name
                 + "\nClasse: " + this.className
-                + "\nNiveau: " + this.level
+                + "\nNiveau: " + this.level.getLevel()
                 + "\nSanté: " + this.attributes.get(Attribute.HEALTH)
                 + "\nMana: " + this.attributes.get(Attribute.MANA)
                 + "\nForce: " + this.attributes.get(Attribute.STRENGTH)
@@ -554,8 +554,20 @@ public abstract class Character
                 + "\nVitesse: " + this.attributes.get(Attribute.SPEED)
                 + "\n";
     }
+    
+    /**
+     * Fonction qui permet d'augmenter l'expérience du personnage.
+     * @param value Valeur dont on veut augmenter l'expérience.
+     */
+    public void increaseExperience(int value)
+    {
+        if(this.level.increaseExp(value))
+        {
+            this.upLevel();
+        }
+    }
 
-    public void upLevel(Controller controller)
+    public void upLevel()
     {
         restoreAttributes();
 
@@ -571,7 +583,7 @@ public abstract class Character
         String res;
         while (cpt > 0)
         {
-            switch (controller.askNumberBetween(text, 1, 4))
+            switch (Controller.askNumberBetween(text, 1, 4))
             {
                 case 1:
                     res = this.increaseAttribute(Attribute.STRENGTH, 1);
@@ -626,6 +638,11 @@ public abstract class Character
         }
 
         System.out.println("Vos nouvelles statistiques:\n" + this.toString());
+    }
+
+    public void printActualLevelState()
+    {
+        System.out.println(this.level);
     }
 
 }

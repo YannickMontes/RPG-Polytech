@@ -5,9 +5,9 @@
  */
 package Events;
 
-import Entities.Attribute;
 import Manager.Turn;
 import Entities.Character;
+import Entities.Level;
 import Manager.Team;
 
 /**
@@ -16,14 +16,14 @@ import Manager.Team;
  */
 public class Fight extends Event {
 
-    Team team1;
-    Team team2;
+    Team playerTeam;
+    Team ennemyTeam;
     Turn actualTurn;
-
+    
     public Fight(Team team1, Team team2) {
         this.name = "Combat";
-        this.team1 = team1;
-        this.team2 = team2;
+        this.playerTeam = team1;
+        this.ennemyTeam = team2;
         for (Character character1 : team1.getCharacters()) {
             character1.restoreLife();
         }
@@ -36,30 +36,30 @@ public class Fight extends Event {
     private void executeFight() {
         System.out.println("*** Début d'un combat ***");
         boolean equipe = false;
-        if (team1.getTeamSpeed() > team2.getTeamSpeed()) {
+        if (playerTeam.getTeamSpeed() > ennemyTeam.getTeamSpeed()) {
             equipe = true;
         }
 
         do {
             executeTurn(equipe);
             equipe = !equipe;
-        } while (team1.isTeamAlive() && team2.isTeamAlive());
-        if (team1.isTeamAlive()) {
-            endFight(team1);
+        } while (playerTeam.isTeamAlive() && ennemyTeam.isTeamAlive());
+        if (playerTeam.isTeamAlive()) {
+            endFight(playerTeam);
         } else {
-            endFight(team2);
+            endFight(ennemyTeam);
         }
     }
 
     private void executeTurn(boolean equipe) {
         if (equipe == true) {
-            actualTurn = new Turn(team1, team2);
+            actualTurn = new Turn(playerTeam, ennemyTeam);
             System.out.println("");
             System.out.println("--------------------");
             System.out.println("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName());
             actualTurn.executeTurn();
         } else {
-            actualTurn = new Turn(team2, team1);
+            actualTurn = new Turn(ennemyTeam, playerTeam);
             System.out.println("");
             System.out.println("--------------------");
             System.out.println("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName());
@@ -70,10 +70,22 @@ public class Fight extends Event {
 
     private void endFight(Team winner) {
         System.out.println("--------------------");
-        System.out.println("Victoire de l'équipe " + winner.getName());
-        System.out.println("Vous allez pouvoir répartir vos points acquis !");
-        for (Character character : winner.getCharacters()) {
-            character.upLevel();
+        System.out.println("Combat terminé. \nVictoire de l'équipe " + winner.getName() + "!");
+        
+        if(winner==playerTeam)
+        {
+            System.out.println("Votre équipe a gagné! Chaque membre de l'équipe va gagner un certain nombre de points d'expérience.");
+            int experience = this.ennemyTeam.getAverageLevel() * 1500 * this.ennemyTeam.getNbCharacters();
+            for(Character c : playerTeam.getCharacters())
+            {
+                c.increaseExperience(experience/((Level.MAX_LEVEL+1)-c.getLevel()));
+                System.out.println("Le personnage " + c.getName() + " a gagné " + experience + " points d'expérience.");
+                c.printActualLevelState();
+            }
+        }
+        else
+        {
+            System.out.println("Votre équipe à perdu. Vous ne gagnez pas de points d'expérience.");
         }
     }
 }

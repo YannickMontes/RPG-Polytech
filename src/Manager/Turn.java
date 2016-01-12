@@ -24,12 +24,10 @@ public class Turn {
 
     private Team team;
     private Team opponentsTeam;
-    private Controller controller;
 
     public Turn(Team team, Team opponentsTeam) {
         this.team = team;
         this.opponentsTeam = opponentsTeam;
-        this.controller = new Controller();
     }
 
     public void turnAttack(Character character) {
@@ -40,7 +38,7 @@ public class Turn {
             actionText += Integer.toString(num) + " -> " + op.getName() + "\n";
             num++;
         }
-        int opponentNumber = controller.askNumberBetween(actionText, 0, num);
+        int opponentNumber = Controller.askNumberBetween(actionText, 0, num);
 
         opponent = opponentsTeam.getCharacters().get(opponentNumber);
         if (character instanceof Warrior) {
@@ -56,7 +54,7 @@ public class Turn {
         String text = "Quelle parade voulez-vous utiliser ? \n"
                 + "1 -> Blocage\n"
                 + "2 -> Esquive\n";
-        int blockNumber = controller.askNumberBetween(text, 1, 2);
+        int blockNumber = Controller.askNumberBetween(text, 1, 2);
         if (character instanceof Warrior) {
             switch (blockNumber) {
                 case 1:
@@ -98,7 +96,7 @@ public class Turn {
                 }
                 numCare++;
             }
-            int useableNumber = controller.askNumberBetween(careText, 0, numCare);
+            int useableNumber = Controller.askNumberBetween(careText, 0, numCare);
             useableItem = (UseableItem) character.getInventory().get(useableNumber);
         }
         if (character instanceof Warrior) {
@@ -127,7 +125,7 @@ public class Turn {
             limitAction++;
         }
 
-        int actionNumber = controller.askNumberBetween(text, 1, limitAction);
+        int actionNumber = Controller.askNumberBetween(text, 1, limitAction);
         switch (actionNumber) {
             case 1:
                 turnAttack(character);

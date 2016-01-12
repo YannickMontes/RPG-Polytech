@@ -33,20 +33,18 @@ public class Game {
     private List<Event> events;
     private List<Item> itemEvents;
     private Team team;
-    private Controller controller;
 
     public Game() {
         events = new ArrayList<>();
-        controller = new Controller();
         this.itemEvents = new ArrayList<>();
     }
 
     public void startGame() {
         initItem();
 
-        team = new Team(controller.askText("Entrer un nom pour l'équipe 1:"));
+        team = new Team(Controller.askText("Entrer un nom pour l'équipe 1:"));
 
-        int numberTeam1 = controller.askNumberBetween("Entrer un nombre de joueur pour l'équipe 1:", 1, 5);
+        int numberTeam1 = Controller.askNumberBetween("Entrer un nombre de joueur pour l'équipe 1:", 1, 5);
 
         fillUpCharacters(team, numberTeam1);
 
@@ -61,12 +59,12 @@ public class Game {
         System.out.println("Entrer le nom des " + number + " joueurs ainsi que leur classe pour l'équipe " + team.getName() + " :");
         for (int i = 0; i < number; i++) {
             System.out.println("--------------------");
-            String name = controller.askText("Choississez un nom pour le personnage n°" + (i + 1));
+            String name = Controller.askText("Choississez un nom pour le personnage n°" + (i + 1));
             String textClass = "Choississez une classe pour " + name + " ?\n"
                     + "1 -> Athlete\n"
                     + "2 -> Guerrier\n"
                     + "3 -> Magicien";
-            int classe = controller.askNumberBetween(textClass, 1, 3);
+            int classe = Controller.askNumberBetween(textClass, 1, 3);
             Character character = null;
             switch (classe) {
                 case 1:

@@ -29,7 +29,7 @@ public class Discovery extends Event
     
     private void generateRandomDiscovery()
     {
-        int randomNumber = (int)(Math.random()*99);
+        int randomNumber = (int)(Math.random()*100);
         
         if(randomNumber==0)//1%
         {
@@ -39,13 +39,13 @@ public class Discovery extends Event
             switch(randomNumber)
             {
                 case 0:
-                    newCh = new Warrior("Sylvain Duriff", (int)(Math.random()*(2))+team.getLevelMaxInTeam()-1);
+                    newCh = new Warrior("Sylvain Duriff", (int)(Math.random()*(3))+team.getLevelMaxInTeam()-1);
                     break;
                 case 1:
-                    newCh = new Thief("EddineLanger", (int)(Math.random()*(2))+team.getLevelMaxInTeam()-1);
+                    newCh = new Thief("EddineLanger", (int)(Math.random()*(3))+team.getLevelMaxInTeam()-1);
                     break;
                 case 2:
-                    newCh = new Athlete("Pierre Kiroule", (int)(Math.random()*(2))+team.getLevelMaxInTeam()-1);
+                    newCh = new Athlete("Pierre Kiroule", (int)(Math.random()*(3))+team.getLevelMaxInTeam()-1);
                     break;
             }
             team.addCharacterTeam(newCh);

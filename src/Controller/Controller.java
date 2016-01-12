@@ -11,16 +11,11 @@ import java.util.Scanner;
  *
  * @author Corentin
  */
-public class Controller {
+public abstract class Controller {
         
-    Scanner sc;
-
-    public Controller()
-    {
-        sc = new Scanner(System.in);
-    }
+    public static final Scanner sc = new Scanner(System.in);
     
-    public int askNumberBetween(String text, int start, int limit) {
+    public static int askNumberBetween(String text, int start, int limit) {
         System.out.println(text);
         do {
             try {
@@ -37,7 +32,7 @@ public class Controller {
         } while (true);
     }
     
-    public String askText(String text) {
+    public static String askText(String text) {
         System.out.println(text);
         return sc.nextLine();
     }

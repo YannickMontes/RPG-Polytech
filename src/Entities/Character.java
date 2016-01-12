@@ -34,7 +34,7 @@ public abstract class Character
     protected String className;
     protected Attributes attributes;
     protected Attributes basicAttributes;
-    protected int level;
+    protected Level level;
     protected int maxWeight;
     protected List<Item> inventory;
     protected List<StuffItem> equipment;
@@ -44,7 +44,7 @@ public abstract class Character
     public Character(String name, String className)
     {
         this.name = name;
-        this.level = 1;
+        this.level = new Level();
         this.className = className;
         this.initVars();
         this.initStats();
@@ -62,21 +62,21 @@ public abstract class Character
     public Character(String n, int l, String className)
     {
         this.className = className;
-        this.level = l;
+        this.level = new Level(l);
         this.name = n;
 
         this.initVars();
         this.initStats();
 
-        int nbPoints = (level - 1) * NBPOINTLEVELUP;
+        int nbPoints = (level.getLevel() - 1) * NBPOINTLEVELUP;
+        int lvl = level.getLevel();
         while (nbPoints > 0)
         {
             int randomNumber = (int) (Math.random() * Attribute.values().length - 1);
-            putRandomPoint();
+            putRandomPoint(lvl);
             nbPoints -= NBPOINTLEVELUP;
-            this.level--;
+            lvl--;
         }
-        this.level = l;
     }
 
     private void initVars()
@@ -106,12 +106,7 @@ public abstract class Character
 
     public int getLevel()
     {
-        return level;
-    }
-
-    public void setLevel(int level)
-    {
-        this.level = level;
+        return level.getLevel();
     }
 
     public int getMaxWeight()
@@ -428,7 +423,7 @@ public abstract class Character
 
     public void restoreLife()
     {
-        this.attributes.replace(Attribute.HEALTH, 150 + 2 * level + 3);
+        this.attributes.replace(Attribute.HEALTH, 150 + 2 * level.getLevel() + 3);
     }
 
     public void restoreAttribute(Attribute attribute)
@@ -537,7 +532,7 @@ public abstract class Character
         return "Votre esquive a échoué";
     }
 
-    public void putRandomPoint()
+    public void putRandomPoint(int lvl)
     {
     }
 
@@ -562,7 +557,6 @@ public abstract class Character
 
     public void upLevel(Controller controller)
     {
-        this.level++;
         restoreAttributes();
 
         String text = "Passage au niveau supérieur!\n"

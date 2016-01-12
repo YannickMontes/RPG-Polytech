@@ -38,8 +38,8 @@ public class Warrior extends Character implements Attack, Block, Care
         this.attributes.put(Attribute.STRENGTH, 35);
         this.attributes.put(Attribute.DEFENSE, 23);
         this.attributes.put(Attribute.DEXTERITY, 22);
-        this.attributes.put(Attribute.HEALTH, 150 + 4 * level + 3);
-        this.attributes.put(Attribute.MANA, 20 + 3 * level + 3);
+        this.attributes.put(Attribute.HEALTH, 150 + 4 * level.getLevel() + 3);
+        this.attributes.put(Attribute.MANA, 20 + 3 * level.getLevel() + 3);
 
         capacities.add("Attaquer");
         capacities.add("Bloquer");
@@ -47,17 +47,17 @@ public class Warrior extends Character implements Attack, Block, Care
     }
 
     @Override
-    public void putRandomPoint()
+    public void putRandomPoint(int lvl)
     {
         int cpt = NBPOINTLEVELUP;
-        if (this.level % 10 == 0)//Tout les 10 lvl, 3 en speed.
+        if (lvl % 10 == 0)//Tout les 10 lvl, 3 en speed.
         {
             if (this.increaseAttribute(Attribute.SPEED, 3).equals(""))
             {
                 cpt -= 3;
             }
         }
-        else if (this.level % 2 == 0)//Tout les lvl pairs
+        else if (lvl % 2 == 0)//Tout les lvl pairs
         {
             if (this.increaseAttribute(Attribute.STRENGTH, 2).equals(""))
             {

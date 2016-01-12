@@ -39,18 +39,19 @@ public class Thief extends Character implements Attack, Care, Block
         this.attributes.put(Attribute.STRENGTH, 25);
         this.attributes.put(Attribute.DEFENSE, 15);
         this.attributes.put(Attribute.DEXTERITY, 30);
-        this.attributes.put(Attribute.HEALTH, 150 + 2 * level + 3);
-        this.attributes.put(Attribute.MANA, 20 + 2 * level + 3);
+        this.attributes.put(Attribute.HEALTH, 150 + 2 * level.getLevel() + 3);
+        this.attributes.put(Attribute.MANA, 20 + 2 * level.getLevel() + 3);
 
         capacities.add("Attaquer");
         capacities.add("Bloquer");
         capacities.add("Soigner");
     }
-
-    public void putRandomPoint()
+    
+    @Override
+    public void putRandomPoint(int lvl)
     {
         int cpt = NBPOINTLEVELUP;
-        if (this.level % 10 == 0)//Tout les 10 lvl
+        if (lvl % 10 == 0)//Tout les 10 lvl
         {
             if (this.increaseAttribute(Attribute.DEFENSE, 2) .equals(""))
             {
@@ -61,7 +62,7 @@ public class Thief extends Character implements Attack, Care, Block
                 cpt -= 1;
             }
         }
-        else if (this.level % 2 == 0)//Tout les lvl pairs 
+        else if (lvl % 2 == 0)//Tout les lvl pairs 
         {
             if (this.increaseAttribute(Attribute.SPEED, 2).equals(""))
             {

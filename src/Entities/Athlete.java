@@ -38,8 +38,8 @@ public class Athlete extends Character implements Attack, Block, Care
         this.attributes.put(Attribute.STRENGTH, 30);
         this.attributes.put(Attribute.DEFENSE, 20);
         this.attributes.put(Attribute.DEXTERITY, 30);
-        this.attributes.put(Attribute.HEALTH, 150 + 2 * level + 3);
-        this.attributes.put(Attribute.MANA, 20 + 2 * level + 3);
+        this.attributes.put(Attribute.HEALTH, 150 + 2 * level.getLevel() + 3);
+        this.attributes.put(Attribute.MANA, 20 + 2 * level.getLevel() + 3);
 
         capacities.add("Attaquer");
         capacities.add("Bloquer");
@@ -47,10 +47,10 @@ public class Athlete extends Character implements Attack, Block, Care
     }
 
     @Override
-    public void putRandomPoint()
+    public void putRandomPoint(int lvl)
     {
         int cpt = NBPOINTLEVELUP;
-        if (this.level % 10 == 0)//Tout les 10 lvl 
+        if (lvl % 10 == 0)//Tout les 10 lvl 
         {
             if (this.increaseAttribute(Attribute.SPEED, 2).equals(""))
             {
@@ -61,7 +61,7 @@ public class Athlete extends Character implements Attack, Block, Care
                 cpt -= 1;
             }
         }
-        else if (this.level % 2 == 0)//Tout les lvl pairs 
+        else if (lvl % 2 == 0)//Tout les lvl pairs 
         {
             if (this.increaseAttribute(Attribute.STRENGTH, 2).equals(""))
             {

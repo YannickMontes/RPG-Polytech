@@ -23,7 +23,8 @@ public abstract class Character
 {
 
     //Fixed variables
-    public final static int MAXARMOREQUIPMENT = 2;
+    public final static int MAXARMOREQUIPMENT = 1;
+    public final static int MAXGREAVEEQUIPMENT = 1;
     public final static int MAXWEAPONEQUIPMENT = 1;
     public final static int MAXEQUIPMENT = 3;
     public final static int NBCLASSES = 3;

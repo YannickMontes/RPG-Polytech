@@ -84,14 +84,15 @@ public class Level
     {
         if(this.level < MAX_LEVEL - 1) // Si le niveau est inférieur au niveau max, et au dernier niveau.
         {
-            this.requiredExp = this.level * 40 + 35;
+            this.requiredExp = 10*((int)Math.pow(level, 2))+40*level+40;
         }
         else if(this.level == MAX_LEVEL - 1) // Si le niveau est égal au niveau max -1 (dernier palier a franchir)
         {
             this.requiredExp = 0;
-            for(int i=0; i < MAX_LEVEL; i++)
+            //Pour le dernier niveau, l'expérience à acquérir est l'expérience totale gagnée depuis le début.
+            for(int i=1; i < MAX_LEVEL-1; i++)
             {
-                this.requiredExp += i*40+35;
+                this.requiredExp += 10*((int)Math.pow(i, 2))+40*i+40;
             }
         }
         else // Si le niveau est maximum.
@@ -117,4 +118,17 @@ public class Level
         }
         return false;
     }
+
+    /**
+     * Surcharge de la fonction ToString() pour l'affichage du niveau.
+     * @return Une chaine de caractère, contenant le niveau et l'expérience actuelle/requise.
+     */
+    @Override
+    public String toString()
+    {
+        return "Niveau:" + this.level
+                + "\nExpérience: "+this.actualExp+" / "+this.requiredExp+".";
+    }
+    
+    
 }

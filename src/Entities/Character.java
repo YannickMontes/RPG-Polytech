@@ -567,7 +567,7 @@ public abstract class Character
         }
     }
 
-    public void upLevel()
+    private void upLevel()
     {
         restoreAttributes();
 

@@ -13,8 +13,8 @@ public class UseableItem extends Item
 {
     private int bonusValue;
     
-    public UseableItem(String name, int weight, int bonusValue) {
-        super(name, weight);
+    public UseableItem(String name, int weight, int bonusValue, int r) {
+        super(name, weight,r);
         this.bonusValue=bonusValue;
     }
 

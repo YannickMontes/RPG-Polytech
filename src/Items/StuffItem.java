@@ -13,8 +13,8 @@ public abstract class StuffItem extends Item {
 
     private int handlingAbility;
 
-    public StuffItem(String name, int weight, int handlingAbility) {
-        super(name, weight);
+    public StuffItem(String name, int weight, int handlingAbility, int r) {
+        super(name, weight, r);
         this.handlingAbility = handlingAbility;
     }
 

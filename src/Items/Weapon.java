@@ -13,8 +13,8 @@ public class Weapon extends StuffItem
 {
     private int damage;
     
-    public Weapon(String name, int weight, int damage, int handlingAbility) {
-        super(name, weight,handlingAbility);
+    public Weapon(String name, int weight, int damage, int handlingAbility, int r) {
+        super(name, weight,handlingAbility, r);
         this.damage=damage;
     }
 

@@ -15,9 +15,9 @@ public class Armor extends StuffItem
 {
     private int defenseValue;
     
-    public Armor(String name, int weight, int handlingAbility, int defenseValue)
+    public Armor(String name, int weight, int handlingAbility, int defenseValue, int r)
     {
-        super(name, weight,handlingAbility);
+        super(name, weight,handlingAbility, r);
         this.defenseValue=defenseValue;
     }
 

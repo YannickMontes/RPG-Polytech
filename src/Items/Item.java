@@ -13,11 +13,13 @@ public abstract class Item
 {
     private String name;
     private int weight;
+    private Rarity rarity;
     
-    public Item(String name, int weight)
+    public Item(String name, int weight, int r)
     {
         this.name = name;
         this.weight = weight;
+        this.rarity = Rarity.values()[r];
     }
 
     public String getName() {

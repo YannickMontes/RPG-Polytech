@@ -10,3 +10,4 @@ private.xml
 /nbproject/private/private.properties
 /nbproject/project/project.properties
 /nbproject/private/
+!/nbproject/project.properties

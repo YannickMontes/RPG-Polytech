@@ -13,6 +13,7 @@ import Entities.Character;
 import Entities.Warrior;
 import Entities.Thief;
 import Items.Armor;
+import Items.Greave;
 import Items.Item;
 import Items.Rarity;
 import Items.UseableItem;
@@ -32,18 +33,28 @@ import org.json.simple.parser.JSONParser;
 public class Game {
 
     private List<Event> events;
-    private List<Item> itemEvents;
     private Team team;
 
     public Game() {
         events = new ArrayList<>();
-        this.itemEvents = new ArrayList<>();
     }
 
     public void startGame() {
-        initItem();
+        readJSONFiles();
 
-        team = new Team(Controller.askText("Entrer un nom pour l'équipe 1:"));
+        for(Weapon w : Weapon.listWeaponItem)
+        {
+            System.out.println(w+"\n");
+        }
+        for(Armor a : Armor.listeArmorItem)
+        {
+            System.out.println(a+"\n");
+        }
+        for(Greave g : Greave.listGreaveItem)
+        {
+            System.out.println(g+"\n");
+        }
+        /*team = new Team(Controller.askText("Entrer un nom pour l'équipe 1:"));
 
         int numberTeam1 = Controller.askNumberBetween("Entrer un nombre de joueur pour l'équipe 1:", 1, 5);
 
@@ -53,7 +64,7 @@ public class Game {
             character.showData();
         }
         //Temporaire
-        initEvents();
+        initEvents();*/
     }
 
     private void fillUpCharacters(Team team, int number) {
@@ -88,7 +99,7 @@ public class Game {
         events.add(new Fight(team, temp));
     }
 
-    private void initItem() {
+    private void readJSONFiles() {
         JSONParser parser = new JSONParser();
 
         try {
@@ -100,35 +111,53 @@ public class Game {
             JSONArray useableItems = (JSONArray) jsonObject.get("Useable Item");
             JSONArray armors = (JSONArray) jsonObject.get("Armor");
             JSONArray weapons = (JSONArray) jsonObject.get("Weapon");
+            JSONArray greaves = (JSONArray) jsonObject.get("Greave");
 
             Iterator<JSONObject> iterator = useableItems.iterator();
+            UseableItem.listUseableItem = new ArrayList<>();
             while (iterator.hasNext()) {
                 JSONObject objTemp = iterator.next();
                 String name = (String) objTemp.get("name");
                 long weight = (long) objTemp.get("weight");
                 long bonus = (long) objTemp.get("bonus");
                 long rarity = (long) objTemp.get("rarity");
-                this.itemEvents.add(new UseableItem(name, (int)weight, (int)bonus, (int)rarity));
+                UseableItem.listUseableItem.add(new UseableItem(name, (int)weight, (int)bonus, (int)rarity));
             }
             iterator = armors.iterator();
+            Armor.listeArmorItem = new ArrayList<>();
             while (iterator.hasNext()) {
                 JSONObject objTemp = iterator.next();
                 String name = (String) objTemp.get("name");
                 long weight = (long) objTemp.get("weight");
                 long handlingAbility = (long) objTemp.get("handlingability");
-                long defensevalue = (long) objTemp.get("defensevalue");
+                long defensevalue = (long) objTemp.get("defenseValue");
                 long rarity = (long) objTemp.get("rarity");
-                this.itemEvents.add(new Armor(name, (int)weight, (int)handlingAbility, (int)defensevalue, (int)rarity));
+                long requiredLevel = (long)objTemp.get("requiredLevel");
+                Armor.listeArmorItem.add(new Armor(name, (int)weight, (int)handlingAbility, (int)defensevalue, (int)rarity, (int)requiredLevel));
             }
             iterator = weapons.iterator();
+            Weapon.listWeaponItem = new ArrayList<>();
             while (iterator.hasNext()) {
                 JSONObject objTemp = iterator.next();
                 String name = (String) objTemp.get("name");
                 long weight = (long) objTemp.get("weight");
                 long handlingAbility = (long) objTemp.get("handlingability");
-                long attackvalue = (long) objTemp.get("attackvalue");
+                long attackvalue = (long) objTemp.get("attackValue");
                 long rarity = (long) objTemp.get("rarity");
-                this.itemEvents.add(new Weapon(name, (int)weight, (int)handlingAbility, (int)attackvalue, (int)rarity));
+                long requiredLevel = (long)objTemp.get("requiredLevel");
+                Weapon.listWeaponItem.add(new Weapon(name, (int)weight, (int)handlingAbility, (int)attackvalue, (int)rarity, (int)requiredLevel));
+            }
+            iterator = greaves.iterator();
+            Greave.listGreaveItem = new ArrayList<>();
+            while (iterator.hasNext()) {
+                JSONObject objTemp = iterator.next();
+                String name = (String) objTemp.get("name");
+                long weight = (long) objTemp.get("weight");
+                long handlingAbility = (long) objTemp.get("handlingability");
+                long defenseValue = (long) objTemp.get("defenseValue");
+                long rarity = (long) objTemp.get("rarity");
+                long requiredLevel = (long)objTemp.get("requiredLevel");
+                Greave.listGreaveItem.add(new Greave(name, (int)weight, (int)handlingAbility, (int)defenseValue, (int)rarity, (int)requiredLevel));
             }
 
         } catch (Exception e) {

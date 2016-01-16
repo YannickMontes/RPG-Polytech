@@ -36,11 +36,6 @@ public class Game {
     private List<Item> itemEvents;
     private Team team;
 
-
-
-            
-
-      
     public Game() {
         events = new ArrayList<>();
         this.itemEvents = new ArrayList<>();

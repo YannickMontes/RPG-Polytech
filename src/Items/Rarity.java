@@ -9,5 +9,5 @@ public enum Rarity
     MAINSTREAM,
     COMMON,
     RARE,
-    UNIQUE
+    PRIMORDIAL
 }

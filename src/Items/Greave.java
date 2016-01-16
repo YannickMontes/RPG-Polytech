@@ -1,5 +1,7 @@
 package Items;
 
+import java.util.List;
+
 /**
  * Cette classe concerne les jambières d'un personnage. 
  * Elles sont comptées comme une armure.
@@ -7,6 +9,7 @@ package Items;
  */
 public class Greave extends StuffItem
 {
+    public static List<Greave> listGreaveItem;
     private int defenseValue; // Caractérise la défense apportée par l'équipement.
     
     /**
@@ -15,11 +18,12 @@ public class Greave extends StuffItem
      * @param weight Poids de l'item
      * @param handlingAbility Maniabilité de l'item
      * @param defenseValue Valeur de défense octroyée par l'item
-     * @param r Rareté de l'item
+     * @param rarity Rareté de l'item
+     * @param requiredLevel Niveau requis pour l'équiper
      */
-    public Greave(String name, int weight, int handlingAbility, int defenseValue, int r)
+    public Greave(String name, int weight, int handlingAbility, int defenseValue, int rarity, int requiredLevel)
     {
-        super(name, weight, handlingAbility, r);
+        super(name, weight,handlingAbility, rarity, requiredLevel);
         this.defenseValue = defenseValue;
     }
     
@@ -30,5 +34,15 @@ public class Greave extends StuffItem
     public int getDefenseValue()
     {
         return this.defenseValue;
+    }
+    
+    @Override
+    public String toString()
+    {
+        String text = "Type: Jambières\n"+super.toString();
+        
+        text += "Dommages: "+this.defenseValue;
+        
+        return text;
     }
 }

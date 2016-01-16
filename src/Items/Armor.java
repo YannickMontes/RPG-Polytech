@@ -5,7 +5,7 @@
  */
 package Items;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 /**
  *
@@ -14,10 +14,11 @@ import java.util.stream.Stream;
 public class Armor extends StuffItem
 {
     private int defenseValue;
+    public static List<Armor> listeArmorItem;
     
-    public Armor(String name, int weight, int handlingAbility, int defenseValue, int r)
+    public Armor(String name, int weight, int handlingAbility, int defenseValue, int rarity, int requiredLevel)
     {
-        super(name, weight,handlingAbility, r);
+        super(name, weight,handlingAbility, rarity, requiredLevel);
         this.defenseValue=defenseValue;
     }
 
@@ -25,4 +26,13 @@ public class Armor extends StuffItem
         return defenseValue;
     }
     
+    @Override
+    public String toString()
+    {
+        String text = "Type: Armure\n"+super.toString();
+        
+        text += "Defense: "+this.defenseValue;
+        
+        return text;
+    }
 }

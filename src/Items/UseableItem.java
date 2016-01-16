@@ -5,15 +5,12 @@
  */
 package Items;
 
-import java.util.List;
-
 /**
  *
  * @author yannick
  */
 public class UseableItem extends Item
 {
-    public static List<UseableItem> listUseableItem;
     private int bonusValue;
     
     public UseableItem(String name, int weight, int bonusValue, int r) {

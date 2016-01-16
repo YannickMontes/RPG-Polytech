@@ -2,8 +2,12 @@
 /build/
 *.xml
 *.mf
+*.properties
 /dist/
 *.*~
 private.xml
-build.xml
+.properties
 /nbproject/private/private.properties
+/nbproject/project/project.properties
+/nbproject/private/
+!/nbproject/project.properties

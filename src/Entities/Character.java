@@ -5,6 +5,7 @@
  */
 package Entities;
 
+import Controller.ConsoleDesign;
 import Items.Armor;
 import Items.Item;
 import Items.StuffItem;
@@ -544,15 +545,23 @@ public abstract class Character
     @Override
     public String toString()
     {
-        return "\nNom: " + this.name
-                + "\nClasse: " + this.className
-                + "\nNiveau: " + this.level.getLevel()
-                + "\nSanté: " + this.attributes.get(Attribute.HEALTH)
-                + "\nMana: " + this.attributes.get(Attribute.MANA)
-                + "\nForce: " + this.attributes.get(Attribute.STRENGTH)
-                + "\nDéfense: " + this.attributes.get(Attribute.DEFENSE)
-                + "\nDextérité: " + this.attributes.get(Attribute.DEXTERITY)
-                + "\nVitesse: " + this.attributes.get(Attribute.SPEED)
+        return  ConsoleDesign.text("Nom: " + this.name, ConsoleDesign.blueText)
+                + "\n"
+                + ConsoleDesign.text("Classe: " + this.className, ConsoleDesign.blueText)
+                + "\n"
+                + ConsoleDesign.text("Niveau: " + this.level.getLevel(), ConsoleDesign.blueText)
+                + "\n"
+                + ConsoleDesign.text("Santé: " + this.attributes.get(Attribute.HEALTH), ConsoleDesign.blueText)
+                + "\n"
+                + ConsoleDesign.text("Mana: " + this.attributes.get(Attribute.MANA), ConsoleDesign.blueText)
+                + "\n"
+                + ConsoleDesign.text("Force: " + this.attributes.get(Attribute.STRENGTH), ConsoleDesign.blueText)
+                + "\n"
+                + ConsoleDesign.text("Défense: " + this.attributes.get(Attribute.DEFENSE), ConsoleDesign.blueText)
+                + "\n"
+                + ConsoleDesign.text("Dextérité: " + this.attributes.get(Attribute.DEXTERITY), ConsoleDesign.blueText)
+                + "\n"
+                + ConsoleDesign.text("Vitesse: " + this.attributes.get(Attribute.SPEED), ConsoleDesign.blueText)
                 + "\n";
     }
     
@@ -571,14 +580,17 @@ public abstract class Character
     private void upLevel()
     {
         restoreAttributes();
-
-        String text = "Passage au niveau supérieur!\n"
-                + "Vos caractéristiques actuelles:\n" + this.toString()
-                + "Vous pouvez répartir " + NBPOINTLEVELUP + " points de compétence supplémentaires!\n"
-                + "1 -> Force\n"
-                + "2 -> Défense\n"
-                + "3 -> Dextérité\n"
-                + "4 -> Vitesse\n";
+        
+         String text = ConsoleDesign.textBox("Passage au niveau supérieur!",ConsoleDesign.redText)
+                 + "\n"
+                  + ConsoleDesign.textBox("Vos caractéristiques actuelles:\n" + this.toString(),ConsoleDesign.redText)
+                 + "\n"
+                 + ConsoleDesign.textDashArrow("Vous pouvez répartir " + NBPOINTLEVELUP + " points de compétence supplémentaires!",ConsoleDesign.redText)
+                    + "\n"
+                    + ConsoleDesign.text("1 -> Force\n",ConsoleDesign.redText)
+                    + ConsoleDesign.text("2 -> Défense\n",ConsoleDesign.redText)
+                    + ConsoleDesign.text("3 -> Dextérité\n",ConsoleDesign.redText)
+                    + ConsoleDesign.text("4 -> Vitesse\n",ConsoleDesign.redText);
 
         int cpt = NBPOINTLEVELUP;
         String res;
@@ -631,11 +643,12 @@ public abstract class Character
                     }
                     break;
             }
-            text += "Réitérez l'opréation encore " + cpt + " fois:\n"
-                    + "1 -> Force\n"
-                    + "2 -> Défense\n"
-                    + "3 -> Dextérité\n"
-                    + "4 -> Vitesse\n";
+             text +=  ConsoleDesign.textDashArrow("Réitérez l'opération encore " + cpt + " fois",ConsoleDesign.redText)
+                    + "\n"
+                    + ConsoleDesign.text("1 -> Force\n",ConsoleDesign.redText)
+                    + ConsoleDesign.text("2 -> Défense\n",ConsoleDesign.redText)
+                    + ConsoleDesign.text("3 -> Dextérité\n",ConsoleDesign.redText)
+                    + ConsoleDesign.text("4 -> Vitesse\n",ConsoleDesign.redText);
         }
 
         System.out.println("Vos nouvelles statistiques:\n" + this.toString());

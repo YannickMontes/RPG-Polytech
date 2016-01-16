@@ -5,6 +5,7 @@
  */
 package Events;
 
+import Controller.ConsoleDesign;
 import Manager.Turn;
 import Entities.Character;
 import Entities.Level;
@@ -34,7 +35,7 @@ public class Fight extends Event {
     }
 
     private void executeFight() {
-        System.out.println("*** Début d'un combat ***");
+        System.out.println(ConsoleDesign.textBox("Début d'un combat", ConsoleDesign.whiteText, ConsoleDesign.redBack));
         boolean equipe = false;
         if (playerTeam.getTeamSpeed() > ennemyTeam.getTeamSpeed()) {
             equipe = true;

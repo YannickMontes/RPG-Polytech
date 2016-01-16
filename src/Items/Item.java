@@ -5,18 +5,20 @@
  */
 package Items;
 
+import Controller.ConsoleDesign;
+import Entities.Attribute;
+
 /**
  *
  * @author yannick
  */
-public abstract class Item 
-{
+public abstract class Item {
+
     private String name;
     private int weight;
     private Rarity rarity;
-    
-    public Item(String name, int weight, int r)
-    {
+
+    public Item(String name, int weight, int r) {
         this.name = name;
         this.weight = weight;
         this.rarity = Rarity.values()[r];
@@ -39,12 +41,12 @@ public abstract class Item
     }
 
     @Override
-    public String toString()
-    {
-        String text = "Nom: "+this.name+"\n";
-        text +="Poids: "+this.weight+"\n";
-        text +="Rareté: "+this.rarity+"\n";
-        
-        return text;
+    public String toString() {
+        return ConsoleDesign.text("Nom: " + this.name, ConsoleDesign.magentaText)
+                + "\n"
+                + ConsoleDesign.text("Poids: " + this.weight, ConsoleDesign.magentaText)
+                + "\n"
+                + ConsoleDesign.text("Rareté: " + this.rarity, ConsoleDesign.magentaText)
+                + "\n";
     }
 }

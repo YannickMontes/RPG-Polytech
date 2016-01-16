@@ -5,6 +5,8 @@
  */
 package Items;
 
+import Controller.ConsoleDesign;
+
 /**
  *
  * @author yannick
@@ -25,15 +27,14 @@ public abstract class StuffItem extends Item {
     }
 
     @Override
-    public String toString()
-    {
-        String text = super.toString();
-        
-        text +="Maniabilité: "+this.handlingAbility+"\n";
-        text +="Niveau requis: "+this.requiredLevel+"\n";
-        
-        return text;
+    public String toString() {
+
+        return super.toString()
+                + ConsoleDesign.text("Maniabilité: " + this.handlingAbility, ConsoleDesign.magentaText)
+                + "\n"
+                + ConsoleDesign.text("Niveau requis: " + this.requiredLevel, ConsoleDesign.magentaText)
+                + "\n";
+
     }
 
-    
 }

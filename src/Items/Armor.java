@@ -5,34 +5,32 @@
  */
 package Items;
 
+import Controller.ConsoleDesign;
 import java.util.List;
 
 /**
  *
  * @author yannick
  */
-public class Armor extends StuffItem
-{
+public class Armor extends StuffItem {
+
     private int defenseValue;
     public static List<Armor> listeArmorItem;
-    
-    public Armor(String name, int weight, int handlingAbility, int defenseValue, int rarity, int requiredLevel)
-    {
-        super(name, weight,handlingAbility, rarity, requiredLevel);
-        this.defenseValue=defenseValue;
+
+    public Armor(String name, int weight, int handlingAbility, int defenseValue, int rarity, int requiredLevel) {
+        super(name, weight, handlingAbility, rarity, requiredLevel);
+        this.defenseValue = defenseValue;
     }
 
     public int getDefenseValue() {
         return defenseValue;
     }
-    
+
     @Override
-    public String toString()
-    {
-        String text = "Type: Armure\n"+super.toString();
-        
-        text += "Defense: "+this.defenseValue;
-        
-        return text;
+    public String toString() {
+        return ConsoleDesign.text("Type: Armure\n", ConsoleDesign.magentaText)
+                + super.toString()
+                + ConsoleDesign.text("Defense: " + this.defenseValue, ConsoleDesign.magentaText)
+                + "\n";
     }
 }

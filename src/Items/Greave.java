@@ -1,19 +1,22 @@
 package Items;
 
+import Controller.ConsoleDesign;
 import java.util.List;
 
 /**
- * Cette classe concerne les jambières d'un personnage. 
- * Elles sont comptées comme une armure.
+ * Cette classe concerne les jambières d'un personnage. Elles sont comptées
+ * comme une armure.
+ *
  * @author yannick
  */
-public class Greave extends StuffItem
-{
+public class Greave extends StuffItem {
+
     public static List<Greave> listGreaveItem;
     private int defenseValue; // Caractérise la défense apportée par l'équipement.
-    
+
     /**
      * Constructeur de base d'un item de type jambière.
+     *
      * @param name Nom de l'item
      * @param weight Poids de l'item
      * @param handlingAbility Maniabilité de l'item
@@ -21,28 +24,25 @@ public class Greave extends StuffItem
      * @param rarity Rareté de l'item
      * @param requiredLevel Niveau requis pour l'équiper
      */
-    public Greave(String name, int weight, int handlingAbility, int defenseValue, int rarity, int requiredLevel)
-    {
-        super(name, weight,handlingAbility, rarity, requiredLevel);
+    public Greave(String name, int weight, int handlingAbility, int defenseValue, int rarity, int requiredLevel) {
+        super(name, weight, handlingAbility, rarity, requiredLevel);
         this.defenseValue = defenseValue;
     }
-    
+
     /**
      * Permet d'obtenir la valeur de défense de l'armure.
+     *
      * @return La défense qu'octroie l'armure, en entier positif.
      */
-    public int getDefenseValue()
-    {
+    public int getDefenseValue() {
         return this.defenseValue;
     }
-    
+
     @Override
-    public String toString()
-    {
-        String text = "Type: Jambières\n"+super.toString();
-        
-        text += "Dommages: "+this.defenseValue;
-        
-        return text;
+    public String toString() {
+        return ConsoleDesign.text("Type: Jambières\n", ConsoleDesign.magentaText)
+                + super.toString()
+                + ConsoleDesign.text("Dommages: " + this.defenseValue, ConsoleDesign.magentaText)
+                + "\n";
     }
 }

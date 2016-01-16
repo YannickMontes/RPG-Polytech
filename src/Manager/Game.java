@@ -41,6 +41,8 @@ public class Game {
     }
 
     public void startGame() {
+                        System.out.println(ConsoleDesign.RPG(ConsoleDesign.whiteText, ConsoleDesign.redBack));
+
         readJSONFiles();
 
         for(Weapon w : Weapon.listWeaponItem)
@@ -55,14 +57,18 @@ public class Game {
         {
             System.out.println(g+"\n");
         }
+        
+                System.out.println(ConsoleDesign.textBox("Création de votre équipe", ConsoleDesign.whiteText, ConsoleDesign.redBack));
+        
         team = new Team(Controller.askText(ConsoleDesign.textBox("Entrez un nom pour votre équipe",ConsoleDesign.redText)));
 
         int numberTeam1 = Controller.askNumberBetween(ConsoleDesign.textBox("Entrez le nombre de personnage pour votre équipe",ConsoleDesign.redText), 1, 5);
 
         fillUpCharacters(team, numberTeam1);
 
+        System.out.println(ConsoleDesign.textBox("Récapitulatif de votre équipe ("+team.getName()+")",ConsoleDesign.redText));
         for (Character character : team.getCharacters()) {
-            character.showData();
+            System.out.println(character);
         }
         //Temporaire
         initEvents();

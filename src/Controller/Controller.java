@@ -27,7 +27,7 @@ public abstract class Controller {
                     throw new Exception();
                 }
             } catch (Exception e) {
-                System.out.println("Veuillez entrer un chiffre entre " + Integer.toString(start) + " et " + Integer.toString(limit));
+                System.out.println(ConsoleDesign.text("Veuillez entrer un chiffre entre " + Integer.toString(start) + " et " + Integer.toString(limit),ConsoleDesign.redText));
             }
         } while (true);
     }

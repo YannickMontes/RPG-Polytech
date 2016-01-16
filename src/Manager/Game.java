@@ -5,6 +5,7 @@
  */
 package Manager;
 
+import Controller.ConsoleDesign;
 import Controller.Controller;
 import Entities.Athlete;
 import Events.Event;
@@ -35,6 +36,11 @@ public class Game {
     private List<Item> itemEvents;
     private Team team;
 
+
+
+            
+
+      
     public Game() {
         events = new ArrayList<>();
         this.itemEvents = new ArrayList<>();
@@ -43,9 +49,9 @@ public class Game {
     public void startGame() {
         initItem();
 
-        team = new Team(Controller.askText("Entrer un nom pour l'équipe 1:"));
+        team = new Team(Controller.askText(ConsoleDesign.textBox("Entrez un nom pour votre équipe",ConsoleDesign.redText)));
 
-        int numberTeam1 = Controller.askNumberBetween("Entrer un nombre de joueur pour l'équipe 1:", 1, 5);
+        int numberTeam1 = Controller.askNumberBetween(ConsoleDesign.textBox("Entrez le nombre de personnage pour votre équipe",ConsoleDesign.redText), 1, 5);
 
         fillUpCharacters(team, numberTeam1);
 
@@ -57,14 +63,14 @@ public class Game {
     }
 
     private void fillUpCharacters(Team team, int number) {
-        System.out.println("Entrer le nom des " + number + " joueurs ainsi que leur classe pour l'équipe " + team.getName() + " :");
+        System.out.println(ConsoleDesign.textBox("Entrez le nom des " + number + " personnage(s) ainsi que leur classe",ConsoleDesign.redText));
         for (int i = 0; i < number; i++) {
-            System.out.println("--------------------");
-            String name = Controller.askText("Choississez un nom pour le personnage n°" + (i + 1));
-            String textClass = "Choississez une classe pour " + name + " ?\n"
-                    + "1 -> Athlete\n"
-                    + "2 -> Guerrier\n"
-                    + "3 -> Magicien";
+            String name = Controller.askText(ConsoleDesign.textDashArrow("Choississez un nom pour le personnage n°" + (i + 1),ConsoleDesign.redText));
+            String textClass = ConsoleDesign.textDashArrow("Choississez une classe pour " + name + " ?",ConsoleDesign.redText)
+                    + "\n"
+                    + ConsoleDesign.text("1 -> Athlete\n",ConsoleDesign.redText)
+                    + ConsoleDesign.text("2 -> Guerrier\n",ConsoleDesign.redText)
+                    + ConsoleDesign.text("3 -> Voleur\n",ConsoleDesign.redText);
             int classe = Controller.askNumberBetween(textClass, 1, 3);
             Character character = null;
             switch (classe) {

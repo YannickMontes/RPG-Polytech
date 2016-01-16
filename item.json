@@ -1,12 +1,12 @@
 {
 "Useable Item":[
-{ "name":"nom1", "weight":1, "bonus":2 },
-{ "name":"nom2", "weight":3, "bonus":2 }
+{ "name":"nom1", "weight":1, "bonus":2, "rarity": 1 },
+{ "name":"nom2", "weight":3, "bonus":2, "rarity": 1 }
 ],
 "Armor": [
-    {"name":"Armure 1", "weight":7, "handlingability":5, "defensevalue": 5}
+    {"name":"Armure 1", "weight":7, "handlingability":5, "defensevalue": 5, "rarity": 1}
 ],
 "Weapon":  [
-    {"name":"excalibure", "weight":10, "handlingability":10, "attackvalue": 20}
+    {"name":"excalibure", "weight":10, "handlingability":10, "attackvalue": 20, "rarity": 1}
 ]
 }

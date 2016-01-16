@@ -37,6 +37,14 @@ public abstract class Item
     public void setWeight(int weight) {
         this.weight = weight;
     }
-    
-    
+
+    @Override
+    public String toString()
+    {
+        String text = "Nom: "+this.name+"\n";
+        text +="Poids: "+this.weight+"\n";
+        text +="Rareté: "+this.rarity+"\n";
+        
+        return text;
+    }
 }

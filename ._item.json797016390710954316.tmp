@@ -1,0 +1,39 @@
+{
+"Useable Item":[
+{ "name":"nom1", "weight":1, "bonus":2,"rarity":0 },
+{ "name":"nom2", "weight":3, "bonus":2, "rarity":0 }
+],
+"Armor": [
+	{"weight":1, "handlingability":100, "defenseValue": 0, "rarity":0, "requiredLevel":1, "name":"T-Shirt usé"},
+	{"weight":3, "handlingability":100, "defenseValue": 1, "rarity":1, "requiredLevel":1, "name":"Armure en coton"},
+	{"weight":1, "handlingability":100, "defenseValue": 2, "rarity":2, "requiredLevel":1, "name":"Débardeur du débutant"},
+	{"weight":5, "handlingability":95, "defenseValue": 3, "rarity":3, "requiredLevel":1, "name":"Combinaison du débutant"},
+	{"weight":4, "handlingability":90, "defenseValue": 4, "rarity":2, "requiredLevel":3, "name":"Col roulé"},
+	{"weight":2, "handlingability":100, "defenseValue": 2, "rarity":0, "requiredLevel":5, "name":"T-Shirt Desigual"},
+	{"weight":7, "handlingability":100, "defenseValue": 3, "rarity":1, "requiredLevel":5, "name":"Sweat épais"},
+	{"weight":10, "handlingability":30, "defenseValue": 5, "rarity":3, "requiredLevel":7, "name":"Pull blanc"},
+	{"weight":20, "handlingability":90, "defenseValue": 7, "rarity":0, "requiredLevel":10, "name":"Armure en pierre"},
+	{"weight":10, "handlingability":80, "defenseValue": 8, "rarity":1, "requiredLevel":10, "name":"Veste légère"},
+	{"weight":5, "handlingability":95, "defenseValue": 10, "rarity":3, "requiredLevel":10, "name":"Chemise en mailles régénératrices"},
+	{"weight":2, "handlingability":90, "defenseValue": 15, "rarity":3, "requiredLevel":15, "name":"Poncho rouge"},
+	{"weight":30, "handlingability":70, "defenseValue": 12, "rarity":2, "requiredLevel":12, "name":"Polaire"},
+	{"weight":40, "handlingability":85, "defenseValue": 13, "rarity":0, "requiredLevel":17, "name":"Armure en fer"},
+	{"weight":10, "handlingability":65, "defenseValue": 14, "rarity":1, "requiredLevel":17, "name":"Maillot de foot"},
+	{"weight":25, "handlingability":1, "defenseValue": 30, "rarity":3, "requiredLevel":23, "name":"Burca"}
+],
+"Weapon":  [
+	{"weight":1, "handlingability":100, "attackValue": 0, "rarity":0, "requiredLevel":1, "name":"Carton plié"},
+	{"weight":2, "handlingability":100, "attackValue": 1, "rarity":1, "requiredLevel":1, "name":"Bout de bois"},
+	{"weight":2, "handlingability":100, "attackValue": 1, "rarity":0, "requiredLevel":2, "name":"Epée en bois"},
+	{"weight":1, "handlingability":90, "attackValue": 1, "rarity":1, "requiredLevel":2, "name":"Eventail"},
+	{"weight":1, "handlingability":85, "attackValue": 1, "rarity":2, "requiredLevel":2, "name":"Dague"},
+	{"weight":3, "handlingability":60, "attackValue": 2, "rarity":3, "requiredLevel":2, "name":"Sabre en bois"},
+	{"weight":1, "handlingability":50, "attackValue": 2, "rarity":3, "requiredLevel":3, "name":"Poings en métal"},
+	{"weight":5, "handlingability":80, "attackValue": 3, "rarity":0, "requiredLevel":5, "name":"Epée en fer"},
+	{"weight":3, "handlingability":90, "attackValue": 2, "rarity":0, "requiredLevel":5, "name":"Dague en fer"},
+	{"weight":50, "handlingability":30, "attackValue": 17, "rarity":3, "requiredLevel":25, "name":"Excalibur"}
+],
+"Greave": [
+	{"weight":1, "handlingability":100, "defenseValue": 0, "rarity":0, "requiredLevel":1, "name":"Chaussettes sales"}
+]
+}

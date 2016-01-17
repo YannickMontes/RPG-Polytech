@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Entities;
 
 import Controller.ConsoleDesign;
@@ -17,13 +12,12 @@ import Controller.Controller;
 import Items.Greave;
 
 /**
- *
- * @author yannick
+ * Cette classe abstraite contient toutes les informations nécéssaires pour un personnage du jeu.
+ * @author Yannick Montes & Corentin Maréchal
  */
 public abstract class Character
 {
-
-    //Fixed variables
+    //Variables de limite fixées au préalable.
     public final static int MAXARMOREQUIPMENT = 1;
     public final static int MAXGREAVEEQUIPMENT = 1;
     public final static int MAXWEAPONEQUIPMENT = 1;
@@ -31,7 +25,7 @@ public abstract class Character
     public final static int NBCLASSES = 3;
     public final static int NBPOINTLEVELUP = 3;
 
-    //Attributesattributes
+    //Variables d'instances
     protected String name;
     protected String className;
     protected Attributes attributes;
@@ -42,7 +36,16 @@ public abstract class Character
     protected List<StuffItem> equipment;
     protected List<String> capacities;
 
-    //Constructors
+    /*
+        CONSTRUCTEURS
+    */   
+    
+    /**
+     * Constructeur basique de la classe personnage. Initialise un personnage au niveau 1,
+     * avec le stuff de départ.
+     * @param name Nom du personnage
+     * @param className Nom de la classe du personnage
+     */
     public Character(String name, String className)
     {
         this.name = name;
@@ -56,7 +59,6 @@ public abstract class Character
     /**
      * Ce constructeur permet de créer un personnage équilibré selon sa classe,
      * à partir d'un nom et d'un niveau.
-     *
      * @param n Nom du pesonnage
      * @param l Niveau du personnage
      * @param className Nom de la classe du personnage
@@ -82,6 +84,13 @@ public abstract class Character
         this.initStuff();
     }
 
+    /*
+        FONCTIONS D'INITIALISATION
+    */
+    
+    /**
+     * Fonction permettant d'initialiser les variables de la classe.
+     */
     private void initVars()
     {
         this.inventory = new ArrayList<>();
@@ -93,6 +102,7 @@ public abstract class Character
     
     /**
      * Fonction permettant d'initialiser un stuff aléatoire en fonction des items existants.
+     * Si le niveau du joueur est de 1, le stuff généré est le stuff de départ.
      */
     private void initStuff()
     {
@@ -137,16 +147,19 @@ public abstract class Character
             this.equipment.add(listPossibleWeapon.get(nbAlea));
         }
     }
+    
+    /**
+     * Fonction permettant d'initialiser les stats du personnage.
+     */
+    public abstract void initStats();
 
-    //Getters & Setters
+    /*
+        GETTERS & SETTERS
+    */
+    
     public String getName()
     {
         return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
     }
 
     public Attributes getAttributes()
@@ -179,21 +192,16 @@ public abstract class Character
         return equipment;
     }
 
-    public void setEquipment(List<StuffItem> equipment)
-    {
-        this.equipment = equipment;
-    }
-
     public List<Item> getInventory()
     {
         return inventory;
     }
-
-    public void setInventory(List<Item> inventory)
-    {
-        this.inventory = inventory;
-    }
-
+    
+    /**
+     * Fonction permettant d'obtenir la taille totale que prennent les objets 
+     * dans l'inventaire.
+     * @return La taille totale, sous forme d'entier
+     */
     protected int inventoryWeight()
     {
         int weight = 0;
@@ -203,28 +211,11 @@ public abstract class Character
         }
         return weight;
     }
-
-    public boolean addInventory(Item item)
-    {
-        if (item.getWeight() + inventoryWeight() <= maxWeight)
-        {
-            this.inventory.add(item);
-            return true;
-        }
-        return false;
-    }
-
-    public void useUseableItem(UseableItem useableItem)
-    {
-        if (this.inventory.contains(useableItem))
-        {
-            // traitement
-            // utilisation = influence sur caratéristiques
-            // utilisation potion -> augmentation santé perso
-            this.inventory.remove(useableItem);
-        }
-    }
-
+    
+    /**
+     * Fonction permettant de vérifier si le personnage est vivant.
+     * @return Vrai si les pvs sont >0, Faux sinon.
+     */
     public boolean isAlive()
     {
         if (this.attributes.get(Attribute.HEALTH) <= 0)
@@ -233,36 +224,10 @@ public abstract class Character
         }
         return true;
     }
-
-    /*  **
-     *
-     * To use Armor in the equipment against an opponent
-     *
-     * @param armor
-     * @param opponent
-     *
-    public void useArmor(Armor armor, Character opponent) {
-        if (this.equipment.contains(armor)) {
-            // traitement
-            // utilisation = influence sur caratéristiques
-
-        }
-    }
-
-    **
-     *
-     * To use a Weapon in the equipment against an opponent
-     *
-     * @param weapon
-     * @param opponent
-     *
-    public void useWeapon(Weapon weapon, Character opponent) {
-        if (this.equipment.contains(weapon)) {
-            // traitement
-            // utilisation = influence sur caratéristiques
-            // utilisation arme -> diminution santé adversaire
-        }
-    }
+    
+    /**
+     * Fonction permettant d'obtenir le nombre d'armures équipées.
+     * @return Le nombre d'armures équipées sous forme d'entier.
      */
     private int numberArmorEquipment()
     {
@@ -277,6 +242,10 @@ public abstract class Character
         return i;
     }
 
+    /**
+     * Fonction permettant d'obtenir le nombre d'armes équipées.
+     * @return Le nombre d'armes équipées sous forme d'entier.
+     */
     private int numberWeaponEquipment()
     {
         for (StuffItem stuffItem : equipment)
@@ -289,6 +258,11 @@ public abstract class Character
         return 0;
     }
 
+    /**
+     * Fonction permettant d'obtenir le nombre d'items utilisable présents
+     * dans l'inventaire.
+     * @return Le nombre d'objets utilisable, sous forme d'entier.
+     */
     public int numberUseableItem()
     {
         int i = 0;
@@ -302,6 +276,12 @@ public abstract class Character
         return i;
     }
 
+    /**
+     * Permet d'obtenir tous les objets équipés d'un type passé en paramètre
+     * sous forme de liste.
+     * @param itemType Type des items voulus
+     * @return La liste contenant les items
+     */
     public ArrayList<StuffItem> getEquipment(Class itemType)
     {
         ArrayList<StuffItem> items = new ArrayList<>();
@@ -314,22 +294,79 @@ public abstract class Character
         }
         return items;
     }
+    
+    /**
+     * Vérifie si l'inventaire est plein.
+     * @return Vrai s'il est plein, faux sinon.
+     */
+    public boolean inventoryNotFull()
+    {
+        int sum=0;
+        for(Item item : this.inventory)
+        {
+            sum += item.getWeight();
+        }
+        if(sum > this.maxWeight)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /*
+        FONCTION DE GESTION DE L'INVENTAIRE ET EQUIPEMENT
+    */
 
     /**
-     *
-     * Equip character with Armor or Weapon
-     *
-     * @param stuffItem
-     * @return
+     * Permet d'ajouter un iteam a l'inventaire.
+     * @param item L'item à ajouter.
+     * @return Vrai si l'ajout a pu se faire, faux sinon.
      */
-    public boolean equipMe(StuffItem stuffItem)
+    public boolean addInventory(Item item)
     {
-        if (equipment.size() < MAXEQUIPMENT && inventory.contains(stuffItem))
-        { //if character owns stuff item and his equipment contains less than MAXEQUIPMENT stuff items
-            if ((stuffItem.getClass() == Weapon.class && numberWeaponEquipment() < MAXWEAPONEQUIPMENT) || (stuffItem.getClass() == Armor.class && numberArmorEquipment() < MAXARMOREQUIPMENT))
+        if (item.getWeight() + inventoryWeight() <= maxWeight)
+        {
+            this.inventory.add(item);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Fonction permettant d'utiliser un item
+     * @param useableItem L'item a utiliser.
+     */
+    public void useUseableItem(UseableItem useableItem)
+    {
+        if (this.inventory.contains(useableItem))
+        {
+            // traitement
+            // utilisation = influence sur caratéristiques
+            // utilisation potion -> augmentation santé perso
+            this.inventory.remove(useableItem);
+        }
+    }
+
+    /**
+     * Fonction permettant d'équiper un personnage.
+     * @param stuffItem l'item à équiper
+     * @return Vrai si l'item a pu etre équipé, faux sinon.
+     */
+    public boolean addEquipement(StuffItem stuffItem)
+    {
+        if(!this.inventory.contains(stuffItem))
+        {
+            if(!this.addInventory(stuffItem))
             {
-                //if number of weapon in equiment is less than MAXWEAPONEQUIPMENT and the stuff item is a weapon 
-                //OR if number of armor in equiment is less than MAXARMOREQUIPMENT and the stuff item is an armor 
+                return false;
+            }
+        }
+        if (equipment.size() < MAXEQUIPMENT)
+        {
+            if ((stuffItem.getClass() == Weapon.class && numberWeaponEquipment() < MAXWEAPONEQUIPMENT) 
+                    || (stuffItem.getClass() == Armor.class && numberArmorEquipment() < MAXARMOREQUIPMENT)
+                    || (stuffItem.getClass() == Greave.class && numberArmorEquipment() < MAXGREAVEEQUIPMENT))
+            {
                 equipment.add(stuffItem);
                 return true;
             }
@@ -338,42 +375,39 @@ public abstract class Character
     }
 
     /**
-     *
-     * Equip character with Armor or Weapon and replace an other Stuff
-     *
-     * @param newStuffItem
-     * @param removeStuffItem
+     * Fonction permettant de remplacer un équipement actuel avec un nouveau.
+     * @param newStuffItem Item remplaçant
+     * @param removeStuffItem Item à remplacer
      * @return
      */
-    public boolean equipMe(StuffItem newStuffItem, StuffItem removeStuffItem)
+    public boolean replaceEquipment(StuffItem newStuffItem, StuffItem removeStuffItem)
     {
-        if (equipment.size() <= MAXEQUIPMENT && inventory.contains(newStuffItem) && equipment.contains(removeStuffItem))
-        { //if character owns the new stuff item and his equipment contains the replacement stuff item and his equipment contains less than MAXEQUIPMENT stuff items
-            equipment.remove(removeStuffItem);
-            if (equipMe(newStuffItem) == true)
-            {
-                return true;
-            }
-            else
-            {
-                equipment.add(removeStuffItem);
-            }
+        if(this.addEquipement(newStuffItem))
+        {
+            this.equipment.remove(removeStuffItem);
+            return true;
         }
         return false;
     }
+    
+    /*
+        FONCTIONS DE COMBAT
+    */
 
     /**
-     *
-     * Take a blow after an attack
-     *
-     * @param value
+     * Fonction pour prendre un coup.
+     * @param value Dégats subis
      */
     public void takeABlow(int value)
     {
         this.attributes.replace(Attribute.HEALTH, this.attributes.get(Attribute.HEALTH) - value);
     }
 
-    //Function to use capacity
+    /**
+     * Fonction permettant d'utiliser une capacité.
+     * @param capacity La capacité a utiliser.
+     * @return Vrai si la capacité à fonctionnée, faux sinon.
+     */
     public boolean verifySuccess(String capacity)
     {
         //selon la capacitié utilisée: selon ses caractéristiques et son arme (s'il en a)
@@ -426,6 +460,13 @@ public abstract class Character
         return false;
     }
 
+    /**
+     * 
+     * @param capacity
+     * @param opponent
+     * @param useableItem
+     * @return 
+     */
     public int measureImpact(String capacity, Character opponent, UseableItem useableItem)
     {
         //selon la capacité utilisisée
@@ -470,12 +511,84 @@ public abstract class Character
         }
         return 0;
     }
+    
+    /**
+     * Fonction permettant de vérifier si l'attaque à fonctionner.
+     * @param success Réussite de l'attaque
+     * @param opponent Cible
+     * @param damages Dommages à infliger
+     * @return Le texte à afficher.
+     */
+    public String attackResult(boolean success, Character opponent, int damages)
+    {
+        if (success == true)
+        {
+            return "Vous avez infligé " + damages + " de dégâts à " + opponent.getName() + " (Santé: " + opponent.getAttributes().get(Attribute.HEALTH) + ")";
+        }
+        return "L'attaque sur " + opponent.getName() + " a échoué";
+    }
 
+    /**
+     * Fonction permettant de vérifier la réussite du soin
+     * @param success Réussite du soin
+     * @param care Valeur du soin
+     * @return Le texte à afficher
+     */
+    public String careResult(boolean success, int care)
+    {
+        if (success == true)
+        {
+            return "Vous avez augmenté de " + care + " votre vie " + " (Santé: " + this.getAttributes().get(Attribute.HEALTH) + ")";
+        }
+        return "Le soin a échoué";
+    }
+
+    /**
+     * Fonction permettant de vérifier la réussite du block
+     * @param success Réussite
+     * @param blockValue valeur du block
+     * @return Le texte à afficher
+     */
+    public String blockResult(boolean success, int blockValue)
+    {
+        if (success == true)
+        {
+            return "Vous avez augmenté de " + blockValue + " votre défense " + " (Défense: " + this.getAttributes().get(Attribute.DEFENSE) + ")";
+        }
+        return "Le blocage a échoué";
+    }
+
+    /**
+     * Fonction permettant de vérifier la réussite de l'esquive.
+     * @param success Réussite de l'esquive
+     * @param blockValue valeur de l'esquive (?)
+     * @return Le texte ç afficher
+     */
+    public String dodgeResult(boolean success, int blockValue)
+    {
+        if (success == true)
+        {
+            return "Vous avez augmenté de " + blockValue + " votre défense " + " (Défense: " + this.getAttributes().get(Attribute.DEFENSE) + ")";
+        }
+        return "L'esquive a échoué";
+    }
+
+    /*
+        FONCTIONS D'ATTRIBUTS
+    */
+    
+    /**
+     * Fonction permettant de remettre un personnage avec sa vie pleine.
+     */
     public void restoreLife()
     {
         this.attributes.replace(Attribute.HEALTH, 150 + 2 * level.getLevel() + 3);
     }
 
+    /**
+     * Fonction permettant de remettre un attribut a sa valeur de base.
+     * @param attribute Attribut à réinitialiser
+     */
     public void restoreAttribute(Attribute attribute)
     {
         attributes.replace(attribute, basicAttributes.get(attribute));
@@ -502,6 +615,9 @@ public abstract class Character
         }
     }
 
+    /**
+     * Fonction pour remettre tous les attributs à leur valeur de base.
+     */
     public void restoreAttributes()
     {
         restoreAttribute(Attribute.SPEED);
@@ -509,109 +625,17 @@ public abstract class Character
         restoreAttribute(Attribute.DEXTERITY);
         restoreAttribute(Attribute.STRENGTH);
     }
-
-    public void showData()
-    {
-        System.out.println("--------------------");
-        System.out.println("DONNEES DE " + this.name);
-        System.out.println("Classe: " + this.className);
-        System.out.println("Niveau: " + this.level.getLevel());
-        System.out.println("Niveau de santé: " + this.attributes.get(Attribute.HEALTH));
-        System.out.println("Niveau de mana: " + this.attributes.get(Attribute.MANA));
-        System.out.println("Niveau de dextérité: " + this.attributes.get(Attribute.DEXTERITY));
-        System.out.println("Niveau de défense: " + this.attributes.get(Attribute.DEFENSE));
-        System.out.println("Niveau de vitesse: " + this.attributes.get(Attribute.SPEED));
-        System.out.println("Niveau de force: " + this.attributes.get(Attribute.STRENGTH));
-        System.out.println("Nombre d'objet dans l'inventaire: " + this.inventory.size());
-        System.out.println("Equipement actuel: ");
-        for (StuffItem stuffItem : equipment)
-        {
-            System.out.println("-" + stuffItem.getName() + " Poids: " + stuffItem.getWeight() + " Maniabilité:" + stuffItem.getHandlingAbility());
-        }
-    }
-
-    public void showInventary()
-    {
-        for (Item item : inventory)
-        {
-            System.out.print("-" + item.getName() + " (" + item.getClass() + ") Poids: " + item.getWeight());
-            if (item instanceof UseableItem)
-            {
-                System.out.println(" Valeur de bonus:" + ((UseableItem) item).getBonusValue());
-            }
-            else if (item instanceof StuffItem)
-            {
-                System.out.println(" Maniabilité:" + ((StuffItem) item).getHandlingAbility());
-            }
-        }
-    }
-
-    public String attackResult(boolean success, Character opponent, int damages)
-    {
-        if (success == true)
-        {
-            return "Vous avez infligé " + damages + " de dégâts à " + opponent.getName() + " (Santé: " + opponent.getAttributes().get(Attribute.HEALTH) + ")";
-        }
-        return "L'attaque sur " + opponent.getName() + " a échoué";
-    }
-
-    public String careResult(boolean success, int care)
-    {
-        if (success == true)
-        {
-            return "Vous avez augmenté de " + care + " votre vie " + " (Santé: " + this.getAttributes().get(Attribute.HEALTH) + ")";
-        }
-        return "Le soin a échoué";
-    }
-
-    public String blockResult(boolean success, int blockValue)
-    {
-        if (success == true)
-        {
-            return "Vous avez augmenté de " + blockValue + " votre défense " + " (Défense: " + this.getAttributes().get(Attribute.DEFENSE) + ")";
-        }
-        return "Le blocage a échoué";
-    }
-
-    public String dodgeResult(boolean success, int blockValue)
-    {
-        if (success == true)
-        {
-            return "Vous avez augmenté de " + blockValue + " votre défense " + " (Défense: " + this.getAttributes().get(Attribute.DEFENSE) + ")";
-        }
-        return "L'esquive a échoué";
-    }
-
-    public void putRandomPoint(int lvl)
-    {
-    }
-
-    public void initStats()
-    {
-    }
-
-    @Override
-    public String toString()
-    {
-        return  ConsoleDesign.text("Nom: " + this.name, ConsoleDesign.cyanText)
-                + "\n"
-                + ConsoleDesign.text("Classe: " + this.className, ConsoleDesign.cyanText)
-                + "\n"
-                + ConsoleDesign.text("Niveau: " + this.level.getLevel(), ConsoleDesign.cyanText)
-                + "\n"
-                + ConsoleDesign.text("Santé: " + this.attributes.get(Attribute.HEALTH), ConsoleDesign.cyanText)
-                + "\n"
-                + ConsoleDesign.text("Mana: " + this.attributes.get(Attribute.MANA), ConsoleDesign.cyanText)
-                + "\n"
-                + ConsoleDesign.text("Force: " + this.attributes.get(Attribute.STRENGTH), ConsoleDesign.cyanText)
-                + "\n"
-                + ConsoleDesign.text("Défense: " + this.attributes.get(Attribute.DEFENSE), ConsoleDesign.cyanText)
-                + "\n"
-                + ConsoleDesign.text("Dextérité: " + this.attributes.get(Attribute.DEXTERITY), ConsoleDesign.cyanText)
-                + "\n"
-                + ConsoleDesign.text("Vitesse: " + this.attributes.get(Attribute.SPEED), ConsoleDesign.cyanText)
-                + "\n";
-    }
+    
+    /**
+     * Fonction à surchager dans les classes filles. Permet de répartir 
+     * les points de compétence aléatoire en fonction du niveau.
+     * @param lvl Niveau du personnage
+     */
+    public abstract void putRandomPoint(int lvl);
+    
+    /*
+        FONCTIONS DE NIVEAU
+    */
     
     /**
      * Fonction qui permet d'augmenter l'expérience du personnage.
@@ -625,6 +649,10 @@ public abstract class Character
         }
     }
 
+    /**
+     * Fonction qui fait gagner un niveau au personnage, et demande a l'utilisateur
+     * de répartir les points.
+     */
     private void upLevel()
     {
         restoreAttributes();
@@ -702,23 +730,80 @@ public abstract class Character
         System.out.println("Vos nouvelles statistiques:\n" + this.toString());
     }
 
+    /*
+        FONCTIONS D'AFFICHAGE
+    */
+    
+    /**
+     * Afficher les données du personnage.
+     */
+    public void showData()
+    {
+        System.out.println("--------------------");
+        System.out.println("DONNEES DE " + this.name);
+        System.out.println("Classe: " + this.className);
+        System.out.println("Niveau: " + this.level.getLevel());
+        System.out.println("Niveau de santé: " + this.attributes.get(Attribute.HEALTH));
+        System.out.println("Niveau de mana: " + this.attributes.get(Attribute.MANA));
+        System.out.println("Niveau de dextérité: " + this.attributes.get(Attribute.DEXTERITY));
+        System.out.println("Niveau de défense: " + this.attributes.get(Attribute.DEFENSE));
+        System.out.println("Niveau de vitesse: " + this.attributes.get(Attribute.SPEED));
+        System.out.println("Niveau de force: " + this.attributes.get(Attribute.STRENGTH));
+        System.out.println("Nombre d'objet dans l'inventaire: " + this.inventory.size());
+        System.out.println("Equipement actuel: ");
+        for (StuffItem stuffItem : equipment)
+        {
+            System.out.println("-" + stuffItem.getName() + " Poids: " + stuffItem.getWeight() + " Maniabilité:" + stuffItem.getHandlingAbility());
+        }
+    }
+
+    /**
+     * Affiche son inventaire.
+     */
+    public void showInventary()
+    {
+        for (Item item : inventory)
+        {
+            System.out.print("-" + item.getName() + " (" + item.getClass() + ") Poids: " + item.getWeight());
+            if (item instanceof UseableItem)
+            {
+                System.out.println(" Valeur de bonus:" + ((UseableItem) item).getBonusValue());
+            }
+            else if (item instanceof StuffItem)
+            {
+                System.out.println(" Maniabilité:" + ((StuffItem) item).getHandlingAbility());
+            }
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        return  ConsoleDesign.text("Nom: " + this.name, ConsoleDesign.cyanText)
+                + "\n"
+                + ConsoleDesign.text("Classe: " + this.className, ConsoleDesign.cyanText)
+                + "\n"
+                + ConsoleDesign.text("Niveau: " + this.level.getLevel(), ConsoleDesign.cyanText)
+                + "\n"
+                + ConsoleDesign.text("Santé: " + this.attributes.get(Attribute.HEALTH), ConsoleDesign.cyanText)
+                + "\n"
+                + ConsoleDesign.text("Mana: " + this.attributes.get(Attribute.MANA), ConsoleDesign.cyanText)
+                + "\n"
+                + ConsoleDesign.text("Force: " + this.attributes.get(Attribute.STRENGTH), ConsoleDesign.cyanText)
+                + "\n"
+                + ConsoleDesign.text("Défense: " + this.attributes.get(Attribute.DEFENSE), ConsoleDesign.cyanText)
+                + "\n"
+                + ConsoleDesign.text("Dextérité: " + this.attributes.get(Attribute.DEXTERITY), ConsoleDesign.cyanText)
+                + "\n"
+                + ConsoleDesign.text("Vitesse: " + this.attributes.get(Attribute.SPEED), ConsoleDesign.cyanText)
+                + "\n";
+    }
+    
+    /**
+     * Affiche les informations sur le niveau actuel.
+     */
     public void printActualLevelState()
     {
         System.out.println(this.level);
     }
-
-    public boolean inventoryNotFull()
-    {
-        int sum=0;
-        for(Item item : this.inventory)
-        {
-            sum += item.getWeight();
-        }
-        if(sum > this.maxWeight)
-        {
-            return false;
-        }
-        return true;
-    }
-
 }

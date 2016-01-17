@@ -23,7 +23,12 @@ public abstract class StuffItem extends Item {
     }
 
     public int getHandlingAbility() {
-        return handlingAbility;
+        return this.handlingAbility;
+    }
+    
+    public int getRequiredLevel()
+    {
+        return this.requiredLevel;
     }
 
     @Override

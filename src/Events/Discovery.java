@@ -10,6 +10,13 @@ import Manager.Team;
 import Entities.Character;
 import Entities.Thief;
 import Entities.Warrior;
+import Items.Armor;
+import Items.Greave;
+import Items.Item;
+import Items.Rarity;
+import Items.StuffItem;
+import Items.UseableItem;
+import Items.Weapon;
 
 /**
  *
@@ -18,6 +25,7 @@ import Entities.Warrior;
 public class Discovery extends Event
 {
     public Team team;
+    public String text;
     
     public Discovery(Team t)
     {
@@ -30,7 +38,9 @@ public class Discovery extends Event
     private void generateRandomDiscovery()
     {
         int randomNumber = (int)(Math.random()*100);
-        
+        StuffItem stuffItem = null;
+        Item item = null;
+                
         if(randomNumber==0)//1%
         {
             //Nouveau personnage
@@ -50,25 +60,94 @@ public class Discovery extends Event
             }
             team.addCharacterTeam(newCh);
         }
-        else if(randomNumber<=10)//10%
+        else if(randomNumber<=20)//20%
         {
-            //Arme rare aléatoire
+            if(randomNumber<=10)//10% Arme mainstream
+            {  
+                stuffItem = StuffItem.getRandomItemInList(Rarity.MAINSTREAM, this.team.getLevelMaxInTeam(), Weapon.listWeaponItem);
+            }
+            else if(randomNumber<=16)//6% Arme commune
+            {
+                stuffItem = StuffItem.getRandomItemInList(Rarity.COMMON, this.team.getLevelMaxInTeam(), Weapon.listWeaponItem);
+            }
+            else if(randomNumber<=19)//3% Arme rare
+            {
+                stuffItem = StuffItem.getRandomItemInList(Rarity.RARE, this.team.getLevelMaxInTeam(), Weapon.listWeaponItem);
+            }
+            else//1% Arme primordial
+            {
+                stuffItem = StuffItem.getRandomItemInList(Rarity.PRIMORDIAL, this.team.getLevelMaxInTeam(), Weapon.listWeaponItem);
+            }
         }
-        else if(randomNumber<=20)//10%
+        else if(randomNumber<=40)//20%
         {
-            //Armure rare aléatoire
+            if(randomNumber<=30)//10% Armure mainstream
+            {  
+                stuffItem = StuffItem.getRandomItemInList(Rarity.MAINSTREAM, this.team.getLevelMaxInTeam(), Armor.listeArmorItem);
+            }
+            else if(randomNumber<=36)//6% Armure commune
+            {
+                stuffItem = StuffItem.getRandomItemInList(Rarity.COMMON, this.team.getLevelMaxInTeam(), Armor.listeArmorItem);
+            }
+            else if(randomNumber<=39)//3% Armure rare
+            {
+                stuffItem = StuffItem.getRandomItemInList(Rarity.RARE, this.team.getLevelMaxInTeam(), Armor.listeArmorItem);
+            }
+            else//1% Armure primordial
+            {
+                stuffItem = StuffItem.getRandomItemInList(Rarity.PRIMORDIAL, this.team.getLevelMaxInTeam(), Armor.listeArmorItem);
+            }
         }
-        else if(randomNumber<=50)//30%
+        else if(randomNumber<=60)//20%
         {
-            //Arme 
+            if(randomNumber<=50)//10% Jambieres mainstream
+            {  
+                stuffItem = StuffItem.getRandomItemInList(Rarity.MAINSTREAM, this.team.getLevelMaxInTeam(), Greave.listGreaveItem);
+            }
+            else if(randomNumber<=56)//6% Jambieres commune
+            {
+                stuffItem = StuffItem.getRandomItemInList(Rarity.COMMON, this.team.getLevelMaxInTeam(), Greave.listGreaveItem);
+            }
+            else if(randomNumber<=59)//3% Jambieres rare
+            {
+                stuffItem = StuffItem.getRandomItemInList(Rarity.RARE, this.team.getLevelMaxInTeam(), Greave.listGreaveItem);
+            }
+            else//1% Jambieres primordial
+            {
+                stuffItem = StuffItem.getRandomItemInList(Rarity.PRIMORDIAL, this.team.getLevelMaxInTeam(), Greave.listGreaveItem);
+            }
         }
-        else if(randomNumber<=80)
+        else //Objet
         {
-            //Armure
+            item = UseableItem.getRandomItem();
         }
-        else
+        
+        int i=0;
+        for(i=0; i<team.getNbCharacters(); i++)
         {
-            //Objet
+            if(team.getCharacters().get(i).inventoryNotFull())
+            {
+                if(stuffItem==null)
+                {
+                    team.getCharacters().get(i).addInventory(item);
+                }
+                else
+                {
+                    team.getCharacters().get(i).addInventory(stuffItem);
+                }
+                break;
+            }
         }
+        text = Controller.ConsoleDesign.text("Vous avez découvert l'item suivant:\n", Controller.ConsoleDesign.magentaText);
+        text += (stuffItem==null) ? item.toString() : stuffItem.toString();
+        text += Controller.ConsoleDesign.text("Il a été placé dans l'inventaire du personnage "+team.getCharacters().get(i).getName()+".", Controller.ConsoleDesign.magentaText);
     }
+
+    @Override
+    public String toString()
+    {
+        return Controller.ConsoleDesign.text(text, Controller.ConsoleDesign.magentaText);
+    }
+    
+    
 }

@@ -36,6 +36,24 @@ public abstract class Controller {
         System.out.println(text);
         return sc.nextLine();
     }
+
+    public static boolean askYesNo(String text) {
+        System.out.println(text);
+        do {
+            try {
+                String textIn = sc.nextLine();
+                if ("O".equals(textIn) || "o".equals(textIn)) {
+                    return true;
+                }else if ("N".equals(textIn) || "n".equals(textIn)) {
+                    return false;
+                }else{
+                    throw new Exception();
+                }
+            } catch (Exception e) {
+                System.out.println(ConsoleDesign.text("Veuillez entrez O ou o pour OUI / N ou n pour NON",ConsoleDesign.redText));
+            }
+        } while (true);
+    }
     
 
 }

@@ -6,6 +6,7 @@
 package Events;
 
 import Controller.ConsoleDesign;
+import Controller.Controller;
 import Manager.Turn;
 import Entities.Character;
 import Entities.Level;
@@ -20,7 +21,7 @@ public class Fight extends Event {
     Team playerTeam;
     Team ennemyTeam;
     Turn actualTurn;
-    
+
     public Fight(Team team1, Team team2) {
         this.name = "Combat";
         this.playerTeam = team1;
@@ -55,6 +56,22 @@ public class Fight extends Event {
     private void executeTurn(boolean equipe) {
         System.out.println("");
         if (equipe == true) {
+            String text = ConsoleDesign.textDashArrow("Souhaitez-vous en savoir plus sur l'état de vos troupes et de l'adversaire ? [O/N]", ConsoleDesign.redText);
+            if (Controller.askYesNo(text) == true) {
+                System.out.println(ConsoleDesign.textBox("Etats des troupes", ConsoleDesign.whiteText, ConsoleDesign.cyanBack));
+                System.out.println(ConsoleDesign.textDash("Votre équipe", ConsoleDesign.redText));
+                for (Character c : playerTeam.getCharacters()) {
+                    System.out.println(c.toString());
+                    System.out.println("");
+                }
+                System.out.println(ConsoleDesign.textDash("Votre adversaire", ConsoleDesign.redText));
+                for (Character c : ennemyTeam.getCharacters()) {
+                    System.out.println(c.toString());
+                    System.out.println("");
+                }
+            }else{
+             System.out.println("");
+            }
             actualTurn = new Turn(playerTeam, ennemyTeam);
             System.out.println(ConsoleDesign.textBox("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName(), ConsoleDesign.whiteText, ConsoleDesign.cyanBack));
             actualTurn.executeTurn();
@@ -63,27 +80,26 @@ public class Fight extends Event {
             System.out.println(ConsoleDesign.textBox("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName(), ConsoleDesign.whiteText, ConsoleDesign.cyanBack));
             actualTurn.executeTurnAuto();
         }
-
     }
 
     private void endFight(Team winner) {
         System.out.println("--------------------");
         System.out.println("Combat terminé. \nVictoire de l'équipe " + winner.getName() + "!");
-        
-        if(winner==playerTeam)
-        {
+
+        if (winner == playerTeam) {
             System.out.println("Votre équipe a gagné! Chaque membre de l'équipe va gagner un certain nombre de points d'expérience.");
             int experience = this.ennemyTeam.getAverageLevel() * 1500 * this.ennemyTeam.getNbCharacters();
-            for(Character c : playerTeam.getCharacters())
-            {
-                c.increaseExperience(experience/((Level.MAX_LEVEL+1)-c.getLevel()));
+            for (Character c : playerTeam.getCharacters()) {
+                c.increaseExperience(experience / ((Level.MAX_LEVEL + 1) - c.getLevel()));
                 System.out.println("Le personnage " + c.getName() + " a gagné " + experience + " points d'expérience.");
                 c.printActualLevelState();
             }
-        }
-        else
-        {
+        } else {
             System.out.println("Votre équipe à perdu. Vous ne gagnez pas de points d'expérience.");
         }
+    }
+
+    private void No(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

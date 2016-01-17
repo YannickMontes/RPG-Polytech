@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Greave extends StuffItem {
 
-    public static List<Greave> listGreaveItem;
+    public static List<StuffItem> listGreaveItem;
     private int defenseValue; // Caractérise la défense apportée par l'équipement.
 
     /**

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Weapon extends StuffItem {
 
-    public static List<Weapon> listWeaponItem;
+    public static List<StuffItem> listWeaponItem;
     private int damage;
 
     public Weapon(String name, int weight, int handlingAbility, int damage, int rarity, int requiredLevel) {

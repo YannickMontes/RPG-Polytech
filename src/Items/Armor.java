@@ -15,7 +15,7 @@ import java.util.List;
 public class Armor extends StuffItem {
 
     private int defenseValue;
-    public static List<Armor> listeArmorItem;
+    public static List<StuffItem> listeArmorItem;
 
     public Armor(String name, int weight, int handlingAbility, int defenseValue, int rarity, int requiredLevel) {
         super(name, weight, handlingAbility, rarity, requiredLevel);

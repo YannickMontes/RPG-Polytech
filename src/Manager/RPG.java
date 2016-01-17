@@ -31,22 +31,6 @@ public class RPG
         boolean a = warrior.equipMe((StuffItem) warrior.getInventory().get(0));
         boolean b = warrior.equipMe((StuffItem) warrior.getInventory().get(1));
          */
-        Warrior w = new Warrior("Connard", 5);
-        Athlete a = new Athlete("Enculé", 4);
-        Thief t = new Thief("Enculé", 7);
-
-        Team c = new Team("Player");
-        c.addCharacterTeam(w);
-        c.addCharacterTeam(t);
-        c.addCharacterTeam(a);
-        
-        System.out.println(c.toString());
-        
-        Team tg = new Team("FDP");
-        tg.generateRandomTeam(c);
-
-        System.out.println(tg.toString());
-        
         Game g = new Game();
         g.startGame();
     }

@@ -14,7 +14,7 @@ import Items.Weapon;
 import java.util.ArrayList;
 import java.util.List;
 import Controller.Controller;
-import me.grea.antoine.utils.Log;
+import Items.Greave;
 
 /**
  *
@@ -50,7 +50,7 @@ public abstract class Character
         this.className = className;
         this.initVars();
         this.initStats();
-
+        this.initStuff();
     }
 
     /**
@@ -79,6 +79,7 @@ public abstract class Character
             nbPoints -= NBPOINTLEVELUP;
             lvl--;
         }
+        this.initStuff();
     }
 
     private void initVars()
@@ -88,6 +89,53 @@ public abstract class Character
         this.capacities = new ArrayList<>();
         this.attributes = new Attributes();
         this.basicAttributes = new Attributes();
+    }
+    
+    /**
+     * Fonction permettant d'initialiser un stuff aléatoire en fonction des items existants.
+     */
+    private void initStuff()
+    {
+        if(this.level.getLevel()==1)
+        {
+            this.equipment.add(Greave.listGreaveItem.get(0));
+            this.equipment.add(Armor.listeArmorItem.get(0));
+            this.equipment.add(Weapon.listWeaponItem.get(0));
+        }
+        else
+        {
+            List<Armor> listPossibleArmor = new ArrayList<>();
+            List<Weapon> listPossibleWeapon = new ArrayList<>();
+            List<Greave> listPossibleGreave = new ArrayList<>();
+            for(Armor armor : Armor.listeArmorItem)
+            {
+                if(armor.getRequiredLevel()<=this.level.getLevel() && armor.getRequiredLevel() > this.level.getLevel()-5)
+                {
+                    listPossibleArmor.add(armor);
+                }
+            }
+            for(Weapon weapon : Weapon.listWeaponItem)
+            {
+                if(weapon.getRequiredLevel()<=this.level.getLevel() && weapon.getRequiredLevel() > this.level.getLevel()-5)
+                {
+                    listPossibleWeapon.add(weapon);
+                }
+            }
+            for(Greave greave : Greave.listGreaveItem)
+            {
+                if(greave.getRequiredLevel()<=this.level.getLevel() && greave.getRequiredLevel() > this.level.getLevel()-5)
+                {
+                    listPossibleGreave.add(greave);
+                }
+            }
+            
+            int nbAlea = (int) (Math.random() * listPossibleArmor.size());
+            this.equipment.add(listPossibleArmor.get(nbAlea));
+            nbAlea = (int) (Math.random() * listPossibleGreave.size());
+            this.equipment.add(listPossibleGreave.get(nbAlea));
+            nbAlea = (int) (Math.random() * listPossibleWeapon.size());
+            this.equipment.add(listPossibleWeapon.get(nbAlea));
+        }
     }
 
     //Getters & Setters

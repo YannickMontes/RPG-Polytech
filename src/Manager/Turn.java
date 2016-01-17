@@ -13,6 +13,7 @@ import Entities.Thief;
 import Items.Item;
 import Items.UseableItem;
 import Controller.Controller;
+import Entities.Attribute;
 import java.util.ArrayList;
 import java.util.List;
 import me.grea.antoine.utils.Log;
@@ -112,7 +113,7 @@ public class Turn {
     public void turnOf(Character character) {
         character.restoreAttributes();
         int limitAction = 1;
-        String text = ConsoleDesign.textDashArrow("Le personnage " + character.getName() + " (" + character.getClass().getSimpleName() + ")" + " doit joué", ConsoleDesign.cyanText);
+        String text = ConsoleDesign.textDashArrow("Le personnage " + character.getName() + " (" + character.getClass().getSimpleName() + " - Niveau: " + character.getLevel() + " - Vie: " + character.getAttributes().get(Attribute.HEALTH) + ")" + " doit joué", ConsoleDesign.cyanText);
         text += "\n \n" + ConsoleDesign.textDashArrow("Quelle action voulez-vous réaliser pour "+ character.getName()+" ?", ConsoleDesign.redText);
         for (String capacity : character.getCapacities()) {
             if (capacity.equals("Attaquer")) {

@@ -21,6 +21,13 @@ public class Team {
 
     private List<Character> characters;
     private String name;
+    
+    public Team(Team playerTeam)
+    {
+        this.name = "On s'en fout";
+        characters = new ArrayList<>();
+        this.generateRandomTeam(playerTeam);
+    }
 
     public Team(String name) {
         this.name = name;

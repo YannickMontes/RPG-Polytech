@@ -12,19 +12,19 @@ package Controller;
 public abstract class ConsoleDesign {
 
     public static String boldText = "\u001B[1m";
-    public static String redBack = "\033[1;41m";
+    public static String redBack = "\033[41m";
     public static String redText = "\033[31m";
-    public static String greenBack = "\033[1;42m";
-    public static String greenText = "\033[1;32m";
-    public static String yellowBack = "\033[1;43m";
-    public static String yellowText = "\033[1;33m";
-    public static String blueBack = "\033[1;44m";
-    public static String blueText = "\033[1;34m";
-    public static String magentaBack = "\033[1;45m";
-    public static String magentaText = "\033[1;35m";
-    public static String cyanBack = "\033[1;46m";
-    public static String cyanText = "\033[1;36m";
-    public static String whiteBack = "\033[1;47m";
+    public static String greenBack = "\033[42m";
+    public static String greenText = "\033[32m";
+    public static String yellowBack = "\033[43m";
+    public static String yellowText = "\033[33m";
+    public static String blueBack = "\033[44m";
+    public static String blueText = "\033[34m";
+    public static String magentaBack = "\033[45m";
+    public static String magentaText = "\033[35m";
+    public static String cyanBack = "\033[46m";
+    public static String cyanText = "\033[36m";
+    public static String whiteBack = "\033[47m";
     public static String whiteText = "\033[1;37m";
     public static String reset = "\033[0m";
 
@@ -38,7 +38,7 @@ public abstract class ConsoleDesign {
         }
         textBox += "\n";
         textBox += color;
-        textBox += "• " + text + " •";
+        textBox += "| " + text + " |";
         textBox += "\n";
         textBox += color;
         for (int i = 0; i < text.length() + 4; i++) {
@@ -95,25 +95,31 @@ public abstract class ConsoleDesign {
     public static String RPG(String color, String color2) {
         String textBox = "";
         textBox += color + color2;
-        textBox += "••••••••••••••••  ••••••••••••••••  •••••••••••••••• \n";
+        textBox += " ••••••••••••••••  ••••••••••••••••  •••••••••••••••• \n";
         textBox += color + color2;
-        textBox += "•              •  •              •  •              • \n";
+        textBox += " •              •  •              •  •              • \n";
         textBox += color + color2;
-        textBox += "•              •  •              •  •                \n";
+        textBox += " •              •  •              •  •                \n";
         textBox += color + color2;
-        textBox += "•              •  •              •  •                \n";
+        textBox += " •              •  •              •  •                \n";
         textBox += color + color2;
-        textBox += "••••••••••••••••  ••••••••••••••••  •                \n";
+        textBox += " ••••••••••••••••  ••••••••••••••••  •                \n";
         textBox += color + color2;
-        textBox += "• •               •                 •        ••••••• \n";
+        textBox += " • •               •                 •        ••••••• \n";
         textBox += color + color2;
-        textBox += "•    •            •                 •              • \n";
+        textBox += " •    •            •                 •              • \n";
         textBox += color + color2;
-        textBox += "•       •         •                 •              • \n";
+        textBox += " •       •         •                 •              • \n";
         textBox += color + color2;
-        textBox += "•          •      •                 •              • \n";
+        textBox += " •          •      •                 •              • \n";
         textBox += color + color2;
-        textBox += "•             •   •                 •••••••••••••••• \n";
+        textBox += " •             •   •                 •••••••••••••••• \n";
+        textBox += color + color2;
+        textBox += "                                                      \n";
+        textBox += color + color2;
+        textBox += "         By Yannick Montes & Corentin Maréchal        \n";
+        textBox += color + color2;
+        textBox += "                                                      \n";
 
         textBox += reset;
         return textBox;

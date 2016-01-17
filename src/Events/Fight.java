@@ -53,17 +53,14 @@ public class Fight extends Event {
     }
 
     private void executeTurn(boolean equipe) {
+        System.out.println("");
         if (equipe == true) {
             actualTurn = new Turn(playerTeam, ennemyTeam);
-            System.out.println("");
-            System.out.println("--------------------");
-            System.out.println("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName());
+            System.out.println(ConsoleDesign.textBox("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName(), ConsoleDesign.whiteText, ConsoleDesign.cyanBack));
             actualTurn.executeTurn();
         } else {
             actualTurn = new Turn(ennemyTeam, playerTeam);
-            System.out.println("");
-            System.out.println("--------------------");
-            System.out.println("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName());
+            System.out.println(ConsoleDesign.textBox("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName(), ConsoleDesign.whiteText, ConsoleDesign.cyanBack));
             actualTurn.executeTurnAuto();
         }
 

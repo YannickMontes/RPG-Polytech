@@ -545,23 +545,23 @@ public abstract class Character
     @Override
     public String toString()
     {
-        return  ConsoleDesign.text("Nom: " + this.name, ConsoleDesign.blueText)
+        return  ConsoleDesign.text("Nom: " + this.name, ConsoleDesign.cyanText)
                 + "\n"
-                + ConsoleDesign.text("Classe: " + this.className, ConsoleDesign.blueText)
+                + ConsoleDesign.text("Classe: " + this.className, ConsoleDesign.cyanText)
                 + "\n"
-                + ConsoleDesign.text("Niveau: " + this.level.getLevel(), ConsoleDesign.blueText)
+                + ConsoleDesign.text("Niveau: " + this.level.getLevel(), ConsoleDesign.cyanText)
                 + "\n"
-                + ConsoleDesign.text("Santé: " + this.attributes.get(Attribute.HEALTH), ConsoleDesign.blueText)
+                + ConsoleDesign.text("Santé: " + this.attributes.get(Attribute.HEALTH), ConsoleDesign.cyanText)
                 + "\n"
-                + ConsoleDesign.text("Mana: " + this.attributes.get(Attribute.MANA), ConsoleDesign.blueText)
+                + ConsoleDesign.text("Mana: " + this.attributes.get(Attribute.MANA), ConsoleDesign.cyanText)
                 + "\n"
-                + ConsoleDesign.text("Force: " + this.attributes.get(Attribute.STRENGTH), ConsoleDesign.blueText)
+                + ConsoleDesign.text("Force: " + this.attributes.get(Attribute.STRENGTH), ConsoleDesign.cyanText)
                 + "\n"
-                + ConsoleDesign.text("Défense: " + this.attributes.get(Attribute.DEFENSE), ConsoleDesign.blueText)
+                + ConsoleDesign.text("Défense: " + this.attributes.get(Attribute.DEFENSE), ConsoleDesign.cyanText)
                 + "\n"
-                + ConsoleDesign.text("Dextérité: " + this.attributes.get(Attribute.DEXTERITY), ConsoleDesign.blueText)
+                + ConsoleDesign.text("Dextérité: " + this.attributes.get(Attribute.DEXTERITY), ConsoleDesign.cyanText)
                 + "\n"
-                + ConsoleDesign.text("Vitesse: " + this.attributes.get(Attribute.SPEED), ConsoleDesign.blueText)
+                + ConsoleDesign.text("Vitesse: " + this.attributes.get(Attribute.SPEED), ConsoleDesign.cyanText)
                 + "\n";
     }
     

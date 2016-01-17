@@ -38,35 +38,32 @@ public class Game {
 
     public Game() {
         events = new ArrayList<>();
+        System.out.println(ConsoleDesign.RPG(ConsoleDesign.whiteText, ConsoleDesign.redBack));
     }
 
     public void startGame() {
-                        System.out.println(ConsoleDesign.RPG(ConsoleDesign.whiteText, ConsoleDesign.redBack));
 
         readJSONFiles();
 
-        for(Weapon w : Weapon.listWeaponItem)
-        {
-            System.out.println(w+"\n");
+        for (Weapon w : Weapon.listWeaponItem) {
+            System.out.println(w + "\n");
         }
-        for(Armor a : Armor.listeArmorItem)
-        {
-            System.out.println(a+"\n");
+        for (Armor a : Armor.listeArmorItem) {
+            System.out.println(a + "\n");
         }
-        for(Greave g : Greave.listGreaveItem)
-        {
-            System.out.println(g+"\n");
+        for (Greave g : Greave.listGreaveItem) {
+            System.out.println(g + "\n");
         }
-        
-                System.out.println(ConsoleDesign.textBox("Création de votre équipe", ConsoleDesign.whiteText, ConsoleDesign.redBack));
-        
-        team = new Team(Controller.askText(ConsoleDesign.textBox("Entrez un nom pour votre équipe",ConsoleDesign.redText)));
 
-        int numberTeam1 = Controller.askNumberBetween(ConsoleDesign.textBox("Entrez le nombre de personnage pour votre équipe",ConsoleDesign.redText), 1, 5);
+        System.out.println(ConsoleDesign.textBox("Création de votre équipe", ConsoleDesign.whiteText, ConsoleDesign.redBack));
+
+        team = new Team(Controller.askText(ConsoleDesign.textBox("Entrez un nom pour votre équipe", ConsoleDesign.redText)));
+
+        int numberTeam1 = Controller.askNumberBetween(ConsoleDesign.textBox("Entrez le nombre de personnage pour votre équipe", ConsoleDesign.redText), 1, 5);
 
         fillUpCharacters(team, numberTeam1);
 
-        System.out.println(ConsoleDesign.textBox("Récapitulatif de votre équipe ("+team.getName()+")",ConsoleDesign.redText));
+        System.out.println(ConsoleDesign.textBox("Récapitulatif de votre équipe (" + team.getName() + ")", ConsoleDesign.redText));
         for (Character character : team.getCharacters()) {
             System.out.println(character);
         }
@@ -75,14 +72,14 @@ public class Game {
     }
 
     private void fillUpCharacters(Team team, int number) {
-        System.out.println(ConsoleDesign.textBox("Entrez le nom des " + number + " personnage(s) ainsi que leur classe",ConsoleDesign.redText));
+        System.out.println(ConsoleDesign.textBox("Entrez le nom des " + number + " personnage(s) ainsi que leur classe", ConsoleDesign.redText));
         for (int i = 0; i < number; i++) {
-            String name = Controller.askText(ConsoleDesign.textDashArrow("Choississez un nom pour le personnage n°" + (i + 1),ConsoleDesign.redText));
-            String textClass = ConsoleDesign.textDashArrow("Choississez une classe pour " + name + " ?",ConsoleDesign.redText)
+            String name = Controller.askText(ConsoleDesign.textDashArrow("Choississez un nom pour le personnage n°" + (i + 1), ConsoleDesign.redText));
+            String textClass = ConsoleDesign.textDashArrow("Choississez une classe pour " + name + " ?", ConsoleDesign.redText)
                     + "\n"
-                    + ConsoleDesign.text("1 -> Athlete\n",ConsoleDesign.redText)
-                    + ConsoleDesign.text("2 -> Guerrier\n",ConsoleDesign.redText)
-                    + ConsoleDesign.text("3 -> Voleur\n",ConsoleDesign.redText);
+                    + ConsoleDesign.text("1 -> Athlete\n", ConsoleDesign.redText)
+                    + ConsoleDesign.text("2 -> Guerrier\n", ConsoleDesign.redText)
+                    + ConsoleDesign.text("3 -> Voleur\n", ConsoleDesign.redText);
             int classe = Controller.askNumberBetween(textClass, 1, 3);
             Character character = null;
             switch (classe) {
@@ -128,7 +125,7 @@ public class Game {
                 long weight = (long) objTemp.get("weight");
                 long bonus = (long) objTemp.get("bonus");
                 long rarity = (long) objTemp.get("rarity");
-                UseableItem.listUseableItem.add(new UseableItem(name, (int)weight, (int)bonus, (int)rarity));
+                UseableItem.listUseableItem.add(new UseableItem(name, (int) weight, (int) bonus, (int) rarity));
             }
             iterator = armors.iterator();
             Armor.listeArmorItem = new ArrayList<>();
@@ -139,8 +136,8 @@ public class Game {
                 long handlingAbility = (long) objTemp.get("handlingability");
                 long defensevalue = (long) objTemp.get("defenseValue");
                 long rarity = (long) objTemp.get("rarity");
-                long requiredLevel = (long)objTemp.get("requiredLevel");
-                Armor.listeArmorItem.add(new Armor(name, (int)weight, (int)handlingAbility, (int)defensevalue, (int)rarity, (int)requiredLevel));
+                long requiredLevel = (long) objTemp.get("requiredLevel");
+                Armor.listeArmorItem.add(new Armor(name, (int) weight, (int) handlingAbility, (int) defensevalue, (int) rarity, (int) requiredLevel));
             }
             iterator = weapons.iterator();
             Weapon.listWeaponItem = new ArrayList<>();
@@ -151,8 +148,8 @@ public class Game {
                 long handlingAbility = (long) objTemp.get("handlingability");
                 long attackvalue = (long) objTemp.get("attackValue");
                 long rarity = (long) objTemp.get("rarity");
-                long requiredLevel = (long)objTemp.get("requiredLevel");
-                Weapon.listWeaponItem.add(new Weapon(name, (int)weight, (int)handlingAbility, (int)attackvalue, (int)rarity, (int)requiredLevel));
+                long requiredLevel = (long) objTemp.get("requiredLevel");
+                Weapon.listWeaponItem.add(new Weapon(name, (int) weight, (int) handlingAbility, (int) attackvalue, (int) rarity, (int) requiredLevel));
             }
             iterator = greaves.iterator();
             Greave.listGreaveItem = new ArrayList<>();
@@ -163,8 +160,8 @@ public class Game {
                 long handlingAbility = (long) objTemp.get("handlingability");
                 long defenseValue = (long) objTemp.get("defenseValue");
                 long rarity = (long) objTemp.get("rarity");
-                long requiredLevel = (long)objTemp.get("requiredLevel");
-                Greave.listGreaveItem.add(new Greave(name, (int)weight, (int)handlingAbility, (int)defenseValue, (int)rarity, (int)requiredLevel));
+                long requiredLevel = (long) objTemp.get("requiredLevel");
+                Greave.listGreaveItem.add(new Greave(name, (int) weight, (int) handlingAbility, (int) defenseValue, (int) rarity, (int) requiredLevel));
             }
 
         } catch (Exception e) {

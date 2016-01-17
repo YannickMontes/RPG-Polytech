@@ -6,6 +6,8 @@
 package Items;
 
 import Controller.ConsoleDesign;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -42,4 +44,18 @@ public abstract class StuffItem extends Item {
 
     }
 
+    public static StuffItem getRandomItemInList(Rarity rarity, int level, List<StuffItem> list)
+    {
+        List<StuffItem> possibilities = new ArrayList<>();
+        for(StuffItem a : list)
+        {
+            if((a.getRequiredLevel()<=level && a.getRequiredLevel()>level-5) && (a.getRarity() == rarity))
+            {
+                possibilities.add(a);
+            }
+        }
+        int randomValue = (int)(Math.random()*possibilities.size());
+        
+        return possibilities.get(randomValue);
+    }
 }

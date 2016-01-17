@@ -13,10 +13,12 @@ import Events.Fight;
 import Entities.Character;
 import Entities.Warrior;
 import Entities.Thief;
+import Events.Discovery;
 import Items.Armor;
 import Items.Greave;
 import Items.Item;
 import Items.Rarity;
+import Items.StuffItem;
 import Items.UseableItem;
 import Items.Weapon;
 import java.io.FileReader;
@@ -44,16 +46,6 @@ public class Game {
     public void startGame() {
 
         readJSONFiles();
-
-        for (Weapon w : Weapon.listWeaponItem) {
-            System.out.println(w + "\n");
-        }
-        for (Armor a : Armor.listeArmorItem) {
-            System.out.println(a + "\n");
-        }
-        for (Greave g : Greave.listGreaveItem) {
-            System.out.println(g + "\n");
-        }
 
         System.out.println(ConsoleDesign.textBox("Création de votre équipe", ConsoleDesign.whiteText, ConsoleDesign.redBack));
 
@@ -98,9 +90,16 @@ public class Game {
     }
 
     private void initEvents() {
-        Team temp = new Team("nom");
-        temp.addCharacterTeam(new Warrior("Peter"));
-        events.add(new Fight(team, temp));
+        int rd = (int)(Math.random()*2);
+        if(rd == 55)
+        {
+            events.add(new Fight(team, new Team(team)));
+        }
+        else
+        {
+            events.add(new Discovery(team));
+            System.out.println(events.get(0));
+        }
     }
 
     private void readJSONFiles() {

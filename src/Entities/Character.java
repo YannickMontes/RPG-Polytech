@@ -552,7 +552,7 @@ public abstract class Character
         {
             return "Vous avez infligé " + damages + " de dégâts à " + opponent.getName() + " (Santé: " + opponent.getAttributes().get(Attribute.HEALTH) + ")";
         }
-        return "Votre attaque sur " + opponent.getName() + " a échoué";
+        return "L'attaque sur " + opponent.getName() + " a échoué";
     }
 
     public String careResult(boolean success, int care)
@@ -561,7 +561,7 @@ public abstract class Character
         {
             return "Vous avez augmenté de " + care + " votre vie " + " (Santé: " + this.getAttributes().get(Attribute.HEALTH) + ")";
         }
-        return "Votre soin a échoué";
+        return "Le soin a échoué";
     }
 
     public String blockResult(boolean success, int blockValue)
@@ -570,7 +570,7 @@ public abstract class Character
         {
             return "Vous avez augmenté de " + blockValue + " votre défense " + " (Défense: " + this.getAttributes().get(Attribute.DEFENSE) + ")";
         }
-        return "Votre blocage a échoué";
+        return "Le blocage a échoué";
     }
 
     public String dodgeResult(boolean success, int blockValue)
@@ -579,7 +579,7 @@ public abstract class Character
         {
             return "Vous avez augmenté de " + blockValue + " votre défense " + " (Défense: " + this.getAttributes().get(Attribute.DEFENSE) + ")";
         }
-        return "Votre esquive a échoué";
+        return "L'esquive a échoué";
     }
 
     public void putRandomPoint(int lvl)

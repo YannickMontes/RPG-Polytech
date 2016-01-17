@@ -25,5 +25,8 @@ public class UseableItem extends Item
         return bonusValue;
     }
     
-    
+    public static UseableItem getRandomItem()
+    {
+        return listUseableItem.get((int) (Math.random()*listUseableItem.size()));
+    }
 }

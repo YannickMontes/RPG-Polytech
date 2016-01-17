@@ -17,7 +17,7 @@ public class Weapon extends StuffItem {
     public static List<Weapon> listWeaponItem;
     private int damage;
 
-    public Weapon(String name, int weight, int damage, int handlingAbility, int rarity, int requiredLevel) {
+    public Weapon(String name, int weight, int handlingAbility, int damage, int rarity, int requiredLevel) {
         super(name, weight, handlingAbility, rarity, requiredLevel);
         this.damage = damage;
     }

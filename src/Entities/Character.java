@@ -104,24 +104,24 @@ public abstract class Character
         }
         else
         {
-            List<Armor> listPossibleArmor = new ArrayList<>();
-            List<Weapon> listPossibleWeapon = new ArrayList<>();
-            List<Greave> listPossibleGreave = new ArrayList<>();
-            for(Armor armor : Armor.listeArmorItem)
+            List<StuffItem> listPossibleArmor = new ArrayList<>();
+            List<StuffItem> listPossibleWeapon = new ArrayList<>();
+            List<StuffItem> listPossibleGreave = new ArrayList<>();
+            for(StuffItem armor : Armor.listeArmorItem)
             {
                 if(armor.getRequiredLevel()<=this.level.getLevel() && armor.getRequiredLevel() > this.level.getLevel()-5)
                 {
                     listPossibleArmor.add(armor);
                 }
             }
-            for(Weapon weapon : Weapon.listWeaponItem)
+            for(StuffItem weapon : Weapon.listWeaponItem)
             {
                 if(weapon.getRequiredLevel()<=this.level.getLevel() && weapon.getRequiredLevel() > this.level.getLevel()-5)
                 {
                     listPossibleWeapon.add(weapon);
                 }
             }
-            for(Greave greave : Greave.listGreaveItem)
+            for(StuffItem greave : Greave.listGreaveItem)
             {
                 if(greave.getRequiredLevel()<=this.level.getLevel() && greave.getRequiredLevel() > this.level.getLevel()-5)
                 {
@@ -705,6 +705,20 @@ public abstract class Character
     public void printActualLevelState()
     {
         System.out.println(this.level);
+    }
+
+    public boolean inventoryNotFull()
+    {
+        int sum=0;
+        for(Item item : this.inventory)
+        {
+            sum += item.getWeight();
+        }
+        if(sum > this.maxWeight)
+        {
+            return false;
+        }
+        return true;
     }
 
 }

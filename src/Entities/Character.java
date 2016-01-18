@@ -444,11 +444,14 @@ public abstract class Character
         float probability = 0;
         if ("attack".equals(capacity))
         {
+            float mania=1;
             for (StuffItem weapon : this.getEquipment(Weapon.class))
             {
-                probability += (float) (((Weapon) weapon).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
+                mania = weapon.getHandlingAbility()/100;
             }
-            probability += (float) (this.attributes.get(Attribute.DEXTERITY).floatValue() / 100)/* * (1 - (0.2 * this.getEquipment(Weapon.class).size()))*/;
+            probability = mania;
+            probability += 2 * (1-mania)*(this.attributes.get(Attribute.DEXTERITY)*0.004);
+            System.out.println("Probabilité d'attaquer: "+probability);
         }
         else if ("block".equals(capacity))
         {
@@ -510,14 +513,7 @@ public abstract class Character
         //// - augmente santé d'une valeur de la santé en fonction de la capacité de soin de ses équipements.
         if ("attack".equals(capacity) && opponent != null)
         {
-            int damage = this.attributes.get(Attribute.STRENGTH);
-            int defense = opponent.attributes.get(Attribute.DEFENSE);
-            int damages = damage - defense;
-            if (damages <= 0)
-            {
-                return 0;
-            }
-            return damages;
+            return this.calculateDamageBasicAttack(opponent);
         }
         else if ("block".equals(capacity))
         {
@@ -529,6 +525,32 @@ public abstract class Character
             return useableItem.getBonusValue();
         }
         return 0;
+    }
+    
+    private int calculateDamageBasicAttack(Character opponent)
+    {
+        int defenseOpponent = opponent.getAttributes().get(Attribute.DEFENSE);
+        int damage =0;
+        float reduction;
+        if(defenseOpponent <= 50)
+        {
+            reduction = (float) (defenseOpponent*0.01f);
+        }
+        else if(defenseOpponent <= 100)
+        {
+            reduction = (float)(0.5f+(defenseOpponent-50)*0.005f);
+        }
+        else if(defenseOpponent <= 200)
+        {
+            reduction = (float)(0.75f+(defenseOpponent-100)*0.00149925f);
+        }
+        else
+        {
+            reduction = 0.9f;
+        }
+        damage = (int)(this.attributes.get(Attribute.STRENGTH)*(1-reduction));
+        
+        return damage;
     }
     
     /**

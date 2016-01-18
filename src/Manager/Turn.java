@@ -187,13 +187,13 @@ public class Turn {
                         String resultAttack = "";
                         if (character instanceof Warrior) {
                             resultAttack = ((Warrior) character).strikeABlow(opponent);
-                            attacks.add(ConsoleDesign.text("-Une attaque a été effectuée par " + character.getName() + " contre " + opponent.getName() + " -> " + resultAttack, ConsoleDesign.redText));
+                            attacks.add(ConsoleDesign.text("- Une attaque a été effectuée par " + character.getName() + " contre " + opponent.getName() + " -> " + resultAttack, ConsoleDesign.redText));
                         } else if (character instanceof Athlete) {
                             resultAttack = ((Athlete) character).strikeABlow(opponent);
-                            attacks.add(ConsoleDesign.text("-Une attaque a été effectuée par " + character.getName() + " contre " + opponent.getName() + " -> " + resultAttack, ConsoleDesign.redText));
+                            attacks.add(ConsoleDesign.text("- Une attaque a été effectuée par " + character.getName() + " contre " + opponent.getName() + " -> " + resultAttack, ConsoleDesign.redText));
                         } else if (character instanceof Thief) {
                             resultAttack = ((Thief) character).strikeABlow(opponent);
-                            attacks.add(ConsoleDesign.text("-Une attaque a été effectuée par " + character.getName() + " contre " + opponent.getName() + " -> " + resultAttack, ConsoleDesign.redText));
+                            attacks.add(ConsoleDesign.text("- Une attaque a été effectuée par " + character.getName() + " contre " + opponent.getName() + " -> " + resultAttack, ConsoleDesign.redText));
                         }
                         break;
                     case 2:
@@ -257,15 +257,21 @@ public class Turn {
                 System.out.println(ConsoleDesign.text("Le joueur " + character.getName() + " est mort !", ConsoleDesign.redText));
             }
         }
-        System.out.println(ConsoleDesign.textDash("Liste des attaques réalisées par l'équipe " + team.getName(), ConsoleDesign.redText));
+        if (attacks.size() > 0) {
+            System.out.println(ConsoleDesign.textDash("Liste des attaques réalisées par l'équipe " + team.getName(), ConsoleDesign.redText));
+        }
         for (String text : attacks) {
             System.out.println(text);
         }
-        System.out.println(ConsoleDesign.textDash("Liste des blocks réalisées par l'équipe " + team.getName(), ConsoleDesign.redText));
+        if (blocks.size() > 0) {
+            System.out.println(ConsoleDesign.textDash("Liste des blocks réalisées par l'équipe " + team.getName(), ConsoleDesign.redText));
+        }
         for (String text : blocks) {
             System.out.println(text);
         }
-        System.out.println(ConsoleDesign.textDash("Liste des soins utilisées par l'équipe " + team.getName(), ConsoleDesign.redText));
+        if (cares.size() > 0) {
+            System.out.println(ConsoleDesign.textDash("Liste des soins utilisées par l'équipe " + team.getName(), ConsoleDesign.redText));
+        }
         for (String text : cares) {
             System.out.println(text);
         }

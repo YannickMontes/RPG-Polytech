@@ -54,6 +54,11 @@ public abstract class StuffItem extends Item {
                 possibilities.add(a);
             }
         }
+        if(possibilities.isEmpty())
+        {
+            int randomValue = (int)(Math.random()*list.size());
+            return list.get(randomValue);
+        }
         int randomValue = (int)(Math.random()*possibilities.size());
         
         return possibilities.get(randomValue);

@@ -88,9 +88,10 @@ public class Fight extends Event {
 
         if (winner == playerTeam) {
             System.out.println("Votre équipe a gagné! Chaque membre de l'équipe va gagner un certain nombre de points d'expérience.");
-            int experience = this.ennemyTeam.getAverageLevel() * 1500 * this.ennemyTeam.getNbCharacters();
+            int experience = this.ennemyTeam.getAverageLevel() * 2500 * this.ennemyTeam.getNbCharacters();
             for (Character c : playerTeam.getCharacters()) {
-                c.increaseExperience(experience / ((Level.MAX_LEVEL + 1) - c.getLevel()));
+                experience = (experience / ((Level.MAX_LEVEL + 1) - c.getLevel()));
+                c.increaseExperience(experience);
                 System.out.println("Le personnage " + c.getName() + " a gagné " + experience + " points d'expérience.");
                 c.printActualLevelState();
             }

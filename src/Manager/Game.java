@@ -91,7 +91,7 @@ public class Game {
 
     private void initEvents() {
         int rd = (int)(Math.random()*2);
-        if(rd == 55)
+        if(rd == 1 || rd == 0)
         {
             events.add(new Fight(team, new Team(team)));
         }

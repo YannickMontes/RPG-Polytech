@@ -5,6 +5,7 @@
  */
 package Items;
 
+import Entities.Attribute;
 import java.util.List;
 
 /**
@@ -14,19 +15,26 @@ import java.util.List;
 public class UseableItem extends Item
 {
     public static List<UseableItem> listUseableItem;
-    private int bonusValue;
+    private final int value;
+    private Attribute attributeBonus;
     
     public UseableItem(String name, int weight, int bonusValue, int r) {
         super(name, weight,r);
-        this.bonusValue=bonusValue;
+        this.value=bonusValue;
     }
 
-    public int getBonusValue() {
-        return bonusValue;
+    public int getValue() 
+    {
+        return value;
     }
     
-    public static UseableItem getRandomItem()
+    public Attribute getAttributeBonus()
     {
-        return listUseableItem.get((int) (Math.random()*listUseableItem.size()));
+        return attributeBonus;
+    }
+    
+    public static UseableItem getRandomItem(List<UseableItem> liste)
+    {
+        return liste.get((int) (Math.random()*liste.size()));
     }
 }

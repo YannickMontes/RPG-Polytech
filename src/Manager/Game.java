@@ -123,7 +123,7 @@ public class Game {
             JSONArray greaves = (JSONArray) jsonObject.get("Greave");
 
             Iterator<JSONObject> iterator = potions.iterator();
-            UseableItem.listUseableItem = new ArrayList<>();
+            Potion.listPotionItem = new ArrayList<>();
             while (iterator.hasNext()) {
                 JSONObject objTemp = iterator.next();
                 String name = (String) objTemp.get("name");

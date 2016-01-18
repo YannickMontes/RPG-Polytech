@@ -36,8 +36,11 @@ public class Turn {
         String actionText = ConsoleDesign.textDashArrow("Choississez un adversaire", ConsoleDesign.redText) + "\n";
         int num = 0;
         for (Character op : opponentsTeam.getCharacters()) {
-            actionText += ConsoleDesign.text(Integer.toString(num) + " -> " + op.getName(), ConsoleDesign.redText) + "\n";
-            num++;
+            if(op.isAlive())
+            {
+                actionText += ConsoleDesign.text(Integer.toString(num) + " -> " + op.getName(), ConsoleDesign.redText) + "\n";
+                num++;   
+            }
         }
         int opponentNumber = Controller.askNumberBetween(actionText, 0, num - 1);
 

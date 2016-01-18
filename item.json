@@ -35,5 +35,8 @@
 ],
 "Greave": [
 	{"weight":1, "handlingability":100, "defenseValue": 0, "rarity":0, "requiredLevel":1, "name":"Chaussettes sales"}
+	{"weight":1, "handlingability":100, "defenseValue": 0, "rarity":1, "requiredLevel":1, "name":"Chaussettes sales"}
+	{"weight":1, "handlingability":100, "defenseValue": 0, "rarity":2, "requiredLevel":1, "name":"Chaussettes sales"}
+	{"weight":1, "handlingability":100, "defenseValue": 0, "rarity":3, "requiredLevel":1, "name":"Chaussettes sales"}
 ]
 }

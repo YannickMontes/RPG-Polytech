@@ -66,12 +66,17 @@ public class Team {
     
     public boolean isTeamAlive()
     {
+        int i=0;
         for(Character ch : characters)
         {
             if(!ch.isAlive())
             {
-                return false;
+                i++;
             }
+        }
+        if(i==this.getNbCharacters())
+        {
+            return false;
         }
         return true;
     }

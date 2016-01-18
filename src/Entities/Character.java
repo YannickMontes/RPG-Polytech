@@ -169,6 +169,11 @@ public abstract class Character
     {
         return attributes;
     }
+    
+    public Attributes getBasicAttributesCHEAT()
+    {
+        return basicAttributes;
+    }
 
     public int getLevel()
     {
@@ -645,7 +650,7 @@ public abstract class Character
      */
     private void restoreAttribute(Attribute attribute)
     {
-        attributes.replace(attribute, basicAttributes.get(attribute));
+        attributes.replace(attribute, basicAttributes.get(attribute), false);
     }
     
     /**

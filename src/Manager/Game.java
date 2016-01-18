@@ -8,6 +8,7 @@ package Manager;
 import Controller.ConsoleDesign;
 import Controller.Controller;
 import Entities.Athlete;
+import Entities.Attribute;
 import Events.Event;
 import Events.Fight;
 import Entities.Character;
@@ -85,20 +86,27 @@ public class Game {
                     character = new Thief(name);
                     break;
             }
+            character.getBasicAttributesCHEAT().cheat();
+            character.reinitStats();
             team.addCharacterTeam(character);
         }
     }
 
     private void initEvents() {
-        int rd = (int)(Math.random()*2);
-        if(rd == 1 || rd == 0)
+        int cpt = 0;
+        while(true)
         {
-            events.add(new Fight(team, new Team(team)));
-        }
-        else
-        {
-            events.add(new Discovery(team));
-            System.out.println(events.get(0));
+            int rd = (int)(Math.random()*2);
+            if(rd == 0)
+            {
+                events.add(new Fight(team, new Team(team)));
+            }
+            else
+            {
+                events.add(new Discovery(team));
+                System.out.println(events.get(cpt));
+            }
+            cpt++;
         }
     }
 

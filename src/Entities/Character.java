@@ -229,36 +229,22 @@ public abstract class Character
     }
     
     /**
-     * Fonction permettant d'obtenir le nombre d'armures équipées.
-     * @return Le nombre d'armures équipées sous forme d'entier.
+     * Fonction calculant le nombre d'items de la classe passé en paramètre,
+     * dans l'équipement du personnage
+     * @param c Classe dont on veut connaitre le nombre d'équipements
+     * @return Le nombre d'équipement de classe c
      */
-    private int numberArmorEquipment()
+    private int numberOfClassEquipment(Class c)
     {
         int i = 0;
         for (StuffItem stuffItem : equipment)
         {
-            if (stuffItem.getClass() == Armor.class)
+            if (stuffItem.getClass() == c)
             {
                 i++;
             }
         }
         return i;
-    }
-
-    /**
-     * Fonction permettant d'obtenir le nombre d'armes équipées.
-     * @return Le nombre d'armes équipées sous forme d'entier.
-     */
-    private int numberWeaponEquipment()
-    {
-        for (StuffItem stuffItem : equipment)
-        {
-            if (stuffItem.getClass() == Weapon.class)
-            {
-                return 1;
-            }
-        }
-        return 0;
     }
 
     /**
@@ -366,11 +352,11 @@ public abstract class Character
         }
         if (equipment.size() < MAXEQUIPMENT)
         {
-            if ((stuffItem.getClass() == Weapon.class && numberWeaponEquipment() < MAXWEAPONEQUIPMENT) 
-                    || (stuffItem.getClass() == Armor.class && numberArmorEquipment() < MAXARMOREQUIPMENT)
-                    || (stuffItem.getClass() == Greave.class && numberArmorEquipment() < MAXGREAVEEQUIPMENT))
+            if ((stuffItem.getClass() == Weapon.class && numberOfClassEquipment(Weapon.class)< MAXWEAPONEQUIPMENT) 
+                    || (stuffItem.getClass() == Armor.class && numberOfClassEquipment(Armor.class)< MAXARMOREQUIPMENT)
+                    || (stuffItem.getClass() == Greave.class && numberOfClassEquipment(Greave.class)< MAXGREAVEEQUIPMENT))
             {
-                equipment.add(stuffItem);
+                this.equipment.add(stuffItem);
                 return true;
             }
         }

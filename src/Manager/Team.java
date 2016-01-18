@@ -147,7 +147,7 @@ public class Team {
         
         if(playerTeam.getNbCharacters()+deltaNbPlayer<1)
         {
-            deltaNbPlayer = 1;
+            deltaNbPlayer = 0;
         }
         
         //On boucle pour créer le nombre de joueurs aléatoire défini. 

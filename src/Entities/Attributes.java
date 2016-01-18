@@ -20,6 +20,11 @@ public class Attributes extends HashMap<Attribute, Integer>
     public final static int MAXSTRENGTH = 99;
     public final static int MAXSPEED = 99;
     public final static int MAXMANA = 999;
+    
+    public Integer addValueToAttribute(Attribute attribute, int value)
+    {
+        return super.replace(attribute, this.get(attribute)+value);
+    }
 
     @Override
     public Integer put(Attribute key, Integer value)

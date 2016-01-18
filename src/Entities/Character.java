@@ -53,6 +53,7 @@ public abstract class Character
         this.className = className;
         this.initVars();
         this.initStats();
+        this.calculateMaxWeight();
         this.initStuff();
     }
 
@@ -71,6 +72,7 @@ public abstract class Character
 
         this.initVars();
         this.initStats();
+        this.calculateMaxWeight();
 
         int nbPoints = (level.getLevel() - 1) * NBPOINTLEVELUP;
         int lvl = level.getLevel();
@@ -108,9 +110,9 @@ public abstract class Character
     {
         if(this.level.getLevel()==1)
         {
-            this.equipment.add(Greave.listGreaveItem.get(0));
-            this.equipment.add(Armor.listeArmorItem.get(0));
-            this.equipment.add(Weapon.listWeaponItem.get(0));
+            this.addEquipement(Greave.listGreaveItem.get(0));
+            this.addEquipement(Armor.listeArmorItem.get(1));
+            this.addEquipement(Weapon.listWeaponItem.get(0));
         }
         else
         {
@@ -140,12 +142,13 @@ public abstract class Character
             }
             
             int nbAlea = (int) (Math.random() * listPossibleArmor.size());
-            this.equipment.add(listPossibleArmor.get(nbAlea));
+            this.addEquipement(listPossibleArmor.get(nbAlea));
             nbAlea = (int) (Math.random() * listPossibleGreave.size());
-            this.equipment.add(listPossibleGreave.get(nbAlea));
+            this.addEquipement(listPossibleGreave.get(nbAlea));
             nbAlea = (int) (Math.random() * listPossibleWeapon.size());
-            this.equipment.add(listPossibleWeapon.get(nbAlea));
+            this.addEquipement(listPossibleWeapon.get(nbAlea));
         }
+        this.reinitStats();
     }
     
     /**
@@ -385,9 +388,35 @@ public abstract class Character
         if(this.addEquipement(newStuffItem))
         {
             this.equipment.remove(removeStuffItem);
+            this.reinitStats();
             return true;
         }
         return false;
+    }
+    
+    /**
+     * Fonction permettant de mettre a jour les attributs, en fonction du stuff.
+     */
+    private void updateAttributeStuff()
+    {
+        for(StuffItem item : this.equipment)
+        {
+            if(item.getClass() == Weapon.class)
+            {
+                int value = ((Weapon)item).getDamage();
+                this.attributes.addValueToAttribute(Attribute.STRENGTH, value);
+            }
+            else if(item.getClass() == Armor.class)
+            {
+                int value = ((Armor)item).getDefenseValue();
+                this.attributes.addValueToAttribute(Attribute.DEFENSE, value);
+            }
+            else if(item.getClass() == Greave.class)
+            {
+                int value = ((Greave)item).getDefenseValue();
+                this.attributes.addValueToAttribute(Attribute.DEFENSE, value);
+            }
+        }
     }
     
     /*
@@ -482,17 +511,7 @@ public abstract class Character
         if ("attack".equals(capacity) && opponent != null)
         {
             int damage = this.attributes.get(Attribute.STRENGTH);
-            for (StuffItem weapon : this.getEquipment(Weapon.class))
-            {
-                damage += ((Weapon) weapon).getDamage();
-            }
-
             int defense = opponent.attributes.get(Attribute.DEFENSE);
-            for (StuffItem armor : opponent.getEquipment(Armor.class))
-            {
-                defense += ((Armor) armor).getDefenseValue();
-            }
-
             int damages = damage - defense;
             if (damages <= 0)
             {
@@ -586,15 +605,6 @@ public abstract class Character
     }
 
     /**
-     * Fonction permettant de remettre un attribut a sa valeur de base.
-     * @param attribute Attribut à réinitialiser
-     */
-    public void restoreAttribute(Attribute attribute)
-    {
-        attributes.replace(attribute, basicAttributes.get(attribute));
-    }
-
-    /**
      * Cette fonction gère le traitement de l'exception en fonction des
      * contraintes sur les caractéristiques.
      *
@@ -616,14 +626,41 @@ public abstract class Character
     }
 
     /**
+     * Fonction permettant de remettre un attribut a sa valeur de base.
+     * @param attribute Attribut à réinitialiser
+     */
+    private void restoreAttribute(Attribute attribute)
+    {
+        attributes.replace(attribute, basicAttributes.get(attribute));
+    }
+    
+    /**
      * Fonction pour remettre tous les attributs à leur valeur de base.
      */
-    public void restoreAttributes()
+    private void restoreAttributes()
     {
         restoreAttribute(Attribute.SPEED);
         restoreAttribute(Attribute.DEFENSE);
         restoreAttribute(Attribute.DEXTERITY);
         restoreAttribute(Attribute.STRENGTH);
+    }
+    
+    /**
+     * Réinitialisation des caractéristiques.
+     */
+    public void reinitStats()
+    {
+        restoreAttributes();
+        updateAttributeStuff();
+        calculateMaxWeight();
+    }
+    
+    /**
+     * 
+     */
+    private void calculateMaxWeight()
+    {
+        this.maxWeight = 25 + this.attributes.get(Attribute.STRENGTH);
     }
     
     /**

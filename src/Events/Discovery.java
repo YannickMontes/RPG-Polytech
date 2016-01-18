@@ -64,57 +64,57 @@ public class Discovery extends Event
         {
             if(randomNumber<=10)//10% Arme mainstream
             {  
-                stuffItem = StuffItem.getRandomItemInList(Rarity.MAINSTREAM, this.team.getLevelMaxInTeam(), Weapon.listWeaponItem);
+                stuffItem = StuffItem.getRandomItemInList(Rarity.MAINSTREAM, this.team.getLevelMaxInTeam()+5, Weapon.listWeaponItem);
             }
             else if(randomNumber<=16)//6% Arme commune
             {
-                stuffItem = StuffItem.getRandomItemInList(Rarity.COMMON, this.team.getLevelMaxInTeam(), Weapon.listWeaponItem);
+                stuffItem = StuffItem.getRandomItemInList(Rarity.COMMON, this.team.getLevelMaxInTeam()+5, Weapon.listWeaponItem);
             }
             else if(randomNumber<=19)//3% Arme rare
             {
-                stuffItem = StuffItem.getRandomItemInList(Rarity.RARE, this.team.getLevelMaxInTeam(), Weapon.listWeaponItem);
+                stuffItem = StuffItem.getRandomItemInList(Rarity.RARE, this.team.getLevelMaxInTeam()+5, Weapon.listWeaponItem);
             }
             else//1% Arme primordial
             {
-                stuffItem = StuffItem.getRandomItemInList(Rarity.PRIMORDIAL, this.team.getLevelMaxInTeam(), Weapon.listWeaponItem);
+                stuffItem = StuffItem.getRandomItemInList(Rarity.PRIMORDIAL, this.team.getLevelMaxInTeam()+5, Weapon.listWeaponItem);
             }
         }
         else if(randomNumber<=40)//20%
         {
             if(randomNumber<=30)//10% Armure mainstream
             {  
-                stuffItem = StuffItem.getRandomItemInList(Rarity.MAINSTREAM, this.team.getLevelMaxInTeam(), Armor.listeArmorItem);
+                stuffItem = StuffItem.getRandomItemInList(Rarity.MAINSTREAM, this.team.getLevelMaxInTeam()+5, Armor.listeArmorItem);
             }
             else if(randomNumber<=36)//6% Armure commune
             {
-                stuffItem = StuffItem.getRandomItemInList(Rarity.COMMON, this.team.getLevelMaxInTeam(), Armor.listeArmorItem);
+                stuffItem = StuffItem.getRandomItemInList(Rarity.COMMON, this.team.getLevelMaxInTeam()+5, Armor.listeArmorItem);
             }
             else if(randomNumber<=39)//3% Armure rare
             {
-                stuffItem = StuffItem.getRandomItemInList(Rarity.RARE, this.team.getLevelMaxInTeam(), Armor.listeArmorItem);
+                stuffItem = StuffItem.getRandomItemInList(Rarity.RARE, this.team.getLevelMaxInTeam()+5, Armor.listeArmorItem);
             }
             else//1% Armure primordial
             {
-                stuffItem = StuffItem.getRandomItemInList(Rarity.PRIMORDIAL, this.team.getLevelMaxInTeam(), Armor.listeArmorItem);
+                stuffItem = StuffItem.getRandomItemInList(Rarity.PRIMORDIAL, this.team.getLevelMaxInTeam()+5, Armor.listeArmorItem);
             }
         }
         else if(randomNumber<=60)//20%
         {
             if(randomNumber<=50)//10% Jambieres mainstream
             {  
-                stuffItem = StuffItem.getRandomItemInList(Rarity.MAINSTREAM, this.team.getLevelMaxInTeam(), Greave.listGreaveItem);
+                stuffItem = StuffItem.getRandomItemInList(Rarity.MAINSTREAM, this.team.getLevelMaxInTeam()+5, Greave.listGreaveItem);
             }
             else if(randomNumber<=56)//6% Jambieres commune
             {
-                stuffItem = StuffItem.getRandomItemInList(Rarity.COMMON, this.team.getLevelMaxInTeam(), Greave.listGreaveItem);
+                stuffItem = StuffItem.getRandomItemInList(Rarity.COMMON, this.team.getLevelMaxInTeam()+5, Greave.listGreaveItem);
             }
             else if(randomNumber<=59)//3% Jambieres rare
             {
-                stuffItem = StuffItem.getRandomItemInList(Rarity.RARE, this.team.getLevelMaxInTeam(), Greave.listGreaveItem);
+                stuffItem = StuffItem.getRandomItemInList(Rarity.RARE, this.team.getLevelMaxInTeam()+5, Greave.listGreaveItem);
             }
             else//1% Jambieres primordial
             {
-                stuffItem = StuffItem.getRandomItemInList(Rarity.PRIMORDIAL, this.team.getLevelMaxInTeam(), Greave.listGreaveItem);
+                stuffItem = StuffItem.getRandomItemInList(Rarity.PRIMORDIAL, this.team.getLevelMaxInTeam()+5, Greave.listGreaveItem);
             }
         }
         else //Objet

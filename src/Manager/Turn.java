@@ -111,7 +111,7 @@ public class Turn {
     }
 
     public void turnOf(Character character) {
-        character.restoreAttributes();
+        character.reinitStats();
         int limitAction = 1;
         String text = ConsoleDesign.textDashArrow("Le personnage " + character.getName() + " (" + character.getClass().getSimpleName() + " - Niveau: " + character.getLevel() + " - Vie: " + character.getAttributes().get(Attribute.HEALTH) + ")" + " doit joué", ConsoleDesign.cyanText);
         text += "\n \n" + ConsoleDesign.textDashArrow("Quelle action voulez-vous réaliser pour "+ character.getName()+" ?", ConsoleDesign.redText);
@@ -161,7 +161,7 @@ public class Turn {
         List<String> attacks = new ArrayList<>();
         for (Character character : team.getCharacters()) {
             if (character.isAlive()) {
-                character.restoreAttributes();
+                character.reinitStats();
                 Log.i("Le joueur " + character.getName() + " a joué.");
                 int limitProbaAction = 90;
                 if (character.numberUseableItem() != 0) {

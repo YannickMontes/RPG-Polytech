@@ -98,8 +98,4 @@ public class Fight extends Event {
             System.out.println("Votre équipe à perdu. Vous ne gagnez pas de points d'expérience.");
         }
     }
-
-    private void No(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

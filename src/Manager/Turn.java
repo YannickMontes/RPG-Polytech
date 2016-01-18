@@ -243,10 +243,10 @@ public class Turn {
                                 cares.add(ConsoleDesign.text("- Un soin a été utilisé par " + character.getName() + " -> " + resultCare, ConsoleDesign.redText));
                             } else if (character instanceof Athlete) {
                                 resultCare = ((Athlete) character).heal(useableItem);
-                                                                cares.add(ConsoleDesign.text("- Un soin a été utilisé par " + character.getName() + " -> " + resultCare, ConsoleDesign.redText));
+                                cares.add(ConsoleDesign.text("- Un soin a été utilisé par " + character.getName() + " -> " + resultCare, ConsoleDesign.redText));
                             } else if (character instanceof Thief) {
                                 resultCare = ((Thief) character).heal(useableItem);
-                                                                cares.add(ConsoleDesign.text("- Un soin a été utilisé par " + character.getName() + " -> " + resultCare, ConsoleDesign.redText));
+                                cares.add(ConsoleDesign.text("- Un soin a été utilisé par " + character.getName() + " -> " + resultCare, ConsoleDesign.redText));
                             }
                         } else {
 

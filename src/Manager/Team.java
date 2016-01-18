@@ -140,6 +140,11 @@ public class Team {
         //On génère + ou - 1 le même nombre de personnages que l'équipe du joueur.
         int deltaNbPlayer = (int)(Math.random()*3)-1;
         
+        if(playerTeam.getNbCharacters()-deltaNbPlayer<1)
+        {
+            deltaNbPlayer = 1;
+        }
+        
         //On boucle pour créer le nombre de joueurs aléatoire défini. 
         for(int i=0; i<playerTeam.getNbCharacters()+deltaNbPlayer; i++)
         {
@@ -163,6 +168,11 @@ public class Team {
                     break;
             }
             
+            if(level<=0)
+            {
+                level = 1;
+            }
+            
             //Le niveau de la team reste quasiment toujours le même, sauf en cas d'infériorité numérique, car un niveau représente
             //beaucoup de caractéristiques supplémentaires, donc il ne faut pas que les adversaire soit trop forts.
             
@@ -181,8 +191,6 @@ public class Team {
                     newChar = new Warrior(name, level);
                     break;
             }
-
-            //TO DO: Stuffer le perso aléatoirement.
             
             this.addCharacterTeam(newChar);
         }

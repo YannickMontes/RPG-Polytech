@@ -562,11 +562,14 @@ public abstract class Character
      */
     public String attackResult(boolean success, Character opponent, int damages)
     {
+        String text;
         if (success == true)
         {
-            return "Vous avez infligé " + damages + " de dégâts à " + opponent.getName() + " (Santé: " + opponent.getAttributes().get(Attribute.HEALTH) + ")";
+                text = "("+this.getName()+") Attaque "+opponent.getName()+" avec une attaque de base, provoquant "+damages
+                        +" points de dégats. (Santé: "+opponent.getAttributes().get(Attribute.HEALTH) +")";
+            return text;
         }
-        return "L'attaque sur " + opponent.getName() + " a échoué";
+        return "("+this.getName()+") L'attaque sur " + opponent.getName() + " a échoué.";
     }
 
     /**
@@ -577,11 +580,13 @@ public abstract class Character
      */
     public String careResult(boolean success, int care)
     {
+        String text;
         if (success == true)
         {
-            return "Vous avez augmenté de " + care + " votre vie " + " (Santé: " + this.getAttributes().get(Attribute.HEALTH) + ")";
+            text = "("+this.getName()+") Se soigne d'une valeur de "+care+". (Santé: "+this.attributes.get(Attribute.HEALTH)+")";
+            return text;
         }
-        return "Le soin a échoué";
+        return "("+this.getName()+") Le soin a échoué.";
     }
 
     /**
@@ -594,9 +599,10 @@ public abstract class Character
     {
         if (success == true)
         {
-            return "Vous avez augmenté de " + blockValue + " votre défense " + " (Défense: " + this.getAttributes().get(Attribute.DEFENSE) + ")";
+            return "("+this.getName()+") Bloque les attaques pour le prochain coup. Défense augmentée de "+blockValue
+                    +". (Défense: "+this.attributes.get(Attribute.DEFENSE)+")";
         }
-        return "Le blocage a échoué";
+        return "("+this.getName()+") Bloquage échoué.";
     }
 
     /**
@@ -609,7 +615,7 @@ public abstract class Character
     {
         if (success == true)
         {
-            return "Vous avez augmenté de " + blockValue + " votre défense " + " (Défense: " + this.getAttributes().get(Attribute.DEFENSE) + ")";
+            return "("+this.getName()+") Esquive les attaques le prochain tour.";
         }
         return "L'esquive a échoué";
     }

@@ -714,8 +714,11 @@ public abstract class Character
         restoreAttributes();
         
          String text = ConsoleDesign.textBox("Passage au niveau supérieur!",ConsoleDesign.redText)
-                 + "\n"
-                  + ConsoleDesign.textBox("Vos caractéristiques actuelles:\n" + this.toString(),ConsoleDesign.redText)
+                 + "\n";
+         
+         if(this.basicAttributes.canUpSomething())
+         {
+              text+= ConsoleDesign.textBox("Vos caractéristiques actuelles:\n" + this.toString(),ConsoleDesign.redText)
                  + "\n"
                  + ConsoleDesign.textDashArrow("Vous pouvez répartir " + NBPOINTLEVELUP + " points de compétence supplémentaires!",ConsoleDesign.redText)
                     + "\n"
@@ -723,6 +726,13 @@ public abstract class Character
                     + ConsoleDesign.text("2 -> Défense\n",ConsoleDesign.redText)
                     + ConsoleDesign.text("3 -> Dextérité\n",ConsoleDesign.redText)
                     + ConsoleDesign.text("4 -> Vitesse\n",ConsoleDesign.redText);
+         }
+         else
+         {
+             text = ConsoleDesign.text("Vous ne pouvez plus rien améliorer (caractéristiques de bases déjà au maximum).", ConsoleDesign.redText);
+             System.out.println(text);
+             return;
+         }           
 
         int cpt = NBPOINTLEVELUP;
         String res;
@@ -835,13 +845,15 @@ public abstract class Character
     @Override
     public String toString()
     {
-        return  ConsoleDesign.text("Nom: " + this.name, ConsoleDesign.cyanText)
+        String text =  ConsoleDesign.text("Nom: " + this.name, ConsoleDesign.cyanText)
                 + "\n"
                 + ConsoleDesign.text("Classe: " + this.className, ConsoleDesign.cyanText)
                 + "\n"
                 + ConsoleDesign.text("Niveau: " + this.level.getLevel(), ConsoleDesign.cyanText)
-                + "\n"
-                + ConsoleDesign.text("Santé: " + this.attributes.get(Attribute.HEALTH), ConsoleDesign.cyanText)
+                + "\n";
+        if(this.isAlive())
+        {
+            text += ConsoleDesign.text("Santé: " + this.attributes.get(Attribute.HEALTH), ConsoleDesign.cyanText)
                 + "\n"
                 + ConsoleDesign.text("Mana: " + this.attributes.get(Attribute.MANA), ConsoleDesign.cyanText)
                 + "\n"
@@ -853,6 +865,13 @@ public abstract class Character
                 + "\n"
                 + ConsoleDesign.text("Vitesse: " + this.attributes.get(Attribute.SPEED), ConsoleDesign.cyanText)
                 + "\n";
+        }
+        else
+        {
+            text+= ConsoleDesign.text("Personnage mort.\n", ConsoleDesign.redText);
+        }
+        
+        return text;
     }
     
     /**

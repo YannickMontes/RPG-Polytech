@@ -17,9 +17,7 @@ import Entities.Thief;
 import Events.Discovery;
 import Items.Armor;
 import Items.Greave;
-import Items.Item;
-import Items.Rarity;
-import Items.StuffItem;
+import Items.Potion;
 import Items.UseableItem;
 import Items.Weapon;
 import java.io.FileReader;
@@ -97,7 +95,7 @@ public class Game {
         while(true)
         {
             int rd = (int)(Math.random()*2);
-            if(rd == 0)
+            if(rd == 77)
             {
                 events.add(new Fight(team, new Team(team)));
             }
@@ -119,12 +117,12 @@ public class Game {
 
             JSONObject jsonObject = (JSONObject) obj;
 
-            JSONArray useableItems = (JSONArray) jsonObject.get("Useable Item");
+            JSONArray potions = (JSONArray) jsonObject.get("Potion");
             JSONArray armors = (JSONArray) jsonObject.get("Armor");
             JSONArray weapons = (JSONArray) jsonObject.get("Weapon");
             JSONArray greaves = (JSONArray) jsonObject.get("Greave");
 
-            Iterator<JSONObject> iterator = useableItems.iterator();
+            Iterator<JSONObject> iterator = potions.iterator();
             UseableItem.listUseableItem = new ArrayList<>();
             while (iterator.hasNext()) {
                 JSONObject objTemp = iterator.next();
@@ -132,7 +130,8 @@ public class Game {
                 long weight = (long) objTemp.get("weight");
                 long bonus = (long) objTemp.get("bonus");
                 long rarity = (long) objTemp.get("rarity");
-                UseableItem.listUseableItem.add(new UseableItem(name, (int) weight, (int) bonus, (int) rarity));
+                Attribute att = Attribute.valueOf(objTemp.get("attribute").toString());
+                Potion.listPotionItem.add(new Potion(name, (int) weight, (int) bonus, (int) rarity, att));
             }
             iterator = armors.iterator();
             Armor.listeArmorItem = new ArrayList<>();

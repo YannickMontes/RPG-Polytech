@@ -513,7 +513,7 @@ public abstract class Character
         }
         else if ("care".equals(capacity) && useableItem != null)
         {
-            return useableItem.getBonusValue();
+            return useableItem.getValue();
         }
         return 0;
     }
@@ -833,7 +833,7 @@ public abstract class Character
             System.out.print("-" + item.getName() + " (" + item.getClass() + ") Poids: " + item.getWeight());
             if (item instanceof UseableItem)
             {
-                System.out.println(" Valeur de bonus:" + ((UseableItem) item).getBonusValue());
+                System.out.println(" Valeur de bonus:" + ((UseableItem) item).getValue());
             }
             else if (item instanceof StuffItem)
             {

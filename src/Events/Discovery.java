@@ -13,6 +13,7 @@ import Entities.Warrior;
 import Items.Armor;
 import Items.Greave;
 import Items.Item;
+import Items.Potion;
 import Items.Rarity;
 import Items.StuffItem;
 import Items.UseableItem;
@@ -119,7 +120,7 @@ public class Discovery extends Event
         }
         else //Objet
         {
-            item = UseableItem.getRandomItem();
+            item = UseableItem.getRandomItem(Potion.listPotionItem);
         }
         
         int i=0;

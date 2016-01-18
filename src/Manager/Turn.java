@@ -101,7 +101,7 @@ public class Turn {
             int numCare = 0;
             for (Item item : character.getInventory()) {
                 if (item instanceof UseableItem) {
-                    System.out.println(ConsoleDesign.text(Integer.toString(numCare) + " -> " + item.getName() + " de bonus " + ((UseableItem) item).getBonusValue(), ConsoleDesign.redText));
+                    System.out.println(ConsoleDesign.text(Integer.toString(numCare) + " -> " + item.getName() + " de bonus " + ((UseableItem) item).getValue(), ConsoleDesign.redText));
                 }
                 numCare++;
             }

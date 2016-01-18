@@ -70,6 +70,16 @@ public class Attributes extends HashMap<Attribute, Integer>
         return super.replace(key, value);
     }
 
+    public boolean canUpSomething()
+    {
+        if(this.get(Attribute.DEFENSE)<MAXDEFENSE || this.get(Attribute.STRENGTH)<MAXSTRENGTH 
+                || this.get(Attribute.DEXTERITY)<MAXDEXTERITY || this.get(Attribute.SPEED)<MAXSPEED)
+        {
+            return true;
+        }
+        return false;
+    }
+    
     private String verifyExcess(Attribute key, Integer value)
     {
         String message = "";

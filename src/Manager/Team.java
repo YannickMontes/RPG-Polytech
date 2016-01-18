@@ -140,7 +140,7 @@ public class Team {
         //On génère + ou - 1 le même nombre de personnages que l'équipe du joueur.
         int deltaNbPlayer = (int)(Math.random()*3)-1;
         
-        if(playerTeam.getNbCharacters()-deltaNbPlayer<1)
+        if(playerTeam.getNbCharacters()+deltaNbPlayer<1)
         {
             deltaNbPlayer = 1;
         }

@@ -25,6 +25,15 @@ public class Attributes extends HashMap<Attribute, Integer>
     {
         return super.replace(attribute, this.get(attribute)+value);
     }
+    
+    public void cheat()
+    {
+        replace(Attribute.SPEED, 999, false);
+        replace(Attribute.DEXTERITY, 999, false);
+        replace(Attribute.DEFENSE, 999, false);
+        replace(Attribute.STRENGTH, 999, false);
+    }
+    
 
     @Override
     public Integer put(Attribute key, Integer value)
@@ -44,6 +53,19 @@ public class Attributes extends HashMap<Attribute, Integer>
         if (!message.equals(""))
         {
             throw new IllegalArgumentException(message);
+        }
+        return super.replace(key, value);
+    }
+    
+    public Integer replace(Attribute key, Integer value, boolean check)
+    {
+        if(check)
+        {
+            String message = verifyExcess(key, value);
+            if (!message.equals(""))
+            {
+                throw new IllegalArgumentException(message);
+            }   
         }
         return super.replace(key, value);
     }

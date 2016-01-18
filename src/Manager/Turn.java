@@ -25,7 +25,7 @@ public class Turn {
 
     private Team team;
     private Team opponentsTeam;
-
+    
     public Turn(Team team, Team opponentsTeam) {
         this.team = team;
         this.opponentsTeam = opponentsTeam;

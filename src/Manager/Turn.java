@@ -39,10 +39,15 @@ public class Turn {
             if(op.isAlive())
             {
                 actionText += ConsoleDesign.text(Integer.toString(num) + " -> " + op.getName(), ConsoleDesign.redText) + "\n";
-                num++;   
             }
+            num++;   
         }
-        int opponentNumber = Controller.askNumberBetween(actionText, 0, num - 1);
+        
+        int opponentNumber;
+        do
+        {
+            opponentNumber = Controller.askNumberBetween(actionText, 0, num - 1);   
+        }while(!opponentsTeam.getCharacters().get(opponentNumber).isAlive());
 
         opponent = opponentsTeam.getCharacters().get(opponentNumber);
         if (character instanceof Warrior) {

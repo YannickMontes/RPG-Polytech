@@ -19,7 +19,7 @@ import Entities.Warrior;
  */
 public class Team {
 
-    public static final int NBMAXCHARACTERS = 4;
+    public static final int NBMAXCHARACTERS = 5;
     private List<Character> characters;
     private String name;
 
@@ -108,12 +108,13 @@ public class Team {
     @Override
     public String toString() {
         String text = "Equipe " + this.name + ":\n"
-                + "Nombre de personnages: " + this.getNbCharacters() + "\n";
+                + "Nombre de personnages: " + this.getNbCharacters() + "\n\n";
 
         for (Character c : this.characters) {
+            text+="\n";
             text += c.toString();
         }
-
+        text+="\n";
         return text;
     }
 

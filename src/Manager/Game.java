@@ -18,14 +18,11 @@ import Events.Discovery;
 import Items.Armor;
 import Items.Greave;
 import Items.Potion;
-import Items.UseableItem;
 import Items.Weapon;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -40,31 +37,46 @@ public class Game {
     private Team team;
 
     public Game() {
+        this.readJSONFiles();
+        this.initPlot();
+        this.displayBegining();
         events = new ArrayList<>();
-        System.out.println(ConsoleDesign.RPG(ConsoleDesign.whiteText, ConsoleDesign.redBack));
+        this.startGame();
     }
-
-    public void startGame() {
-
-        readJSONFiles();
-
+    
+    private void initPlot()
+    {
+        Story.initStory();
+    }
+    
+    private void displayBegining()
+    {
+        System.out.println(ConsoleDesign.RPG(ConsoleDesign.whiteText, ConsoleDesign.redBack));
+        System.out.println(Story.getPlot());
+    }
+    
+    private void createPlayerTeam()
+    {
         System.out.println(ConsoleDesign.textBox("Création de votre équipe", ConsoleDesign.whiteText, ConsoleDesign.redBack));
 
         team = new Team(Controller.askText(ConsoleDesign.textBox("Entrez un nom pour votre équipe", ConsoleDesign.redText)));
+        
+        int numberTeam1 = Controller.askNumberBetween(ConsoleDesign.textBox("Entrez le nombre de personnage pour votre équipe (entre 2 et 5)", ConsoleDesign.redText), 2, 5);
+        fillUpCharacters(numberTeam1);
+        
+        System.out.println(ConsoleDesign.textBox("Récapitulatif de votre équipe:", ConsoleDesign.redText));
+        System.out.println(this.team.toString());
+        Story.replaceVars(team);
+    }
 
-        int numberTeam1 = Controller.askNumberBetween(ConsoleDesign.textBox("Entrez le nombre de personnage pour votre équipe", ConsoleDesign.redText), 1, 5);
-
-        fillUpCharacters(team, numberTeam1);
-
-        System.out.println(ConsoleDesign.textBox("Récapitulatif de votre équipe (" + team.getName() + ")", ConsoleDesign.redText));
-        for (Character character : team.getCharacters()) {
-            System.out.println(character);
-        }
-        //Temporaire
+    private void startGame() {
+        this.createPlayerTeam();
+        System.out.println(Story.getPlot());
+        this.displayTips();
         initEvents();
     }
 
-    private void fillUpCharacters(Team team, int number) {
+    private void fillUpCharacters(int number) {
         System.out.println(ConsoleDesign.textBox("Entrez le nom des " + number + " personnage(s) ainsi que leur classe", ConsoleDesign.redText));
         for (int i = 0; i < number; i++) {
             String name = Controller.askText(ConsoleDesign.textDashArrow("Choississez un nom pour le personnage n°" + (i + 1), ConsoleDesign.redText));
@@ -95,11 +107,11 @@ public class Game {
     private void initEvents() {
         while(true)
         {
-            int choiceUser = Controller.askNumberBetween("1-> Se déplacer\n2-> Consulter son inventaire\n3-> Modifier l'équipement des personnages", 1, 3);
+            int choiceUser = Controller.askNumberBetween("1-> Se déplacer\n2-> Consulter son inventaire\n3-> Modifier l'équipement des personnages\n"
+                    + "4-> Voir le statut de l'équipe", 1, 4);
             switch(choiceUser)
             {
                 case 1:
-                    int cpt = 0;
                     int rd = (int)(Math.random()*2);
                     if(rd == 0)
                     {
@@ -108,9 +120,7 @@ public class Game {
                     else
                     {
                         events.add(new Discovery(team));
-                        System.out.println(events.get(cpt));
                     }
-                    cpt++;
                     break;
                 case 2:
                     for(Character c : this.team.getCharacters())
@@ -123,7 +133,7 @@ public class Game {
                     {
                         System.out.println(ConsoleDesign.text(c.getEquipmentToString(), ConsoleDesign.greenText));
                         System.out.println(ConsoleDesign.text(c.getEquipeableItemToString(), ConsoleDesign.greenText));
-                        boolean result = Controller.askYesNo("Voulez-vous modifier votre équipement?[O/N]");
+                        boolean result = Controller.askYesNo("Voulez-vous modifier votre équipement? [O/N]");
                         while(result)
                         {
                             int choice = Controller.askNumberBetween(ConsoleDesign.text("1-> Remplacer Arme\n2-> Remplacer Armure\n3-> Remplacer Jambières\n4-> Ne rien remplacer"
@@ -145,6 +155,8 @@ public class Game {
                             }
                         }
                     }
+                case 4:
+                    System.out.println(ConsoleDesign.text(this.team.toString(),ConsoleDesign.cyanText));
                     break;
             }
         }
@@ -244,5 +256,18 @@ public class Game {
             return;
         }
         chara.replaceEquipment(chara.getInInventoryItemOfType(Weapon.class,choiceUser-1), chara.getEquipment(Weapon.class));
+    }
+
+    private void displayTips()
+    {
+        System.out.println(ConsoleDesign.textBox("Bonjour, et bienvenue dans Beat the Invador!\nLes règles du jeu sont simples.\n"
+                + "Vous êtes aux commandes d'une équipe que vous avez créer.\n"
+                +"Durant votre périple, vous allez être ammenés à vous déplacer sur Terre, pour récupérer des informations.\n"
+                + "Cependant, les milieux sont hostiles! Vous pouvez a tout moment rencontrer une horde d'ennemis, qui sont généralement vos semblables (bien qu'ils ne vous ressemblent plus énormément)\n"
+                + "Vous devrez éliminer ces groupes pour pouvoir avancer. A la fin de chaque rencontre, votre vie vous est rendue.\n"
+                + "Entres chaque combat, vous pourrez gérer votre équipement et votre inventaire."
+                + "Qui sait, peut-être que vous ferrez des découvertes au fil du temps...\n"
+                + "Allez, c'est à vous!\n", ConsoleDesign.greenText));
+        System.out.println("\n");
     }
 }

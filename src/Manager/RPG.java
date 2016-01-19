@@ -30,7 +30,6 @@ public class RPG {
         boolean b = warrior.equipMe((StuffItem) warrior.getInventory().get(1));
          */
         Game g = new Game();
-        g.startGame();
     }
 
 }

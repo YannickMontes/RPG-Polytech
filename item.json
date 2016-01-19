@@ -37,10 +37,10 @@
         {"weight":50, "handlingability":30, "attackValue": 17, "rarity":3, "requiredLevel":25, "name":"Excalibur"}
         ],
         "Greave": [
-        {"weight":1, "handlingability":100, "defenseValue": 0, "rarity":0, "requiredLevel":1, "name":"Chaussettes sales"}
-        {"weight":1, "handlingability":100, "defenseValue": 1, "rarity":0, "requiredLevel":1, "name":"Chaussettes du voyageur"}
-        {"weight":1, "handlingability":50, "defenseValue": 2, "rarity":1, "requiredLevel":2, "name":"Bottes trouées"}
-        {"weight":1, "handlingability":20, "defenseValue": 5, "rarity":3, "requiredLevel":3, "name":"Patins à glace"}
+        {"weight":1, "handlingability":100, "defenseValue": 0, "rarity":0, "requiredLevel":1, "name":"Chaussettes sales"},
+        {"weight":1, "handlingability":100, "defenseValue": 1, "rarity":0, "requiredLevel":1, "name":"Chaussettes du voyageur"},
+        {"weight":1, "handlingability":50, "defenseValue": 2, "rarity":1, "requiredLevel":2, "name":"Bottes trouées"},
+        {"weight":1, "handlingability":20, "defenseValue": 5, "rarity":3, "requiredLevel":3, "name":"Patins à glace"},
         {"weight":1, "handlingability":100, "defenseValue": 3, "rarity":1, "requiredLevel":5, "name":"Jambières en acier"}
         ]
 }

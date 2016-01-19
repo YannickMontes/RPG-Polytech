@@ -4,14 +4,15 @@
  * and open the template in the editor.
  */
 package Actions;
+
 import Entities.Character;
 
 /**
  *
  * @author yannick
  */
-public interface Attack extends Capacity
-{
+public interface Attack extends Capacity {
+
     public String strikeABlow(Character opponent);
-    
+
 }

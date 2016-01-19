@@ -25,7 +25,7 @@ public class Turn {
 
     private Team team;
     private Team opponentsTeam;
-    
+
     public Turn(Team team, Team opponentsTeam) {
         this.team = team;
         this.opponentsTeam = opponentsTeam;
@@ -36,18 +36,16 @@ public class Turn {
         String actionText = ConsoleDesign.textDashArrow("Choississez un adversaire", ConsoleDesign.redText) + "\n";
         int num = 0;
         for (Character op : opponentsTeam.getCharacters()) {
-            if(op.isAlive())
-            {
+            if (op.isAlive()) {
                 actionText += ConsoleDesign.text(Integer.toString(num) + " -> " + op.getName(), ConsoleDesign.redText) + "\n";
             }
-            num++;   
+            num++;
         }
-        
+
         int opponentNumber;
-        do
-        {
-            opponentNumber = Controller.askNumberBetween(actionText, 0, num - 1);   
-        }while(!opponentsTeam.getCharacters().get(opponentNumber).isAlive());
+        do {
+            opponentNumber = Controller.askNumberBetween(actionText, 0, num - 1);
+        } while (!opponentsTeam.getCharacters().get(opponentNumber).isAlive());
 
         opponent = opponentsTeam.getCharacters().get(opponentNumber);
         if (character instanceof Warrior) {

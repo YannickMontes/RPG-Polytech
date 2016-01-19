@@ -13,27 +13,24 @@ import java.util.List;
  *
  * @author yannick
  */
-public class Potion extends UseableItem
-{
+public class Potion extends UseableItem {
+
     public static List<UseableItem> listPotionItem;
     private Attribute attributeUped;
-    
-    public Potion(String name, int weight, int bonusValue, int r, Attribute att)
-    {
+
+    public Potion(String name, int weight, int bonusValue, int r, Attribute att) {
         super(name, weight, bonusValue, r);
         this.attributeUped = att;
     }
-    
-    public Attribute getAttributeUped()
-    {
+
+    public Attribute getAttributeUped() {
         return this.attributeUped;
     }
-    
+
     @Override
-    public String toString()
-    {
-        return ConsoleDesign.text("Type: Sortilège\n"
-                +"Attribut augmenté: "+this.attributeUped+"\n"
-                +"Bonus: "+this.getValue(), ConsoleDesign.redText);
+    public String toString() {
+        return ConsoleDesign.text("Type: Potion", ConsoleDesign.magentaText) + "\n" +
+                ConsoleDesign.text("Attribut augmenté:: " + this.attributeUped , ConsoleDesign.magentaText) + "\n" +
+                ConsoleDesign.text("Bonus: " + this.getValue(), ConsoleDesign.magentaText) + "\n";
     }
 }

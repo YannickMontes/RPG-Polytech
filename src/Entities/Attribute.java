@@ -9,8 +9,7 @@ package Entities;
  *
  * @author yannick
  */
-public enum Attribute 
-{
+public enum Attribute {
     STRENGTH,
     DEXTERITY,
     HEALTH,

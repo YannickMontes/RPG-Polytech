@@ -12,29 +12,26 @@ import java.util.List;
  *
  * @author yannick
  */
-public class UseableItem extends Item
-{
+public class UseableItem extends Item {
+
     public static List<UseableItem> listUseableItem;
     private final int value;
     private Attribute attributeBonus;
-    
+
     public UseableItem(String name, int weight, int bonusValue, int r) {
-        super(name, weight,r);
-        this.value=bonusValue;
+        super(name, weight, r);
+        this.value = bonusValue;
     }
 
-    public int getValue() 
-    {
+    public int getValue() {
         return value;
     }
-    
-    public Attribute getAttributeBonus()
-    {
+
+    public Attribute getAttributeBonus() {
         return attributeBonus;
     }
-    
-    public static UseableItem getRandomItem(List<UseableItem> liste)
-    {
-        return liste.get((int) (Math.random()*liste.size()));
+
+    public static UseableItem getRandomItem(List<UseableItem> liste) {
+        return liste.get((int) (Math.random() * liste.size()));
     }
 }

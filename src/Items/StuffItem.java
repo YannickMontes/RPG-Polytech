@@ -27,9 +27,8 @@ public abstract class StuffItem extends Item {
     public int getHandlingAbility() {
         return this.handlingAbility;
     }
-    
-    public int getRequiredLevel()
-    {
+
+    public int getRequiredLevel() {
         return this.requiredLevel;
     }
 
@@ -44,23 +43,19 @@ public abstract class StuffItem extends Item {
 
     }
 
-    public static StuffItem getRandomItemInList(Rarity rarity, int level, List<StuffItem> list)
-    {
+    public static StuffItem getRandomItemInList(Rarity rarity, int level, List<StuffItem> list) {
         List<StuffItem> possibilities = new ArrayList<>();
-        for(StuffItem a : list)
-        {
-            if((a.getRequiredLevel()<=level && a.getRequiredLevel()>level-5) && (a.getRarity() == rarity))
-            {
+        for (StuffItem a : list) {
+            if ((a.getRequiredLevel() <= level && a.getRequiredLevel() > level - 5) && (a.getRarity() == rarity)) {
                 possibilities.add(a);
             }
         }
-        if(possibilities.isEmpty())
-        {
-            int randomValue = (int)(Math.random()*list.size());
+        if (possibilities.isEmpty()) {
+            int randomValue = (int) (Math.random() * list.size());
             return list.get(randomValue);
         }
-        int randomValue = (int)(Math.random()*possibilities.size());
-        
+        int randomValue = (int) (Math.random() * possibilities.size());
+
         return possibilities.get(randomValue);
     }
 }

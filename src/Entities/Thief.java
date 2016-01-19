@@ -14,23 +14,19 @@ import Items.UseableItem;
  *
  * @author yannick
  */
-public class Thief extends Character implements Attack, Care, Block
-{
+public class Thief extends Character implements Attack, Care, Block {
 
-    public Thief(String name)
-    {
+    public Thief(String name) {
         super(name, "Voleur");
 
     }
 
-    public Thief(String n, int l)
-    {
+    public Thief(String n, int l) {
         super(n, l, "Voleur");
     }
 
     @Override
-    public void initStats()
-    {
+    public void initStats() {
         this.basicAttributes.put(Attribute.DEXTERITY, 30);
         this.basicAttributes.put(Attribute.DEFENSE, 15);
         this.basicAttributes.put(Attribute.SPEED, 30);
@@ -46,83 +42,63 @@ public class Thief extends Character implements Attack, Care, Block
         capacities.add("Bloquer");
         capacities.add("Soigner");
     }
-    
+
     @Override
-    public void putRandomPoint(int lvl)
-    {
+    public void putRandomPoint(int lvl) {
         int cpt = NBPOINTLEVELUP;
         if (lvl % 10 == 0)//Tout les 10 lvl
         {
-            if (this.increaseAttribute(Attribute.DEFENSE, 2) .equals(""))
-            {
+            if (this.increaseAttribute(Attribute.DEFENSE, 2).equals("")) {
                 cpt -= 2;
             }
-            if (this.increaseAttribute(Attribute.STRENGTH, 1).equals(""))
-            {
+            if (this.increaseAttribute(Attribute.STRENGTH, 1).equals("")) {
                 cpt -= 1;
             }
-        }
-        else if (lvl % 2 == 0)//Tout les lvl pairs 
+        } else if (lvl % 2 == 0)//Tout les lvl pairs 
         {
-            if (this.increaseAttribute(Attribute.SPEED, 2).equals(""))
-            {
+            if (this.increaseAttribute(Attribute.SPEED, 2).equals("")) {
                 cpt -= 2;
             }
-            if (this.increaseAttribute(Attribute.DEXTERITY, 1).equals(""))
-            {
+            if (this.increaseAttribute(Attribute.DEXTERITY, 1).equals("")) {
                 cpt -= 1;
             }
-        }
-        else//Tout les lvl impairs
+        } else//Tout les lvl impairs
         {
-            if (this.increaseAttribute(Attribute.STRENGTH, 1).equals(""))
-            {
+            if (this.increaseAttribute(Attribute.STRENGTH, 1).equals("")) {
                 cpt -= 1;
             }
-            if (this.increaseAttribute(Attribute.DEXTERITY, 1).equals(""))
-            {
+            if (this.increaseAttribute(Attribute.DEXTERITY, 1).equals("")) {
                 cpt -= 1;
             }
-            if (this.increaseAttribute(Attribute.DEFENSE, 1).equals(""))
-            {
+            if (this.increaseAttribute(Attribute.DEFENSE, 1).equals("")) {
                 cpt -= 1;
             }
         }
 
-        if (cpt > 0)
-        {
-            if (this.increaseAttribute(Attribute.STRENGTH, cpt).equals(""))
-            {
+        if (cpt > 0) {
+            if (this.increaseAttribute(Attribute.STRENGTH, cpt).equals("")) {
                 cpt = 0;
             }
-            if (this.increaseAttribute(Attribute.DEFENSE, cpt).equals(""))
-            {
+            if (this.increaseAttribute(Attribute.DEFENSE, cpt).equals("")) {
                 cpt = 0;
             }
-            if (this.increaseAttribute(Attribute.DEXTERITY, cpt).equals(""))
-            {
+            if (this.increaseAttribute(Attribute.DEXTERITY, cpt).equals("")) {
                 cpt = 0;
             }
-            if (this.increaseAttribute(Attribute.SPEED, cpt).equals(""))
-            {
+            if (this.increaseAttribute(Attribute.SPEED, cpt).equals("")) {
                 cpt = 0;
             }
         }
     }
 
     @Override
-    public String heal(UseableItem useableItem)
-    {
-        if (useableItem != null)
-        {
-            if (inventory.contains(useableItem))
-            {
-                if (capacities.contains("Soigner"))
-                {
+    public String heal(UseableItem useableItem) {
+        if (useableItem != null) {
+            if (inventory.contains(useableItem)) {
+                if (capacities.contains("Soigner")) {
                     boolean success = verifySuccess("care");
                     int care = 0;
-                    if (success == true)
-                    {
+                    if (success == true) {
                         care = measureImpact("care", null, useableItem);
                         this.attributes.replace(Attribute.HEALTH, this.attributes.get(Attribute.HEALTH) + care);
                     }
@@ -137,16 +113,12 @@ public class Thief extends Character implements Attack, Care, Block
     }
 
     @Override
-    public String strikeABlow(Character opponent)
-    {
-        if (opponent != null)
-        {
-            if (capacities.contains("Attaquer"))
-            {
+    public String strikeABlow(Character opponent) {
+        if (opponent != null) {
+            if (capacities.contains("Attaquer")) {
                 boolean success = verifySuccess("attack");
                 int damages = 0;
-                if (success == true)
-                {
+                if (success == true) {
                     damages = measureImpact("attack", opponent, null);
                     opponent.takeABlow(damages);
                 }
@@ -159,14 +131,11 @@ public class Thief extends Character implements Attack, Care, Block
     }
 
     @Override
-    public String block()
-    {
-        if (capacities.contains("Bloquer"))
-        {
+    public String block() {
+        if (capacities.contains("Bloquer")) {
             boolean success = verifySuccess("block");
             int upBlock = 0;
-            if (success == true)
-            {
+            if (success == true) {
                 upBlock = measureImpact("block", null, null);
             }
             String text = blockResult(success, upBlock);
@@ -176,14 +145,11 @@ public class Thief extends Character implements Attack, Care, Block
     }
 
     @Override
-    public String dodge()
-    {
-        if (capacities.contains("Bloquer"))
-        {
+    public String dodge() {
+        if (capacities.contains("Bloquer")) {
             boolean success = verifySuccess("dodge");
             int upDodge = 0;
-            if (success == true)
-            {
+            if (success == true) {
                 upDodge = measureImpact("dodge", null, null);
             }
             String text = dodgeResult(success, upDodge);

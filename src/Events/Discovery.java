@@ -38,7 +38,7 @@ public class Discovery extends Event {
 
     private void askUserAddItem(Item item) {
         String text = "\n" + ConsoleDesign.textBox("Vous avez découvert l'item suivant:", ConsoleDesign.redText)+"\n";
-        text += ConsoleDesign.text(item.toString(), ConsoleDesign.magentaText);
+        text += item.toString();
         System.out.println(text);
         boolean yes = Controller.askYesNo(ConsoleDesign.textDashArrow("Voulez-vous ajouter cet item découvert ? [O/N]", ConsoleDesign.redText));
         text = "";

@@ -28,8 +28,8 @@ public class Sortilege extends UseableItem {
 
     @Override
     public String toString() {
-        return ConsoleDesign.text("Type: Sortilège\n"
-                + "Dégats: " + this.getValue() + "\n"
-                + "Cout en mana: " + this.manaCost + "\n", ConsoleDesign.redText);
+        return ConsoleDesign.text("Type: Sortilège", ConsoleDesign.magentaText) + "\n" +
+                ConsoleDesign.text("Dégats: " + this.getValue() , ConsoleDesign.magentaText) + "\n" +
+                ConsoleDesign.text("Cout en mana: " + this.manaCost, ConsoleDesign.magentaText) + "\n";
     }
 }

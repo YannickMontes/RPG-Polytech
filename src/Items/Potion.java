@@ -29,8 +29,8 @@ public class Potion extends UseableItem {
 
     @Override
     public String toString() {
-        return ConsoleDesign.text("Type: Sortilège\n"
-                + "Attribut augmenté: " + this.attributeUped + "\n"
-                + "Bonus: " + this.getValue(), ConsoleDesign.redText);
+        return ConsoleDesign.text("Type: Potion", ConsoleDesign.magentaText) + "\n" +
+                ConsoleDesign.text("Attribut augmenté:: " + this.attributeUped , ConsoleDesign.magentaText) + "\n" +
+                ConsoleDesign.text("Bonus: " + this.getValue(), ConsoleDesign.magentaText) + "\n";
     }
 }

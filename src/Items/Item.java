@@ -39,9 +39,8 @@ public abstract class Item {
     public void setWeight(int weight) {
         this.weight = weight;
     }
-    
-    public Rarity getRarity()
-    {
+
+    public Rarity getRarity() {
         return this.rarity;
     }
 

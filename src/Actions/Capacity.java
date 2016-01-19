@@ -10,5 +10,5 @@ package Actions;
  * @author Corentin
  */
 public interface Capacity {
-    
+
 }

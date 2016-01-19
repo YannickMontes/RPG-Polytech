@@ -9,12 +9,11 @@ package Events;
  *
  * @author yannick
  */
-public abstract class Event
-{
+public abstract class Event {
+
     String name;
-    
-    public String getName()
-    {
+
+    public String getName() {
         return this.name;
     }
 }

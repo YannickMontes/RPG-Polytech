@@ -11,8 +11,8 @@ import Entities.Attribute;
  *
  * @author yannick
  */
-public class Effect
-{
+public class Effect {
+
     private Attribute carac;
     private int value;
     private int nbTurns;

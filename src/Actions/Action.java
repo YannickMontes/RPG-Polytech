@@ -11,8 +11,8 @@ import Items.UseableItem;
  *
  * @author yannick
  */
-public class Action
-{
+public class Action {
+
     private Character source;
     private Character destination;
     private Care skill;

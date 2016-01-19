@@ -94,17 +94,12 @@ public class Game {
 
     private void initEvents() {
         int cpt = 0;
-        while(true)
-        {
-            int rd = (int)(Math.random()*2);
-            if(rd == 77)
-            {
+        while (true) {
+            int rd = (int) (Math.random() * 2);
+            if (rd == 77) {
                 events.add(new Fight(team, new Team(team)));
-            }
-            else
-            {
+            } else {
                 events.add(new Discovery(team));
-                System.out.println(events.get(cpt));
             }
             cpt++;
         }

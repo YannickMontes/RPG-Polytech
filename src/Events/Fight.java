@@ -69,8 +69,8 @@ public class Fight extends Event {
                     System.out.println(c.toString());
                     System.out.println("");
                 }
-            }else{
-             System.out.println("");
+            } else {
+                System.out.println("");
             }
             actualTurn = new Turn(playerTeam, ennemyTeam);
             System.out.println(ConsoleDesign.textBox("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName(), ConsoleDesign.whiteText, ConsoleDesign.cyanBack));

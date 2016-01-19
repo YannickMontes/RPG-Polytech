@@ -12,9 +12,9 @@ import java.util.Scanner;
  * @author Corentin
  */
 public abstract class Controller {
-        
+
     public static final Scanner sc = new Scanner(System.in);
-    
+
     public static int askNumberBetween(String text, int start, int limit) {
         System.out.println(text);
         do {
@@ -23,15 +23,15 @@ public abstract class Controller {
                 int number = Integer.parseInt(textIn);
                 if (number >= start && number <= limit) {
                     return number;
-                }else{
+                } else {
                     throw new Exception();
                 }
             } catch (Exception e) {
-                System.out.println(ConsoleDesign.text("Veuillez entrer un chiffre entre " + Integer.toString(start) + " et " + Integer.toString(limit),ConsoleDesign.redText));
+                System.out.println(ConsoleDesign.text("Veuillez entrer un chiffre entre " + Integer.toString(start) + " et " + Integer.toString(limit), ConsoleDesign.redText));
             }
         } while (true);
     }
-    
+
     public static String askText(String text) {
         System.out.println(text);
         return sc.nextLine();
@@ -44,16 +44,15 @@ public abstract class Controller {
                 String textIn = sc.nextLine();
                 if ("O".equals(textIn) || "o".equals(textIn)) {
                     return true;
-                }else if ("N".equals(textIn) || "n".equals(textIn)) {
+                } else if ("N".equals(textIn) || "n".equals(textIn)) {
                     return false;
-                }else{
+                } else {
                     throw new Exception();
                 }
             } catch (Exception e) {
-                System.out.println(ConsoleDesign.text("Veuillez entrez O ou o pour OUI / N ou n pour NON",ConsoleDesign.redText));
+                System.out.println(ConsoleDesign.text("Veuillez entrez O ou o pour OUI / N ou n pour NON", ConsoleDesign.redText));
             }
         } while (true);
     }
-    
 
 }

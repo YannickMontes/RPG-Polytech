@@ -5,6 +5,7 @@
  */
 package Events;
 
+import Controller.ConsoleDesign;
 import Entities.Athlete;
 import Manager.Team;
 import Entities.Character;
@@ -45,21 +46,30 @@ public class Discovery extends Event
         if(randomNumber==0)//1%
         {
             //Nouveau personnage
-            Character newCh = null;
-            randomNumber = (int)(Math.random()*(Character.NBCLASSES-1));
-            switch(randomNumber)
+            text = ConsoleDesign.text("Vous avez découvert un nouveau personnage!\n", ConsoleDesign.magentaText);
+            if(Team.NBMAXCHARACTERS >= this.team.getNbCharacters())
             {
-                case 0:
-                    newCh = new Warrior("Sylvain Duriff", (int)(Math.random()*(3))+team.getLevelMaxInTeam()-1);
-                    break;
-                case 1:
-                    newCh = new Thief("EddineLanger", (int)(Math.random()*(3))+team.getLevelMaxInTeam()-1);
-                    break;
-                case 2:
-                    newCh = new Athlete("Pierre Kiroule", (int)(Math.random()*(3))+team.getLevelMaxInTeam()-1);
-                    break;
+                text += ConsoleDesign.text("Cependant, vous ne pouvez plus ajouter de personnages à votre équipe.", ConsoleDesign.redText);
             }
-            team.addCharacterTeam(newCh);
+            else
+            {
+                Character newCh = null;
+                randomNumber = (int)(Math.random()*(Character.NBCLASSES-1));
+                switch(randomNumber)
+                {
+                    case 0:
+                        newCh = new Warrior("Sylvain Duriff", (int)(Math.random()*(3))+team.getLevelMaxInTeam()-1);
+                        break;
+                    case 1:
+                        newCh = new Thief("EddineLanger", (int)(Math.random()*(3))+team.getLevelMaxInTeam()-1);
+                        break;
+                    case 2:
+                        newCh = new Athlete("Pierre Kiroule", (int)(Math.random()*(3))+team.getLevelMaxInTeam()-1);
+                        break;
+                }
+                team.addCharacterTeam(newCh);
+                text += ConsoleDesign.text(newCh.toString()+"Ce personnage à été ajouté à votre équipe.\n", ConsoleDesign.magentaText);
+            }
         }
         else if(randomNumber<=20)//20%
         {
@@ -124,24 +134,39 @@ public class Discovery extends Event
         }
         
         int i=0;
+        boolean successAdd = false;
         for(i=0; i<team.getNbCharacters(); i++)
         {
             if(team.getCharacters().get(i).inventoryNotFull())
             {
-                if(stuffItem==null)
+                if(stuffItem==null && item!=null)
                 {
-                    team.getCharacters().get(i).addInventory(item);
+                    successAdd = team.getCharacters().get(i).addInventory(item);
                 }
-                else
+                else if(stuffItem!= null && item==null)
                 {
-                    team.getCharacters().get(i).addInventory(stuffItem);
+                    successAdd = team.getCharacters().get(i).addInventory(stuffItem);
                 }
                 break;
             }
         }
         text = Controller.ConsoleDesign.text("Vous avez découvert l'item suivant:\n", Controller.ConsoleDesign.magentaText);
-        text += (stuffItem==null) ? item.toString() : stuffItem.toString();
-        text += Controller.ConsoleDesign.text("Il a été placé dans l'inventaire du personnage "+team.getCharacters().get(i).getName()+".", Controller.ConsoleDesign.magentaText);
+        if(stuffItem == null && item!=null)
+        {
+            text += ConsoleDesign.text(item.toString(), ConsoleDesign.magentaText);
+        }
+        else if(stuffItem!= null && item==null)
+        {
+            text += ConsoleDesign.text(stuffItem.toString(), ConsoleDesign.magentaText);
+        }
+        if(successAdd)
+        {
+            text += Controller.ConsoleDesign.text("Il a été placé dans l'inventaire du personnage "+team.getCharacters().get(i).getName()+".", Controller.ConsoleDesign.magentaText);
+        }
+        else
+        {
+            text += Controller.ConsoleDesign.text("Vous n'avez plus de place dans tout vos inventaires.", ConsoleDesign.redText);
+        }
     }
 
     @Override

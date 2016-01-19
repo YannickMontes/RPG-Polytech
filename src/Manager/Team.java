@@ -18,7 +18,8 @@ import Entities.Warrior;
  * @author Corentin
  */
 public class Team {
-
+    
+    public static final int NBMAXCHARACTERS = 4;
     private List<Character> characters;
     private String name;
     

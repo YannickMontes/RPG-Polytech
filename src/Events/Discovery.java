@@ -59,7 +59,7 @@ public class Discovery extends Event {
             boolean successAdd = chosePerso.addInventory(item);
 
             if (successAdd) {
-                text += ConsoleDesign.text("Il a été placé dans l'inventaire du personnage " + team.getCharacters().get(persoNumber).getName() + ".", ConsoleDesign.magentaText);
+                text += ConsoleDesign.text("Il a été placé dans l'inventaire du personnage " + team.getCharacters().get(persoNumber).getName() + ".", ConsoleDesign.redText);
             } else {
                 text += ConsoleDesign.text("Vous n'avez plus de place dans tout vos inventaires.", ConsoleDesign.redText);
             }

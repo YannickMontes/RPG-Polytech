@@ -205,6 +205,19 @@ public abstract class Character
         return inventory;
     }
     
+    public int getNbEquipableItem()
+    {
+        int nb = 0;
+        for(int i=0; i<this.inventory.size(); i++)
+        {
+            if(this.inventory.get(i) instanceof StuffItem)
+            {
+                nb++;
+            }
+        }
+        return nb;
+    }
+    
     /**
      * Fonction permettant d'obtenir la taille totale que prennent les objets 
      * dans l'inventaire.
@@ -276,17 +289,17 @@ public abstract class Character
      * @param itemType Type des items voulus
      * @return La liste contenant les items
      */
-    public ArrayList<StuffItem> getEquipment(Class itemType)
+    public StuffItem getEquipment(Class itemType)
     {
         ArrayList<StuffItem> items = new ArrayList<>();
         for (StuffItem stuffItem : equipment)
         {
             if (stuffItem.getClass() == itemType)
             {
-                items.add(stuffItem);
+                return stuffItem;
             }
         }
-        return items;
+        return null;
     }
     
     /**
@@ -436,10 +449,9 @@ public abstract class Character
         if ("attack".equals(capacity))
         {
             float mania=1;
-            for (StuffItem weapon : this.getEquipment(Weapon.class))
-            {
-                mania = weapon.getHandlingAbility()/100;
-            }
+            StuffItem weapon = this.getEquipment(Weapon.class);
+            mania = weapon.getHandlingAbility()/100;
+            
             probability = mania;
             probability += 2 * (1-mania)*(this.attributes.get(Attribute.DEXTERITY)*0.004);
             System.out.println("Probabilité d'attaquer: "+probability);
@@ -447,10 +459,8 @@ public abstract class Character
         else if ("block".equals(capacity))
         {
             //probability = this.attributes.get(Attribute.DEFENSE);
-            for (StuffItem armor : this.getEquipment(Armor.class))
-            {
-                probability += (float) (((Armor) armor).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
-            }
+            StuffItem armor = this.getEquipment(Armor.class);
+            probability += (float) (((Armor) armor).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
             probability += (float) (this.attributes.get(Attribute.DEFENSE).floatValue() / 100)/* * (1 - (0.2 * this.getEquipment(Armor.class).size()))*/;
         }
         else if ("dodge".equals(capacity))
@@ -880,5 +890,102 @@ public abstract class Character
     public void printActualLevelState()
     {
         System.out.println(this.level);
+    }
+
+    public String getInvetoryToString()
+    {
+        String text ="";
+        int cpt=1;
+        text += ConsoleDesign.text("\nInventaire de: \n"+this.name,ConsoleDesign.cyanText);
+        for(Item i : this.inventory)
+        {
+            if(this.equipment.contains(i))
+            {
+                text +=ConsoleDesign.text("\n("+cpt+")", ConsoleDesign.greenText)+ConsoleDesign.text("Equipé\n", ConsoleDesign.yellowText)+i.toString();
+            }
+            else
+            {
+                text +=ConsoleDesign.text("\n("+cpt+")", ConsoleDesign.greenText)+i.toString();
+            }
+            cpt++;
+        }
+        return text;
+    }
+
+    public String getEquipmentToString()
+    {
+        String text = "";
+        int cpt = 1;
+        text += ConsoleDesign.text("Equipement de: \n"+this.name,ConsoleDesign.cyanText);
+        for(StuffItem i : this.equipment)
+        {
+            if(this.equipment.contains(i))
+            {
+                text +=ConsoleDesign.text("\n("+cpt+")", ConsoleDesign.greenText)+ConsoleDesign.text("Equipé\n", ConsoleDesign.yellowText)+i.toString();
+            }
+            cpt++;
+        }
+        return text;
+    }
+
+    public String getEquipeableItemToString()
+    {
+        String text ="";
+        int cpt=1;
+        text += ConsoleDesign.text("Elements équipables de: \n"+this.name,ConsoleDesign.cyanText);
+        for(Item i : this.inventory)
+        {
+            if(!this.equipment.contains(i) && i instanceof StuffItem)
+            {
+                text +=ConsoleDesign.text("\n("+cpt+")\n", ConsoleDesign.greenText)+i.toString();
+            }
+            cpt++;
+        }  
+        return text;
+    }
+
+    public String getEquipeableItemToString(Class clas)
+    {
+        String text ="";
+        int cpt=1;
+        text += ConsoleDesign.text("Elements équipables de: \n"+this.name,ConsoleDesign.cyanText);
+        for(Item i : this.inventory)
+        {
+            if(!this.equipment.contains(i) && i.getClass()==clas)
+            {
+                text +=ConsoleDesign.text("\n("+cpt+")\n", ConsoleDesign.greenText)+i.toString();
+            }
+            cpt++;
+        }  
+        return text;
+    }
+
+    public int getNbEquipableItem(Class clas)
+    {
+        int sum = 0;
+        for(int i=0; i<this.inventory.size(); i++)
+        {
+            if(this.inventory.get(i).getClass()==clas)
+            {
+                sum++;
+            }
+        }
+        return sum;
+    }
+    
+    public StuffItem getInInventoryItemOfType(Class classe, int number)
+    {
+        int nb = 0;
+        for(Item i : this.inventory)
+        {
+            if(i.getClass()==classe)
+            {
+                if(nb==number)
+                {
+                    return (StuffItem)i;
+                }
+            }
+        }
+        return null;
     }
 }

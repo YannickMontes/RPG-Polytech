@@ -93,20 +93,60 @@ public class Game {
     }
 
     private void initEvents() {
-        int cpt = 0;
         while(true)
         {
-            int rd = (int)(Math.random()*2);
-            if(rd == 77)
+            int choiceUser = Controller.askNumberBetween("1-> Se déplacer\n2-> Consulter son inventaire\n3-> Modifier l'équipement des personnages", 1, 3);
+            switch(choiceUser)
             {
-                events.add(new Fight(team, new Team(team)));
+                case 1:
+                    int cpt = 0;
+                    int rd = (int)(Math.random()*2);
+                    if(rd == 0)
+                    {
+                        events.add(new Fight(team, new Team(team)));
+                    }
+                    else
+                    {
+                        events.add(new Discovery(team));
+                        System.out.println(events.get(cpt));
+                    }
+                    cpt++;
+                    break;
+                case 2:
+                    for(Character c : this.team.getCharacters())
+                    {
+                        System.out.println(ConsoleDesign.text(c.getInvetoryToString(), ConsoleDesign.greenText));
+                    }
+                    break;
+                case 3:
+                    for(Character c : this.team.getCharacters())
+                    {
+                        System.out.println(ConsoleDesign.text(c.getEquipmentToString(), ConsoleDesign.greenText));
+                        System.out.println(ConsoleDesign.text(c.getEquipeableItemToString(), ConsoleDesign.greenText));
+                        boolean result = Controller.askYesNo("Voulez-vous modifier votre équipement?[O/N]");
+                        while(result)
+                        {
+                            int choice = Controller.askNumberBetween(ConsoleDesign.text("1-> Remplacer Arme\n2-> Remplacer Armure\n3-> Remplacer Jambières\n4-> Ne rien remplacer"
+                                    , ConsoleDesign.magentaText), 1, 4);
+                            switch(choice)
+                            {
+                                case 1:
+                                    changeEquipment(c, Weapon.class);
+                                    break;
+                                case 2:
+                                    changeEquipment(c, Armor.class);
+                                    break;
+                                case 3:
+                                    changeEquipment(c, Greave.class);
+                                    break;
+                                case 4:
+                                    result = false;
+                                    break;
+                            }
+                        }
+                    }
+                    break;
             }
-            else
-            {
-                events.add(new Discovery(team));
-                System.out.println(events.get(cpt));
-            }
-            cpt++;
         }
     }
 
@@ -192,5 +232,17 @@ public class Game {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+    
+    public void changeEquipment(Character chara, Class classe)
+    {
+        System.out.println(chara.getEquipment(classe));
+        System.out.println(chara.getEquipeableItemToString(classe));
+        int choiceUser = Controller.askNumberBetween("Choisissez le numéro de l'item que vous voulez remplacer (0 pour rien changer)", 0, chara.getNbEquipableItem(classe));
+        if(choiceUser == 0)
+        {
+            return;
+        }
+        chara.replaceEquipment(chara.getInInventoryItemOfType(Weapon.class,choiceUser-1), chara.getEquipment(Weapon.class));
     }
 }

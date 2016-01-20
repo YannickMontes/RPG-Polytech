@@ -75,7 +75,7 @@ public class Discovery extends Event {
         {
             //Nouveau personnage
             System.out.println("\n" + ConsoleDesign.textBox("Vous avez découvert un nouveau personnage!", ConsoleDesign.redText) + "\n");
-            if (Team.NBMAXCHARACTERS >= this.team.getNbCharacters()) {
+            if (Team.NBMAXCHARACTERS <= this.team.getNbCharacters()) {
                 System.out.println(ConsoleDesign.text("Cependant, vous ne pouvez plus ajouter de personnages à votre équipe.", ConsoleDesign.redText));
             } else {
                 Character newCh = null;

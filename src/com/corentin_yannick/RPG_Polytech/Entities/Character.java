@@ -432,7 +432,7 @@ public abstract class Character {
             
             probability = mania;
             probability += 2 * (1 - mania) * (this.attributes.get(Attribute.DEXTERITY) * 0.004);
-            System.out.println("Probabilité d'attaquer: " + probability);
+            //System.out.println("Probabilité d'attaquer: " + probability);
         } else if ("block".equals(capacity)) {
             //probability = this.attributes.get(Attribute.DEFENSE);
             StuffItem armor = this.getEquipment(Armor.class);

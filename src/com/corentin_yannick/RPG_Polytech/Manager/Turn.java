@@ -10,7 +10,6 @@ import com.corentin_yannick.RPG_Polytech.Entities.Athlete;
 import com.corentin_yannick.RPG_Polytech.Entities.Character;
 import com.corentin_yannick.RPG_Polytech.Entities.Warrior;
 import com.corentin_yannick.RPG_Polytech.Entities.Thief;
-import com.corentin_yannick.RPG_Polytech.Items.Item;
 import com.corentin_yannick.RPG_Polytech.Items.UseableItem;
 import com.corentin_yannick.RPG_Polytech.Controllers.Controller;
 import com.corentin_yannick.RPG_Polytech.Entities.Attribute;
@@ -274,13 +273,13 @@ public class Turn {
             System.out.println(text);
         }
         if (blocks.size() > 0) {
-            System.out.println(ConsoleDesign.textDash("Liste des blocks réalisées par l'équipe " + team.getName(), ConsoleDesign.redText));
+            System.out.println(ConsoleDesign.textDash("Liste des blocks réalisés par l'équipe " + team.getName(), ConsoleDesign.redText));
         }
         for (String text : blocks) {
             System.out.println(text);
         }
         if (cares.size() > 0) {
-            System.out.println(ConsoleDesign.textDash("Liste des soins utilisées par l'équipe " + team.getName(), ConsoleDesign.redText));
+            System.out.println(ConsoleDesign.textDash("Liste des objets utilisés par l'équipe " + team.getName(), ConsoleDesign.redText));
         }
         for (String text : cares) {
             System.out.println(text);

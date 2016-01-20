@@ -100,8 +100,8 @@ public class Game {
                     character = new Thief(name);
                     break;
             }
-            character.getBasicAttributesCHEAT().cheat();
-            character.reinitStats();
+            //character.getBasicAttributesCHEAT().cheat();
+            //character.reinitStats();
             team.addCharacterTeam(character);
         }
     }
@@ -136,32 +136,7 @@ public class Game {
                     }
                     break;
                 case 3:
-                    for(Character c : this.team.getCharacters())
-                    {
-                        System.out.println(ConsoleDesign.text(c.getEquipmentToString(), ConsoleDesign.greenText));
-                        System.out.println(ConsoleDesign.text(c.getEquipeableItemToString(), ConsoleDesign.greenText));
-                        boolean result = Controller.askYesNo("Voulez-vous modifier votre équipement? [O/N]");
-                        while(result)
-                        {
-                            int choice = Controller.askNumberBetween(ConsoleDesign.text("1-> Remplacer Arme\n2-> Remplacer Armure\n3-> Remplacer Jambières\n4-> Ne rien remplacer"
-                                    , ConsoleDesign.magentaText), 1, 4);
-                            switch(choice)
-                            {
-                                case 1:
-                                    changeEquipment(c, Weapon.class);
-                                    break;
-                                case 2:
-                                    changeEquipment(c, Armor.class);
-                                    break;
-                                case 3:
-                                    changeEquipment(c, Greave.class);
-                                    break;
-                                case 4:
-                                    result = false;
-                                    break;
-                            }
-                        }
-                    }
+                    changeEquipmentTeam();
                 case 4:
                     System.out.println(ConsoleDesign.text(this.team.toString(),ConsoleDesign.cyanText));
                     break;
@@ -265,7 +240,7 @@ public class Game {
     
     public void changeEquipment(Character chara, Class classe)
     {
-        System.out.println("Equipement actuel ("+classe+")");
+        System.out.println("Equipement actuel:");
         System.out.println(chara.getEquipment(classe));
         System.out.println(chara.getEquipeableItemToString(classe));
         int choiceUser = Controller.askNumberBetween("Choisissez le numéro de l'item que vous voulez remplacer (0 pour rien changer)", 0, chara.getNbEquipableItem(classe));
@@ -273,7 +248,7 @@ public class Game {
         {
             return;
         }
-        chara.replaceEquipment(chara.getInInventoryItemOfType(Weapon.class,choiceUser-1), chara.getEquipment(Weapon.class));
+        System.out.println(chara.replaceEquipment(chara.getInInventoryItemOfType(Weapon.class,choiceUser-1), chara.getEquipment(Weapon.class)));
     }
 
     private void displayTips()
@@ -287,5 +262,49 @@ public class Game {
                 + "Qui sait, peut-être que vous ferrez des découvertes au fil du temps...\n"
                 + "Allez, c'est à vous!\n", ConsoleDesign.greenText));
         System.out.println("\n");
+    }
+
+    private void changeEquipmentTeam()
+    {
+        String text = "Modifer l'équipement du personnage:\n";
+        int i=0;
+        for(Character c : this.team.getCharacters())
+        {
+            text += i+"-> "+this.team.getCharacters().get(i).getName()+"\n";
+            i++;
+        }
+        text+=i+"-> Ne pas modifier";
+        int choice = Controller.askNumberBetween(text, 0, i);
+        if(choice==i)
+        {
+            return;
+        }
+        else
+        {
+            Character c = this.team.getCharacters().get(choice);
+            System.out.println(ConsoleDesign.text(c.getEquipmentToString(), ConsoleDesign.greenText));
+            System.out.println(ConsoleDesign.text(c.getEquipeableItemToString(), ConsoleDesign.greenText));
+            boolean result = Controller.askYesNo("Voulez-vous modifier votre équipement? [O/N]");
+            while(result)
+            {
+                int choiceUser = Controller.askNumberBetween(ConsoleDesign.text("1-> Remplacer Arme\n2-> Remplacer Armure\n3-> Remplacer Jambières\n4-> Ne rien remplacer"
+                        , ConsoleDesign.magentaText), 1, 4);
+                switch(choiceUser)
+                {
+                    case 1:
+                        changeEquipment(c, Weapon.class);
+                        break;
+                    case 2:
+                        changeEquipment(c, Armor.class);
+                        break;
+                    case 3:
+                        changeEquipment(c, Greave.class);
+                        break;
+                    case 4:
+                        result = false;
+                        break;
+                }
+            }
+        }
     }
 }

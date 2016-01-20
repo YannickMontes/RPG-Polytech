@@ -79,7 +79,6 @@ public abstract class Character {
         int nbPoints = (level.getLevel() - 1) * NBPOINTLEVELUP;
         int lvl = level.getLevel();
         while (nbPoints > 0) {
-            int randomNumber = (int) (Math.random() * Attribute.values().length - 1);
             putRandomPoint(lvl);
             nbPoints -= NBPOINTLEVELUP;
             lvl--;
@@ -140,6 +139,7 @@ public abstract class Character {
         }
         this.inventory.add(Potion.listPotionItem.get(0));
         this.inventory.add(Potion.listPotionItem.get(0));
+        //this.inventory.add(Weapon.listWeaponItem.get(1));
         this.reinitStats();
     }
 
@@ -345,21 +345,25 @@ public abstract class Character {
      * @param stuffItem l'item à équiper
      * @return Vrai si l'item a pu etre équipé, faux sinon.
      */
-    public boolean addEquipement(StuffItem stuffItem) {
-        if (!this.inventory.contains(stuffItem)) {
+    public String addEquipement(StuffItem stuffItem) {
+        /*if (!this.inventory.contains(stuffItem)) {
             if (!this.addInventory(stuffItem)) {
-                return false;
+                return "Vous ne pouvez pas transporter plus d'objets.";
             }
-        }
+        }*/
         if (equipment.size() < MAXEQUIPMENT) {
             if ((stuffItem.getClass() == Weapon.class && numberOfClassEquipment(Weapon.class) < MAXWEAPONEQUIPMENT)
                     || (stuffItem.getClass() == Armor.class && numberOfClassEquipment(Armor.class) < MAXARMOREQUIPMENT)
                     || (stuffItem.getClass() == Greave.class && numberOfClassEquipment(Greave.class) < MAXGREAVEEQUIPMENT)) {
+                if(stuffItem.getRequiredLevel()>this.getLevel())
+                {
+                    return "Vous n'avez pas le niveau requis pour équiper cet item.";
+                }
                 this.equipment.add(stuffItem);
-                return true;
+                return "";
             }
         }
-        return false;
+        return "Vous avez déjà trop d'équipements équipés.";
     }
 
     /**
@@ -369,13 +373,15 @@ public abstract class Character {
      * @param removeStuffItem Item à remplacer
      * @return
      */
-    public boolean replaceEquipment(StuffItem newStuffItem, StuffItem removeStuffItem) {
-        if (this.addEquipement(newStuffItem)) {
-            this.equipment.remove(removeStuffItem);
+    public String replaceEquipment(StuffItem newStuffItem, StuffItem removeStuffItem) {
+        this.equipment.remove(removeStuffItem);
+        this.inventory.add(removeStuffItem);
+        String message = this.addEquipement(newStuffItem);
+        if (message.equals("")) {
             this.reinitStats();
-            return true;
+            return "";
         }
-        return false;
+        return message;
     }
 
     /**
@@ -515,6 +521,10 @@ public abstract class Character {
         if (success == true) {
             text = "(" + this.getName() + ") Attaque " + opponent.getName() + " avec une attaque de base, provoquant " + damages
                     + " points de dégats. (Santé: " + opponent.getAttributes().get(Attribute.HEALTH) + ")";
+            if(!opponent.isAlive())
+            {
+                text+="\nLe personnage "+opponent.getName()+" est mort!";
+            }
             return text;
         }
         return "(" + this.getName() + ") L'attaque sur " + opponent.getName() + " a échoué.";
@@ -848,14 +858,14 @@ public abstract class Character {
     {
         String text ="";
         int cpt=1;
-        text += ConsoleDesign.text("Elements équipables de: \n"+this.name,ConsoleDesign.cyanText);
+        text += ConsoleDesign.text("Elements équipables de "+this.name+":",ConsoleDesign.cyanText);
         for(Item i : this.inventory)
         {
             if(!this.equipment.contains(i) && i instanceof StuffItem)
             {
                 text +=ConsoleDesign.text("\n("+cpt+")\n", ConsoleDesign.greenText)+i.toString();
+                cpt++;
             }
-            cpt++;
         }  
         return text;
     }
@@ -864,14 +874,14 @@ public abstract class Character {
     {
         String text ="";
         int cpt=1;
-        text += ConsoleDesign.text("Elements équipables de: \n"+this.name,ConsoleDesign.cyanText);
+        text += ConsoleDesign.text("Elements équipables de "+this.name+":",ConsoleDesign.cyanText);
         for(Item i : this.inventory)
         {
             if(!this.equipment.contains(i) && i.getClass()==clas)
             {
                 text +=ConsoleDesign.text("\n("+cpt+")\n", ConsoleDesign.greenText)+i.toString();
+                cpt++;
             }
-            cpt++;
         }  
         return text;
     }
@@ -881,7 +891,7 @@ public abstract class Character {
         int sum = 0;
         for(int i=0; i<this.inventory.size(); i++)
         {
-            if(this.inventory.get(i).getClass()==clas)
+            if(this.inventory.get(i).getClass()==clas && !this.equipment.contains(i))
             {
                 sum++;
             }

@@ -147,25 +147,6 @@ public class Discovery extends Event {
         if (item != null) {
             askUserAddItem(item);
         }
-
-        /*
-        boolean successAdd = false
-                
-        for(i=0; i<team.getNbCharacters(); i++)
-        {
-            if(team.getCharacters().get(i).inventoryNotFull())
-            {
-                if(stuffItem==null && item!=null)
-                {
-                    successAdd = team.getCharacters().get(i).addInventory(item);
-                }
-                else if(stuffItem!= null && item==null)
-                {
-                    successAdd = team.getCharacters().get(i).addInventory(stuffItem);
-                }
-                break;
-            }
-        }*/
     }
 
 }

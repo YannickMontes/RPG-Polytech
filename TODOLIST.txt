@@ -1,6 +1,0 @@
-Personnage:
-	-Gestion du niveau avec gain d'expérience en fin de combat + découverte
-
-Items (Drop & Découverte):
-FAIT	-Fichiers JSON qui référence les items
-	

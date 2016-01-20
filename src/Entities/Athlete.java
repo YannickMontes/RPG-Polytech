@@ -7,14 +7,14 @@ package Entities;
 
 import Actions.Attack;
 import Actions.Block;
-import Actions.Care;
 import Items.UseableItem;
+import Actions.UseItem;
 
 /**
  *
  * @author yannick
  */
-public class Athlete extends Character implements Attack, Block, Care {
+public class Athlete extends Character implements Attack, Block, UseItem {
 
     public Athlete(String name) {
         super(name, "Athlete");
@@ -39,7 +39,7 @@ public class Athlete extends Character implements Attack, Block, Care {
 
         capacities.add("Attaquer");
         capacities.add("Bloquer");
-        capacities.add("Soigner");
+        capacities.add("Utiliser un item");
     }
 
     @Override
@@ -137,20 +137,19 @@ public class Athlete extends Character implements Attack, Block, Care {
     }
 
     @Override
-    public String heal(UseableItem useableItem) {
+    public String useItem(UseableItem useableItem) {
         if (useableItem != null) {
             if (inventory.contains(useableItem)) {
-                if (capacities.contains("Soigner")) {
-                    boolean success = verifySuccess("care");
+                if (capacities.contains("Utiliser un item")) {
+                    boolean success = verifySuccess("useItem");
                     int care = 0;
                     if (success == true) {
-                        care = measureImpact("care", null, useableItem);
-                        this.attributes.replace(Attribute.HEALTH, this.attributes.get(Attribute.HEALTH) + care);
+                        care = measureImpact("useItem", null, useableItem);
                     }
-                    String text = careResult(success, care);
+                    String text = careResult(success, useableItem);
                     return text;
                 }
-                return "Vous ne possedez pas la capacité de soigner actuellement";
+                return "Vous ne pouvez pas utiliser d'item.";
             }
             return "Vous ne possedez pas cet objet dans votre inventaire";
         }

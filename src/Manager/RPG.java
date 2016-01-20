@@ -5,12 +5,6 @@
  */
 package Manager;
 
-import Entities.Athlete;
-import Entities.Thief;
-import Entities.Warrior;
-import Items.StuffItem;
-import Items.Weapon;
-
 /**
  *
  * @author yannick

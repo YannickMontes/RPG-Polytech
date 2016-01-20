@@ -7,14 +7,14 @@ package Entities;
 
 import Actions.Attack;
 import Actions.Block;
-import Actions.Care;
 import Items.UseableItem;
+import Actions.UseItem;
 
 /**
  *
  * @author yannick
  */
-public class Thief extends Character implements Attack, Care, Block {
+public class Thief extends Character implements Attack, UseItem, Block {
 
     public Thief(String name) {
         super(name, "Voleur");
@@ -40,7 +40,7 @@ public class Thief extends Character implements Attack, Care, Block {
 
         capacities.add("Attaquer");
         capacities.add("Bloquer");
-        capacities.add("Soigner");
+        capacities.add("Utiliser un item");
     }
 
     @Override
@@ -92,24 +92,24 @@ public class Thief extends Character implements Attack, Care, Block {
     }
 
     @Override
-    public String heal(UseableItem useableItem) {
+    public String useItem(UseableItem useableItem) {
         if (useableItem != null) {
             if (inventory.contains(useableItem)) {
-                if (capacities.contains("Soigner")) {
-                    boolean success = verifySuccess("care");
+                if (capacities.contains("Utiliser un item")) {
+                    boolean success = verifySuccess("useItem");
                     int care = 0;
                     if (success == true) {
-                        care = measureImpact("care", null, useableItem);
-                        this.attributes.replace(Attribute.HEALTH, this.attributes.get(Attribute.HEALTH) + care);
+                        care = measureImpact("useItem", null, useableItem);
                     }
-                    String text = careResult(success, care);
+                    String text = careResult(success, useableItem);
                     return text;
                 }
-                return "Vous ne possedez pas la capacité de soigner actuellement";
+                return "Vous ne pouvez pas utiliser d'item.";
             }
             return "Vous ne possedez pas cet objet dans votre inventaire";
         }
         return "Vous ne possedez pas d'objets utilisables dans votre inventaire";
+
     }
 
     @Override

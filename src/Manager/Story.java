@@ -24,6 +24,8 @@ import org.json.simple.parser.ParseException;
 public class Story
 {
     public static List<String> plot = new ArrayList<>();
+    public static List<String> namesPlayer = new ArrayList<>();
+    public static List<String> namesTeam = new ArrayList<>();
     private static int plotNumber=0;
     
     public static void initStory()
@@ -48,6 +50,40 @@ public class Story
         {
             Logger.getLogger(Story.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        initNames();
+    }
+    
+    public static void initNames()
+    {
+        JSONParser json = new JSONParser();
+        
+        try
+        {
+            Object object = json.parse(new FileReader("names.json"));
+            
+            JSONObject jsonObject = (JSONObject) object;
+
+            JSONArray names = (JSONArray) jsonObject.get("joueur");
+            Iterator<JSONObject> iterator = names.iterator();
+            while(iterator.hasNext())
+            {
+                JSONObject objTemp = iterator.next();
+                String plot = (String) objTemp.get("pseudo");
+                Story.namesPlayer.add(plot);
+            }
+            JSONArray team = (JSONArray) jsonObject.get("equipes");
+            iterator = team.iterator();
+            while(iterator.hasNext())
+            {
+                JSONObject objTemp = iterator.next();
+                String plot = (String) objTemp.get("name");
+                Story.namesTeam.add(plot);
+            }
+        } catch (Exception ex)
+        {
+            Logger.getLogger(Story.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public static String getPlot()
@@ -66,5 +102,17 @@ public class Story
                 Story.plot.set(i, replaced);
             }
         }
+    }
+    
+    public static String getRandomPlayerName()
+    {
+        int nbAlea = (int)(Math.random()*namesPlayer.size());
+        return namesPlayer.get(nbAlea);
+    }
+    
+    public static String getRandomTeamName()
+    {
+        int nbAlea = (int)(Math.random()*namesTeam.size());
+        return namesTeam.get(nbAlea);
     }
 }

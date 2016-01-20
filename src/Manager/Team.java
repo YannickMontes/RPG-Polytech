@@ -24,7 +24,7 @@ public class Team {
     private String name;
 
     public Team(Team playerTeam) {
-        this.name = "On s'en fout";
+        this.name = Story.getRandomTeamName();
         characters = new ArrayList<>();
         this.generateRandomTeam(playerTeam);
     }
@@ -131,15 +131,15 @@ public class Team {
         //On génère + ou - 1 le même nombre de personnages que l'équipe du joueur.
         int deltaNbPlayer = (int) (Math.random() * 3) - 1;
 
-        if (playerTeam.getNbCharacters() + deltaNbPlayer < 1) {
+        if (playerTeam.getNbCharacters() + deltaNbPlayer < 1 || playerTeam.getLevelMaxInTeam()==1) {
             deltaNbPlayer = 0;
         }
-
+        
         //On boucle pour créer le nombre de joueurs aléatoire défini. 
         for (int i = 0; i < playerTeam.getNbCharacters() + deltaNbPlayer; i++) {
             Character newChar = null;
 
-            String name = "Zazie"; //TO DO: ALLER CHERCHER PARMI LES NOMS ALEATOIRE EN JSON
+            String name = Story.getRandomPlayerName();
 
             //Random maitrisé pour le niveau du personnage.
             int level = 0;
@@ -156,7 +156,7 @@ public class Team {
                     break;
             }
 
-            if (level <= 0) {
+            if (level <= 0 || playerTeam.getLevelMaxInTeam()==1) {
                 level = 1;
             }
 

@@ -11,8 +11,7 @@ import Items.UseableItem;
  *
  * @author yannick
  */
-public interface Care extends Capacity {
+public interface UseItem extends Capacity {
 
-    public String heal(UseableItem useableItem);
-
+    public String useItem(UseableItem useableItem);
 }

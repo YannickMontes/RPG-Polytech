@@ -16,21 +16,16 @@ import java.util.List;
 public class Potion extends UseableItem {
 
     public static List<UseableItem> listPotionItem;
-    private Attribute attributeUped;
 
     public Potion(String name, int weight, int bonusValue, int r, Attribute att) {
         super(name, weight, bonusValue, r);
-        this.attributeUped = att;
-    }
-
-    public Attribute getAttributeUped() {
-        return this.attributeUped;
+        this.attributeBonus = att;
     }
 
     @Override
     public String toString() {
         return ConsoleDesign.text("Type: Potion", ConsoleDesign.magentaText) + "\n" +
-                ConsoleDesign.text("Attribut augmenté:: " + this.attributeUped , ConsoleDesign.magentaText) + "\n" +
+                ConsoleDesign.text("Attribut augmenté:: " + this.attributeBonus , ConsoleDesign.magentaText) + "\n" +
                 ConsoleDesign.text("Bonus: " + this.getValue(), ConsoleDesign.magentaText) + "\n";
     }
 }

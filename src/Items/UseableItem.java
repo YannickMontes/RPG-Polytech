@@ -15,8 +15,8 @@ import java.util.List;
 public class UseableItem extends Item {
 
     public static List<UseableItem> listUseableItem;
-    private final int value;
-    private Attribute attributeBonus;
+    protected final int value;
+    protected Attribute attributeBonus;
 
     public UseableItem(String name, int weight, int bonusValue, int r) {
         super(name, weight, r);

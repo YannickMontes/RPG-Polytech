@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import Controller.Controller;
 import Items.Greave;
+import Items.Potion;
 
 /**
  * Cette classe abstraite contient toutes les informations nécéssaires pour un
@@ -108,7 +109,7 @@ public abstract class Character {
     private void initStuff() {
         if (this.level.getLevel() == 1) {
             this.addEquipement(Greave.listGreaveItem.get(0));
-            this.addEquipement(Armor.listeArmorItem.get(1));
+            this.addEquipement(Armor.listeArmorItem.get(0));
             this.addEquipement(Weapon.listWeaponItem.get(0));
         } else {
             List<StuffItem> listPossibleArmor = new ArrayList<>();
@@ -137,6 +138,8 @@ public abstract class Character {
             nbAlea = (int) (Math.random() * listPossibleWeapon.size());
             this.addEquipement(listPossibleWeapon.get(nbAlea));
         }
+        this.inventory.add(Potion.listPotionItem.get(0));
+        this.inventory.add(Potion.listPotionItem.get(0));
         this.reinitStats();
     }
 
@@ -250,7 +253,7 @@ public abstract class Character {
         int i = 0;
         for (Item item : inventory) {
             if (item instanceof UseableItem) {
-                return i++;
+                i++;
             }
         }
         return i;
@@ -290,6 +293,19 @@ public abstract class Character {
             return false;
         }
         return true;
+    }
+    
+    public List<UseableItem> getUseableItems()
+    {
+        List<UseableItem> ret = new ArrayList<>();
+        for(Item i : this.inventory)
+        {
+            if(i instanceof UseableItem)
+            {
+                ret.add((UseableItem)i);
+            }
+        }
+        return ret;
     }
 
     /*
@@ -421,7 +437,7 @@ public abstract class Character {
                 probability -= (float) (stuffItem.getWeight()) / 3;
             }
             probability += (float) (this.attributes.get(Attribute.SPEED).floatValue() / 100)/* * (1 - (0.2 * this.getEquipment().size()))*/;
-        } else if ("care".equals(capacity)) {
+        } else if ("useItem".equals(capacity)) {
             probability = 1;
         }
 
@@ -459,10 +475,11 @@ public abstract class Character {
         if ("attack".equals(capacity) && opponent != null) {
             return this.calculateDamageBasicAttack(opponent);
         } else if ("block".equals(capacity)) {
-            this.attributes.replace(Attribute.DEFENSE, (int) (this.attributes.get(Attribute.DEFENSE) + 0.5 * this.attributes.get(Attribute.STRENGTH)));
+            this.attributes.replace(Attribute.DEFENSE, (int) (this.attributes.get(Attribute.DEFENSE) + 0.5 * this.attributes.get(Attribute.STRENGTH)),false);
             return (int) (0.5 * this.attributes.get(Attribute.STRENGTH));
-        } else if ("care".equals(capacity) && useableItem != null) {
-            return useableItem.getValue();
+        } else if ("useItem".equals(capacity) && useableItem != null) {
+            this.attributes.replace(useableItem.getAttributeBonus(), this.attributes.get(useableItem.getAttributeBonus())+useableItem.getValue(), false);
+            return 1;
         }
         return 0;
     }
@@ -507,16 +524,23 @@ public abstract class Character {
      * Fonction permettant de vérifier la réussite du soin
      *
      * @param success Réussite du soin
-     * @param care Valeur du soin
+     * @param item Item à utiliser
      * @return Le texte à afficher
      */
-    public String careResult(boolean success, int care) {
+    public String careResult(boolean success, UseableItem item) {
         String text;
         if (success == true) {
-            text = "(" + this.getName() + ") Se soigne d'une valeur de " + care + ". (Santé: " + this.attributes.get(Attribute.HEALTH) + ")";
+            if(item.getAttributeBonus() == Attribute.HEALTH)
+            {
+                text = "(" + this.getName() + ") Se soigne de " +item.getValue()+ ".";
+            }
+            else
+            {
+                text = "(" + this.getName() + ") Augmente de " +item.getValue()+ " son attribut de "+item.getAttributeBonus()+" pour le tour actuel.";
+            }
             return text;
         }
-        return "(" + this.getName() + ") Le soin a échoué.";
+        return "(" + this.getName() + ") L'utilisation d'item a échoué.";
     }
 
     /**

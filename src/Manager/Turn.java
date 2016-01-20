@@ -91,44 +91,48 @@ public class Turn {
             }
         }
     }
-
-    public void turnCare(Character character) {
+    
+    public void turnObject(Character character) {
         UseableItem useableItem = null;
         if (character.numberUseableItem() > 0) {
-            String careText = ConsoleDesign.textDashArrow("Quel soin voulez-vous utiliser ?", ConsoleDesign.redText);
-            int numCare = 0;
-            for (Item item : character.getInventory()) {
-                if (item instanceof UseableItem) {
-                    System.out.println(ConsoleDesign.text(Integer.toString(numCare) + " -> " + item.getName() + " de bonus " + ((UseableItem) item).getValue(), ConsoleDesign.redText));
-                }
-                numCare++;
+            String careText = ConsoleDesign.textDashArrow("Quel item voulez-vous utiliser ?", ConsoleDesign.redText);
+            int numObject = -1;
+            for (UseableItem item : character.getUseableItems()) {
+                numObject++;
+                System.out.println(ConsoleDesign.text("("+numObject+") "+item.toString(), ConsoleDesign.greenText));
             }
-            int useableNumber = Controller.askNumberBetween(careText, 0, numCare);
-            useableItem = (UseableItem) character.getInventory().get(useableNumber);
+            int useableNumber = Controller.askNumberBetween(careText, 0, numObject);
+            useableItem = character.getUseableItems().get(useableNumber);
         }
         if (character instanceof Warrior) {
-            System.out.println(ConsoleDesign.text(((Warrior) character).heal(useableItem), ConsoleDesign.redText));
+            System.out.println(ConsoleDesign.text(((Warrior) character).useItem(useableItem), ConsoleDesign.redText));
         } else if (character instanceof Athlete) {
-            System.out.println(ConsoleDesign.text(((Athlete) character).heal(useableItem), ConsoleDesign.redText));
+            System.out.println(ConsoleDesign.text(((Athlete) character).useItem(useableItem), ConsoleDesign.redText));
         } else if (character instanceof Thief) {
-            System.out.println(ConsoleDesign.text(((Thief) character).heal(useableItem), ConsoleDesign.redText));
+            System.out.println(ConsoleDesign.text(((Thief) character).useItem(useableItem), ConsoleDesign.redText));
         }
+        turnOf(character,true);
     }
 
-    public void turnOf(Character character) {
-        character.reinitStats();
-        int limitAction = 1;
+    public void turnOf(Character character, boolean usedObject) {
+        if(!usedObject)
+        {
+            character.reinitStats();   
+        }
+        int limitAction = 0;
         String text = ConsoleDesign.textDashArrow("Le personnage " + character.getName() + " (" + character.getClass().getSimpleName() + " - Niveau: " + character.getLevel() + " - Vie: " + character.getAttributes().get(Attribute.HEALTH) + ")" + " doit joué", ConsoleDesign.cyanText);
         text += "\n \n" + ConsoleDesign.textDashArrow("Quelle action voulez-vous réaliser pour " + character.getName() + " ?", ConsoleDesign.redText);
         for (String capacity : character.getCapacities()) {
             if (capacity.equals("Attaquer")) {
                 text += "\n" + ConsoleDesign.text("1 -> Attaquer un personnage", ConsoleDesign.redText);
+                limitAction++;
             } else if (capacity.equals("Bloquer")) {
                 text += "\n" + ConsoleDesign.text("2 -> Utiliser une parade", ConsoleDesign.redText);
-            } else if (capacity.equals("Soigner") && character.numberUseableItem() != 0) {
-                text += "\n" + ConsoleDesign.text("3 -> Utiliser un soin", ConsoleDesign.redText);
+                limitAction++;
+            } else if (capacity.equals("Utiliser un item") && !usedObject) {
+                text += "\n" + ConsoleDesign.text("3 -> Utiliser un objet", ConsoleDesign.redText);
+                limitAction++;
             }
-            limitAction++;
         }
 
         int actionNumber = Controller.askNumberBetween(text, 1, limitAction);
@@ -140,7 +144,7 @@ public class Turn {
                 turnDefense(character);
                 break;
             case 3:
-                turnCare(character);
+                turnObject(character);
                 break;
         }
         System.out.println("");
@@ -149,7 +153,7 @@ public class Turn {
     public boolean executeTurn() {
         for (Character character : team.getCharacters()) {
             if (character.isAlive()) {
-                turnOf(character);
+                turnOf(character, false);
             } else {
                 System.out.println();
                 System.out.println(ConsoleDesign.textDash("Le joueur " + character.getName() + " est mort et ne peut plus jouer pour ce combat !", ConsoleDesign.redText));
@@ -245,11 +249,11 @@ public class Turn {
                         UseableItem useableItem = null;
                         if (character.numberUseableItem() > 0) {
                             if (character instanceof Warrior) {
-                                resultCare = ((Warrior) character).heal(useableItem);
+                                resultCare = ((Warrior) character).useItem(useableItem);
                             } else if (character instanceof Athlete) {
-                                resultCare = ((Athlete) character).heal(useableItem);
+                                resultCare = ((Athlete) character).useItem(useableItem);
                             } else if (character instanceof Thief) {
-                                resultCare = ((Thief) character).heal(useableItem);
+                                resultCare = ((Thief) character).useItem(useableItem);
                             }
                             cares.add(ConsoleDesign.text(resultCare, ConsoleDesign.redText));
                         }

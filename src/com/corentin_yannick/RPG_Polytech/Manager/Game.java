@@ -45,27 +45,24 @@ public class Game {
         events = new ArrayList<>();
         this.startGame();
     }
-    
-    private void initPlot()
-    {
+
+    private void initPlot() {
         Story.initStory();
     }
-    
-    private void displayBegining()
-    {
+
+    private void displayBegining() {
         System.out.println(ConsoleDesign.RPG(ConsoleDesign.whiteText, ConsoleDesign.redBack));
         System.out.println(Story.getPlot());
     }
-    
-    private void createPlayerTeam()
-    {
+
+    private void createPlayerTeam() {
         System.out.println(ConsoleDesign.textBox("Création de votre équipe", ConsoleDesign.whiteText, ConsoleDesign.redBack));
 
         team = new Team(Controller.askText(ConsoleDesign.textBox("Entrez un nom pour votre équipe", ConsoleDesign.redText)));
-        
+
         int numberTeam1 = Controller.askNumberBetween(ConsoleDesign.textBox("Entrez le nombre de personnage pour votre équipe (entre 2 et 5)", ConsoleDesign.redText), 2, 5);
         fillUpCharacters(numberTeam1);
-        
+
         System.out.println(ConsoleDesign.textBox("Récapitulatif de votre équipe:", ConsoleDesign.redText));
         System.out.println(this.team.toString());
         Story.replaceVars(team);
@@ -107,47 +104,38 @@ public class Game {
     }
 
     private void initEvents() {
-        while(true)
-        {
+        while (true) {
             int choiceUser = Controller.askNumberBetween("1-> Se déplacer\n2-> Consulter son inventaire\n3-> Modifier l'équipement des personnages\n"
                     + "4-> Voir le statut de l'équipe", 1, 4);
-            switch(choiceUser)
-            {
+            switch (choiceUser) {
                 case 1:
-                    if(this.displayStory())
-                    {
-                        int rd = (int)(Math.random()*2);
-                        if(rd == 0)
-                        {
+                    if (this.displayStory()) {
+                        int rd = (int) (Math.random() * 2);
+                        if (rd == 0) {
                             events.add(new Fight(team, new Team(team)));
                             nbFights++;
-                        }
-                        else
-                        {
+                        } else {
                             events.add(new Discovery(team));
                             nbDiscovery++;
-                        }   
+                        }
                     }
                     break;
                 case 2:
-                    for(Character c : this.team.getCharacters())
-                    {
+                    for (Character c : this.team.getCharacters()) {
                         System.out.println(ConsoleDesign.text(c.getInvetoryToString(), ConsoleDesign.greenText));
                     }
                     break;
                 case 3:
                     changeEquipmentTeam();
                 case 4:
-                    System.out.println(ConsoleDesign.text(this.team.toString(),ConsoleDesign.cyanText));
+                    System.out.println(ConsoleDesign.text(this.team.toString(), ConsoleDesign.cyanText));
                     break;
             }
         }
     }
-    
-    public boolean displayStory()
-    {
-        if(this.nbFights>=2 && this.nbDiscovery>=2 && !Story.alreadyPlot.get(2))
-        {
+
+    public boolean displayStory() {
+        if (this.nbFights >= 2 && this.nbDiscovery >= 2 && !Story.alreadyPlot.get(2)) {
             System.out.println(Story.getPlot());
             return false;
         }
@@ -237,60 +225,49 @@ public class Game {
     public void setTeam(Team team) {
         this.team = team;
     }
-    
-    public void changeEquipment(Character chara, Class classe)
-    {
+
+    public void changeEquipment(Character chara, Class classe) {
         System.out.println("Equipement actuel:");
         System.out.println(chara.getEquipment(classe));
         System.out.println(chara.getEquipeableItemToString(classe));
         int choiceUser = Controller.askNumberBetween("Choisissez le numéro de l'item que vous voulez remplacer (0 pour rien changer)", 0, chara.getNbEquipableItem(classe));
-        if(choiceUser == 0)
-        {
+        if (choiceUser == 0) {
             return;
         }
-        System.out.println(chara.replaceEquipment(chara.getInInventoryItemOfType(Weapon.class,choiceUser-1), chara.getEquipment(Weapon.class)));
+        System.out.println(chara.replaceEquipment(chara.getInInventoryItemOfType(Weapon.class, choiceUser - 1), chara.getEquipment(Weapon.class)));
     }
 
-    private void displayTips()
-    {
-        System.out.println(ConsoleDesign.textBox("Bonjour, et bienvenue dans Beat the Invador!\nLes règles du jeu sont simples.\n"
-                + "Vous êtes aux commandes d'une équipe que vous avez créer.\n"
-                +"Durant votre périple, vous allez être ammenés à vous déplacer sur Terre, pour récupérer des informations.\n"
-                + "Cependant, les milieux sont hostiles! Vous pouvez a tout moment rencontrer une horde d'ennemis, qui sont généralement vos semblables (bien qu'ils ne vous ressemblent plus énormément)\n"
-                + "Vous devrez éliminer ces groupes pour pouvoir avancer. A la fin de chaque rencontre, votre vie vous est rendue.\n"
-                + "Entres chaque combat, vous pourrez gérer votre équipement et votre inventaire."
-                + "Qui sait, peut-être que vous ferrez des découvertes au fil du temps...\n"
-                + "Allez, c'est à vous!\n", ConsoleDesign.greenText));
+    private void displayTips() {
+        System.out.println(ConsoleDesign.text("Bonjour, et bienvenue dans Beat the Invador! Les règles du jeu sont simples.", ConsoleDesign.greenText)
+                + "\n" + ConsoleDesign.text("Vous êtes aux commandes d'une équipe que vous avez créer.", ConsoleDesign.greenText)
+                + "\n" + ConsoleDesign.text("Durant votre périple, vous allez être ammenés à vous déplacer sur Terre, pour récupérer des informations.", ConsoleDesign.greenText)
+                + "\n" + ConsoleDesign.text("Cependant, les milieux sont hostiles! Vous pouvez a tout moment rencontrer une horde d'ennemis, qui sont généralement vos semblables (bien qu'ils ne vous ressemblent plus énormément)", ConsoleDesign.greenText)
+                + "\n" + ConsoleDesign.text("Vous devrez éliminer ces groupes pour pouvoir avancer. A la fin de chaque rencontre, votre vie vous est rendue.", ConsoleDesign.greenText)
+                + "\n" + ConsoleDesign.text("Entres chaque combat, vous pourrez gérer votre équipement et votre inventaire.", ConsoleDesign.greenText)
+                + "\n" + ConsoleDesign.text("Qui sait, peut-être que vous ferrez des découvertes au fil du temps...", ConsoleDesign.greenText)
+                + "\n" + ConsoleDesign.text("Allez, c'est à vous!", ConsoleDesign.greenText));
         System.out.println("\n");
     }
 
-    private void changeEquipmentTeam()
-    {
+    private void changeEquipmentTeam() {
         String text = "Modifer l'équipement du personnage:\n";
-        int i=0;
-        for(Character c : this.team.getCharacters())
-        {
-            text += i+"-> "+this.team.getCharacters().get(i).getName()+"\n";
+        int i = 0;
+        for (Character c : this.team.getCharacters()) {
+            text += i + "-> " + this.team.getCharacters().get(i).getName() + "\n";
             i++;
         }
-        text+=i+"-> Ne pas modifier";
+        text += i + "-> Ne pas modifier";
         int choice = Controller.askNumberBetween(text, 0, i);
-        if(choice==i)
-        {
+        if (choice == i) {
             return;
-        }
-        else
-        {
+        } else {
             Character c = this.team.getCharacters().get(choice);
             System.out.println(ConsoleDesign.text(c.getEquipmentToString(), ConsoleDesign.greenText));
             System.out.println(ConsoleDesign.text(c.getEquipeableItemToString(), ConsoleDesign.greenText));
             boolean result = Controller.askYesNo("Voulez-vous modifier votre équipement? [O/N]");
-            while(result)
-            {
-                int choiceUser = Controller.askNumberBetween(ConsoleDesign.text("1-> Remplacer Arme\n2-> Remplacer Armure\n3-> Remplacer Jambières\n4-> Ne rien remplacer"
-                        , ConsoleDesign.magentaText), 1, 4);
-                switch(choiceUser)
-                {
+            while (result) {
+                int choiceUser = Controller.askNumberBetween(ConsoleDesign.text("1-> Remplacer Arme\n2-> Remplacer Armure\n3-> Remplacer Jambières\n4-> Ne rien remplacer", ConsoleDesign.magentaText), 1, 4);
+                switch (choiceUser) {
                     case 1:
                         changeEquipment(c, Weapon.class);
                         break;

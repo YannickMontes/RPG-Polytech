@@ -83,20 +83,21 @@ public class Fight extends Event {
     }
 
     private void endFight(Team winner) {
-        System.out.println("--------------------");
-        System.out.println("Combat terminé. \nVictoire de l'équipe " + winner.getName() + "!");
+        System.out.println(ConsoleDesign.textBox("Victoire de l'équipe " + winner.getName() + "!", ConsoleDesign.whiteText, ConsoleDesign.cyanBack));
 
         if (winner == playerTeam) {
-            System.out.println("Votre équipe a gagné! Chaque membre de l'équipe va gagner un certain nombre de points d'expérience.");
+            System.out.println(ConsoleDesign.textDashArrow("Votre équipe a gagné! Chaque membre de l'équipe va gagner un certain nombre de points d'expérience.", ConsoleDesign.redText));
             for (Character c : playerTeam.getCharacters()) {
                 int experience = this.ennemyTeam.getAverageLevel() * 4000 * this.ennemyTeam.getNbCharacters();
                 experience = (experience / ((Level.MAX_LEVEL + 1) - c.getLevel()));
                 c.increaseExperience(experience);
-                System.out.println("Le personnage " + c.getName() + " a gagné " + experience + " points d'expérience.");
+                System.out.println(ConsoleDesign.text("Le personnage " + c.getName() + " a gagné " + experience + " points d'expérience.", ConsoleDesign.redText));
                 c.printActualLevelState();
             }
+            System.out.println("");
         } else {
-            System.out.println("Votre équipe à perdu. Vous ne gagnez pas de points d'expérience.");
+            System.out.println(ConsoleDesign.text("Votre équipe à perdu. Vous ne gagnez pas de points d'expérience.", ConsoleDesign.redText));
+                        System.out.println("");
         }
     }
 }

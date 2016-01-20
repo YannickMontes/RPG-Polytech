@@ -24,6 +24,7 @@ import org.json.simple.parser.ParseException;
 public class Story
 {
     public static List<String> plot = new ArrayList<>();
+    public static List<Boolean> alreadyPlot = new ArrayList<>();
     public static List<String> namesPlayer = new ArrayList<>();
     public static List<String> namesTeam = new ArrayList<>();
     private static int plotNumber=0;
@@ -45,6 +46,7 @@ public class Story
                 JSONObject objTemp = iterator.next();
                 String plot = (String) objTemp.get("plot");
                 Story.plot.add(plot);
+                Story.alreadyPlot.add(false);
             }
         } catch (Exception ex)
         {
@@ -89,6 +91,7 @@ public class Story
     public static String getPlot()
     {
         Story.plotNumber++;
+        Story.alreadyPlot.set(Story.plotNumber-1,true);
         return Story.plot.get(Story.plotNumber-1);
     }
     
@@ -96,11 +99,6 @@ public class Story
     {
         for(int i=0; i<Story.plot.size(); i++)
         {
-            if(Story.plot.get(i).contains("#NAME"))
-            {
-                String replaced = Story.plot.get(i).replace("#NAME", t.getName());
-                Story.plot.set(i, replaced);
-            }
             if(Story.plot.get(i).contains("#NAMEPERSO1"))
             {
                 String replaced = Story.plot.get(i).replace("#NAMEPERSO1", t.getCharacters().get(0).getName());
@@ -109,6 +107,16 @@ public class Story
             if(Story.plot.get(i).contains("#NAMEPERSO2"))
             {
                 String replaced = Story.plot.get(i).replace("#NAMEPERSO2", t.getCharacters().get(1).getName());
+                Story.plot.set(i, replaced);
+            }
+            if(Story.plot.get(i).contains("#NAME"))
+            {
+                String replaced = Story.plot.get(i).replace("#NAME", t.getName());
+                Story.plot.set(i, replaced);
+            }
+            if(Story.plot.get(i).contains("#NB"))
+            {
+                String replaced = Story.plot.get(i).replace("#NB", Integer.toString(t.getNbCharacters()));
                 Story.plot.set(i, replaced);
             }
         }

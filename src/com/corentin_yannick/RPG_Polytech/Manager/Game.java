@@ -171,7 +171,7 @@ public class Game {
     
     public boolean displayStory()
     {
-        if(this.nbFights>=3 || this.nbDiscovery>=1)
+        if(this.nbFights>=2 && this.nbDiscovery>=2 && !Story.alreadyPlot.get(2))
         {
             System.out.println(Story.getPlot());
             return false;
@@ -265,6 +265,7 @@ public class Game {
     
     public void changeEquipment(Character chara, Class classe)
     {
+        System.out.println("Equipement actuel ("+classe+")");
         System.out.println(chara.getEquipment(classe));
         System.out.println(chara.getEquipeableItemToString(classe));
         int choiceUser = Controller.askNumberBetween("Choisissez le numéro de l'item que vous voulez remplacer (0 pour rien changer)", 0, chara.getNbEquipableItem(classe));

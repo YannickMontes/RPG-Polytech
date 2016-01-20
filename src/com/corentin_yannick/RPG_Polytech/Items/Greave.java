@@ -42,7 +42,7 @@ public class Greave extends StuffItem {
     public String toString() {
         return ConsoleDesign.text("Type: Jambières\n", ConsoleDesign.magentaText)
                 + super.toString()
-                + ConsoleDesign.text("Dommages: " + this.defenseValue, ConsoleDesign.magentaText)
+                + ConsoleDesign.text("Defense: " + this.defenseValue, ConsoleDesign.magentaText)
                 + "\n";
     }
 }

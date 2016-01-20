@@ -79,7 +79,6 @@ public abstract class Character {
         int nbPoints = (level.getLevel() - 1) * NBPOINTLEVELUP;
         int lvl = level.getLevel();
         while (nbPoints > 0) {
-            int randomNumber = (int) (Math.random() * Attribute.values().length - 1);
             putRandomPoint(lvl);
             nbPoints -= NBPOINTLEVELUP;
             lvl--;
@@ -140,7 +139,7 @@ public abstract class Character {
         }
         this.inventory.add(Potion.listPotionItem.get(0));
         this.inventory.add(Potion.listPotionItem.get(0));
-        this.inventory.add(Weapon.listWeaponItem.get(1));
+        //this.inventory.add(Weapon.listWeaponItem.get(1));
         this.reinitStats();
     }
 

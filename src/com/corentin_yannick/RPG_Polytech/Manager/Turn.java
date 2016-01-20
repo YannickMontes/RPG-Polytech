@@ -123,6 +123,10 @@ public class Turn {
         String text = ConsoleDesign.textDashArrow("Le personnage " + character.getName() + " (" + character.getClass().getSimpleName() + " - Niveau: " + character.getLevel() + " - Vie: " + character.getAttributes().get(Attribute.HEALTH) + ")" + " doit joué", ConsoleDesign.cyanText);
         text += "\n \n" + ConsoleDesign.textDashArrow("Quelle action voulez-vous réaliser pour " + character.getName() + " ?", ConsoleDesign.redText);
         for (String capacity : character.getCapacities()) {
+            if(this.opponentsTeam.isTeamAlive())
+            {
+                return;
+            }
             if (capacity.equals("Attaquer")) {
                 text += "\n" + ConsoleDesign.text("1 -> Attaquer un personnage", ConsoleDesign.redText);
                 limitAction++;

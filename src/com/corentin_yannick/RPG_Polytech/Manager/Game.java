@@ -35,6 +35,8 @@ public class Game {
 
     private List<Event> events;
     private Team team;
+    private int nbFights = 0;
+    private int nbDiscovery = 0;
 
     public Game() {
         this.readJSONFiles();
@@ -118,10 +120,12 @@ public class Game {
                         if(rd == 0)
                         {
                             events.add(new Fight(team, new Team(team)));
+                            nbFights++;
                         }
                         else
                         {
                             events.add(new Discovery(team));
+                            nbDiscovery++;
                         }   
                     }
                     break;
@@ -167,9 +171,10 @@ public class Game {
     
     public boolean displayStory()
     {
-        if(this.events.size()==7)
+        if(this.nbFights>=3 || this.nbDiscovery>=1)
         {
-            
+            System.out.println(Story.getPlot());
+            return false;
         }
         return true;
     }

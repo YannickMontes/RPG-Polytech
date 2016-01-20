@@ -101,6 +101,16 @@ public class Story
                 String replaced = Story.plot.get(i).replace("#NAME", t.getName());
                 Story.plot.set(i, replaced);
             }
+            if(Story.plot.get(i).contains("#NAMEPERSO1"))
+            {
+                String replaced = Story.plot.get(i).replace("#NAMEPERSO1", t.getCharacters().get(0).getName());
+                Story.plot.set(i, replaced);
+            }
+            if(Story.plot.get(i).contains("#NAMEPERSO2"))
+            {
+                String replaced = Story.plot.get(i).replace("#NAMEPERSO2", t.getCharacters().get(1).getName());
+                Story.plot.set(i, replaced);
+            }
         }
     }
     

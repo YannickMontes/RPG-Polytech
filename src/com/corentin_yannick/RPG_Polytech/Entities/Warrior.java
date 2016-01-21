@@ -84,70 +84,39 @@ public class Warrior extends Character implements Attack, Block, UseItem {
     }
 
     @Override
-    public String strikeABlow(Character opponent) {
-        if (opponent != null) {
-            if (capacities.contains("Attaquer")) {
-                boolean success = verifySuccess("attack");
-                int damages = 0;
-                if (success == true) {
-                    damages = measureImpact("attack", opponent, null);
-                    opponent.takeABlow(damages);
-                }
-                String text = attackResult(success, opponent, damages);
-                return text;
-            }
-            return "Vous ne possédez pas la capacité d'attaque actuellement";
+    public boolean strikeABlow(Character opponent, int damages) {
+        if (capacities.contains("Attaquer")) {
+            opponent.takeABlow(damages);
+            return true;
         }
-        return "Votre adversaire est inconnu";
+        return false;
     }
 
-    @Override
-    public String block() {
+     @Override
+    public boolean block(int upValue) {
         if (capacities.contains("Bloquer")) {
-            boolean success = verifySuccess("block");
-            int upBlock = 0;
-            if (success == true) {
-                upBlock = measureImpact("block", null, null);
-            }
-            String text = blockResult(success, upBlock);
-            return text;
+            this.attributes.replace(Attribute.DEFENSE, (int) (this.attributes.get(Attribute.DEFENSE) + upValue), false);
+            return true;
         }
-        return "Vous ne possédez pas la capacité de bloque actuellement";
+        return false;
     }
 
     @Override
-    public String dodge() {
+    public boolean dodge(int upValue) {
         if (capacities.contains("Bloquer")) {
-            boolean success = verifySuccess("dodge");
-            int upDodge = 0;
-            if (success == true) {
-                upDodge = measureImpact("dodge", null, null);
-            }
-            String text = dodgeResult(success, upDodge);
-            return text;
+            return true;
         }
-        return "Vous ne possédez pas la capacité d'esquive actuellement";
+        return false;
     }
 
-    @Override
-    public String useItem(UseableItem useableItem) {
-        if (useableItem != null) {
-            if (inventory.contains(useableItem)) {
-                if (capacities.contains("Utiliser un item")) {
-                    boolean success = verifySuccess("useItem");
-                    int care = 0;
-                    if (success == true) {
-                        care = measureImpact("useItem", null, useableItem);
-                    }
-                    String text = careResult(success, useableItem);
-                    return text;
-                }
-                return "Vous ne pouvez pas utiliser d'item.";
-            }
-            return "Vous ne possedez pas cet objet dans votre inventaire";
+   @Override
+    public boolean useItem(UseableItem useableItem, int upValue) {
+        if (capacities.contains("Utiliser un item")) {
+            this.attributes.replace(useableItem.getAttributeBonus(), this.attributes.get(useableItem.getAttributeBonus()) + upValue, false);
+            this.inventory.remove(useableItem); //delete
+            return true;
         }
-        return "Vous ne possedez pas d'objets utilisables dans votre inventaire";
-
+        return false;
     }
 
 }

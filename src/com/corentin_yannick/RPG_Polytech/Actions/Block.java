@@ -13,8 +13,8 @@ import com.corentin_yannick.RPG_Polytech.Entities.Character;
  */
 public interface Block extends Capacity {
 
-    public String block();
+    boolean block(int upValue);
 
-    public String dodge();
+    boolean dodge(int upValue);
 
 }

@@ -13,5 +13,6 @@ import com.corentin_yannick.RPG_Polytech.Items.UseableItem;
  */
 public interface UseItem extends Capacity {
 
-    public String useItem(UseableItem useableItem);
+    public boolean useItem(UseableItem useableItem, int upValue);
+    
 }

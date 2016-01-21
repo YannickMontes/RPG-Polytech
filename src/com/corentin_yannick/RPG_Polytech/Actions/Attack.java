@@ -13,6 +13,6 @@ import com.corentin_yannick.RPG_Polytech.Entities.Character;
  */
 public interface Attack extends Capacity {
 
-    public String strikeABlow(Character opponent);
+    public boolean strikeABlow(Character opponent, int damages);
 
 }

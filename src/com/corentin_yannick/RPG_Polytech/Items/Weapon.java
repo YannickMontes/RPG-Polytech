@@ -6,6 +6,7 @@
 package com.corentin_yannick.RPG_Polytech.Items;
 
 import com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.MAGENTA;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
 public class Weapon extends StuffItem {
 
     public static List<StuffItem> listWeaponItem;
-    private int damage;
+    private final int damage;
 
     public Weapon(String name, int weight, int handlingAbility, int damage, int rarity, int requiredLevel) {
         super(name, weight, handlingAbility, rarity, requiredLevel);
@@ -28,9 +29,9 @@ public class Weapon extends StuffItem {
 
     @Override
     public String toString() {
-        return ConsoleDesign.text("Type: Arme\n", ConsoleDesign.magentaText)
+        return ConsoleDesign.text("Type: Arme\n", MAGENTA)
                 + super.toString()
-                + ConsoleDesign.text("Dommages: " + this.damage, ConsoleDesign.magentaText)
+                + ConsoleDesign.text("Dommages: " + this.damage, MAGENTA)
                 + "\n";
     }
 

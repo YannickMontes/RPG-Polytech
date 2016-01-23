@@ -18,7 +18,7 @@ import com.corentin_yannick.RPG_Polytech.Entities.Character;
 import com.corentin_yannick.RPG_Polytech.Entities.Thief;
 import com.corentin_yannick.RPG_Polytech.Entities.Warrior;
 import com.corentin_yannick.RPG_Polytech.Manager.Turn;
-
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.RED;
 /**
  *
  * @author coren
@@ -65,38 +65,38 @@ public class Action {
                 if (((Warrior) character).getInventory().contains(useableItem)) {
                     upValue = measureImpact("useItem", null, useableItem);
                     if (((Warrior) character).useItem(useableItem, upValue) == false) {
-                        System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", ConsoleDesign.redText));
+                        System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", RED));
                         return false;
                     }
                 } else {
-                    System.out.println(ConsoleDesign.text("Vous ne possédez pas cette objet !", ConsoleDesign.redText));
+                    System.out.println(ConsoleDesign.text("Vous ne possédez pas cette objet !", RED));
                     return false;
                 }
             } else if (character instanceof Athlete) {
                 if (((Warrior) character).getInventory().contains(useableItem)) {
                     upValue = measureImpact("useItem", null, useableItem);
                     if (((Warrior) character).useItem(useableItem, upValue) == false) {
-                        System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", ConsoleDesign.redText));
+                        System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", RED));
                         return false;
                     }
                 } else {
-                    System.out.println(ConsoleDesign.text("Vous ne possédez pas cette objet !", ConsoleDesign.redText));
+                    System.out.println(ConsoleDesign.text("Vous ne possédez pas cette objet !", RED));
                     return false;
                 }
             } else if (character instanceof Thief) {
                 if (((Warrior) character).getInventory().contains(useableItem)) {
                     upValue = measureImpact("useItem", null, useableItem);
                     if (((Warrior) character).useItem(useableItem, upValue) == false) {
-                        System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", ConsoleDesign.redText));
+                        System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", RED));
                         return false;
                     }
                 } else {
-                    System.out.println(ConsoleDesign.text("Vous ne possédez pas cette objet !", ConsoleDesign.redText));
+                    System.out.println(ConsoleDesign.text("Vous ne possédez pas cette objet !", RED));
                     return false;
                 }
             }
         }
-        System.out.println(ConsoleDesign.text(careResult(success, useableItem), ConsoleDesign.redText));
+        System.out.println(ConsoleDesign.text(careResult(success, useableItem), RED));
 
         currentTurn.turnOf(character, true);
     }
@@ -167,11 +167,11 @@ public class Action {
 
     public boolean makeAttack() {
         Character opponent = null;
-        String actionText = ConsoleDesign.textDashArrow("Choississez un adversaire", ConsoleDesign.redText) + "\n";
+        String actionText = ConsoleDesign.textDashArrow("Choississez un adversaire", RED) + "\n";
         int num = 0;
         for (Character op : opponentsTeam.getCharacters()) {
             if (op.isAlive()) {
-                actionText += ConsoleDesign.text(Integer.toString(num) + " -> " + op.getName(), ConsoleDesign.redText) + "\n";
+                actionText += ConsoleDesign.text(Integer.toString(num) + " -> " + op.getName(), RED) + "\n";
             }
             num++;
         }
@@ -209,9 +209,9 @@ public class Action {
     }
 
     public boolean makeDefense() {
-        String text = ConsoleDesign.textDashArrow("Quelle parade voulez-vous utiliser ?", ConsoleDesign.redText) + " \n";
-        text += ConsoleDesign.text("1 -> Blocage", ConsoleDesign.redText) + "\n";
-        text += ConsoleDesign.text("2 -> Esquive", ConsoleDesign.redText) + "\n";
+        String text = ConsoleDesign.textDashArrow("Quelle parade voulez-vous utiliser ?", RED) + " \n";
+        text += ConsoleDesign.text("1 -> Blocage", RED) + "\n";
+        text += ConsoleDesign.text("2 -> Esquive", RED) + "\n";
         int blockNumber = Controller.askNumberBetween(text, 1, 2);
         if (character instanceof Warrior) {
             switch (blockNumber) {
@@ -221,11 +221,11 @@ public class Action {
                     if (success == true) {
                         upBlock = measureImpact("block", null, null);
                         if (((Warrior) character).block(upBlock) == false) {
-                            System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", ConsoleDesign.redText));
+                            System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", RED));
                             return false;
                         }
                     }
-                    System.out.println(ConsoleDesign.text(blockResult(success, upBlock), ConsoleDesign.redText));
+                    System.out.println(ConsoleDesign.text(blockResult(success, upBlock), RED));
                     break;
                 case 2:
                     boolean successD = verifySuccess("dodge");
@@ -233,11 +233,11 @@ public class Action {
                     if (successD == true) {
                         upDodge = measureImpact("dodge", null, null);
                         if (((Warrior) character).dodge(upDodge) == false) {
-                            System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", ConsoleDesign.redText));
+                            System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", RED));
                             return false;
                         }
                     }
-                    System.out.println(ConsoleDesign.text(dodgeResult(successD, upDodge), ConsoleDesign.redText));
+                    System.out.println(ConsoleDesign.text(dodgeResult(successD, upDodge), RED));
                     break;
             }
         } else if (character instanceof Athlete) {
@@ -248,11 +248,11 @@ public class Action {
                     if (success == true) {
                         upBlock = measureImpact("block", null, null);
                         if (((Athlete) character).block(upBlock) == false) {
-                            System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", ConsoleDesign.redText));
+                            System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", RED));
                             return false;
                         }
                     }
-                    System.out.println(ConsoleDesign.text(blockResult(success, upBlock), ConsoleDesign.redText));
+                    System.out.println(ConsoleDesign.text(blockResult(success, upBlock), RED));
                     break;
                 case 2:
                     boolean successD = verifySuccess("dodge");
@@ -260,11 +260,11 @@ public class Action {
                     if (successD == true) {
                         upDodge = measureImpact("dodge", null, null);
                         if (((Athlete) character).dodge(upDodge) == false) {
-                            System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", ConsoleDesign.redText));
+                            System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", RED));
                             return false;
                         }
                     }
-                    System.out.println(ConsoleDesign.text(dodgeResult(successD, upDodge), ConsoleDesign.redText));
+                    System.out.println(ConsoleDesign.text(dodgeResult(successD, upDodge), RED));
                     break;
             }
         } else if (character instanceof Thief) {
@@ -275,11 +275,11 @@ public class Action {
                     if (success == true) {
                         upBlock = measureImpact("block", null, null);
                         if (((Thief) character).block(upBlock) == false) {
-                            System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", ConsoleDesign.redText));
+                            System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", RED));
                             return false;
                         }
                     }
-                    System.out.println(ConsoleDesign.text(blockResult(success, upBlock), ConsoleDesign.redText));
+                    System.out.println(ConsoleDesign.text(blockResult(success, upBlock), RED));
                     break;
                 case 2:
                     boolean successD = verifySuccess("dodge");
@@ -287,11 +287,11 @@ public class Action {
                     if (successD == true) {
                         upDodge = measureImpact("dodge", null, null);
                         if (((Thief) character).dodge(upDodge) == false) {
-                            System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", ConsoleDesign.redText));
+                            System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", RED));
                             return false;
                         }
                     }
-                    System.out.println(ConsoleDesign.text(dodgeResult(successD, upDodge), ConsoleDesign.redText));
+                    System.out.println(ConsoleDesign.text(dodgeResult(successD, upDodge), RED));
                     break;
             }
         }
@@ -300,58 +300,54 @@ public class Action {
 
     public boolean useObject() {
         UseableItem useableItem = null;
-        if (character.numberUseableItem() > 0) {
-            String careText = ConsoleDesign.textDashArrow("Quel item voulez-vous utiliser ?", ConsoleDesign.redText);
-            int numObject = -1;
-            for (UseableItem item : character.getUseableItems()) {
-                numObject++;
-                System.out.println(ConsoleDesign.text("(" + numObject + ") " + item.toString(), ConsoleDesign.greenText));
-            }
-            int useableNumber = Controller.askNumberBetween(careText, 0, numObject);
-            useableItem = character.getUseableItems().get(useableNumber);
+        if (character.getNumberUseableItem()> 0) {
+            String careText = ConsoleDesign.textDashArrow("Quel item voulez-vous utiliser ?[0->Retour]", RED);
+            System.out.println(character.getUseableItemsToString());
+            int useableNumber = Controller.askNumberBetween(careText, 0, character.getNumberUseableItem());
+            useableItem = (UseableItem)character.getInInventoryItemOfType(UseableItem.class, useableNumber);
         }else{
-            System.out.println(ConsoleDesign.text("Vous ne possédez d'objet utilisatbles !", ConsoleDesign.redText));
+            System.out.println(ConsoleDesign.text("Vous ne possédez d'objet utilisatbles !", RED));
             return false;
         }
         boolean success = verifySuccess("useItem");
         int upValue = 0;
         if (success == true) {
             if (character instanceof Warrior) {
-                if (((Warrior) character).getInventory().contains(useableItem)) {
+                if (((Warrior) character).inventoryContains(useableItem)) {
                     upValue = measureImpact("useItem", null, useableItem);
                     if (((Warrior) character).useItem(useableItem, upValue) == false) {
-                        System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", ConsoleDesign.redText));
+                        System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", RED));
                         return false;
                     }
                 } else {
-                    System.out.println(ConsoleDesign.text("Vous ne possédez pas cette objet !", ConsoleDesign.redText));
+                    System.out.println(ConsoleDesign.text("Vous ne possédez pas cette objet !", RED));
                     return false;
                 }
             } else if (character instanceof Athlete) {
-                if (((Athlete) character).getInventory().contains(useableItem)) {
+                if (((Athlete) character).inventoryContains(useableItem)) {
                     upValue = measureImpact("useItem", null, useableItem);
                     if (((Athlete) character).useItem(useableItem, upValue) == false) {
-                        System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", ConsoleDesign.redText));
+                        System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", RED));
                         return false;
                     }
                 } else {
-                    System.out.println(ConsoleDesign.text("Vous ne possédez pas cette objet !", ConsoleDesign.redText));
+                    System.out.println(ConsoleDesign.text("Vous ne possédez pas cette objet !", RED));
                     return false;
                 }
             } else if (character instanceof Thief) {
-                if (((Thief) character).getInventory().contains(useableItem)) {
+                if (((Thief) character).inventoryContains(useableItem)) {
                     upValue = measureImpact("useItem", null, useableItem);
                     if (((Thief) character).useItem(useableItem, upValue) == false) {
-                        System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", ConsoleDesign.redText));
+                        System.out.println(ConsoleDesign.text("Vous ne possédez pas cette capacité !", RED));
                         return false;
                     }
                 } else {
-                    System.out.println(ConsoleDesign.text("Vous ne possédez pas cette objet !", ConsoleDesign.redText));
+                    System.out.println(ConsoleDesign.text("Vous ne possédez pas cette objet !", RED));
                     return false;
                 }
             }
         }
-        System.out.println(ConsoleDesign.text(careResult(success, useableItem), ConsoleDesign.redText));
+        System.out.println(ConsoleDesign.text(careResult(success, useableItem), RED));
 
         currentTurn.turnOf(character, true);
         return true;
@@ -373,18 +369,16 @@ public class Action {
             mania = weapon.getHandlingAbility() / 100;
 
             probability = mania;
-            probability += 2 * (1 - mania) * (character.getAttributes().get(Attribute.DEXTERITY) * 0.004);
+            probability += 2 * (1 - mania) * (character.getAttributeValue(Attribute.DEXTERITY) * 0.004);
             //System.out.println("Probabilité d'attaquer: " + probability);
         } else if ("block".equals(capacity)) {
             //probability = this.attributes.get(Attribute.DEFENSE);
             StuffItem armor = character.getEquipment(Armor.class);
             probability += (float) (((Armor) armor).getHandlingAbility() / 100) * 0.2; // entre 0 et 100
-            probability += (float) (character.getAttributes().get(Attribute.DEFENSE).floatValue() / 100)/* * (1 - (0.2 * this.getEquipment(Armor.class).size()))*/;
+            probability += (float) ((float)character.getAttributeValue(Attribute.DEFENSE) / 100)/* * (1 - (0.2 * this.getEquipment(Armor.class).size()))*/;
         } else if ("dodge".equals(capacity)) {
-            for (StuffItem stuffItem : character.getEquipment()) {
-                probability -= (float) (stuffItem.getWeight()) / 3;
-            }
-            probability += (float) (character.getAttributes().get(Attribute.SPEED).floatValue() / 100)/* * (1 - (0.2 * this.getEquipment().size()))*/;
+            probability -= character.getTotalWeightEquipment()/50;
+            probability += (float) ((float)character.getAttributeValue(Attribute.SPEED) / 100)/* * (1 - (0.2 * this.getEquipment().size()))*/;
         } else if ("useItem".equals(capacity)) {
             probability = 1;
         }
@@ -413,7 +407,7 @@ public class Action {
         if ("attack".equals(capacity) && opponent != null) {
             return this.calculateDamageBasicAttack(opponent);
         } else if ("block".equals(capacity)) {
-            return (int) (0.5 * character.getAttributes().get(Attribute.STRENGTH));
+            return (int) (0.5 * character.getAttributeValue(Attribute.STRENGTH));
         } else if ("useItem".equals(capacity) && useableItem != null) {
             return useableItem.getValue();
         }
@@ -421,7 +415,7 @@ public class Action {
     }
 
     private int calculateDamageBasicAttack(com.corentin_yannick.RPG_Polytech.Entities.Character opponent) {
-        int defenseOpponent = opponent.getAttributes().get(Attribute.DEFENSE);
+        int defenseOpponent = opponent.getAttributeValue(Attribute.DEFENSE);
         int damage = 0;
         float reduction;
         if (defenseOpponent <= 50) {
@@ -433,7 +427,7 @@ public class Action {
         } else {
             reduction = 0.9f;
         }
-        damage = (int) (character.getAttributes().get(Attribute.STRENGTH) * (1 - reduction));
+        damage = (int) (character.getAttributeValue(Attribute.STRENGTH) * (1 - reduction));
 
         return damage;
     }
@@ -450,7 +444,7 @@ public class Action {
         String text;
         if (success == true) {
             text = "(" + character.getName() + ") Attaque " + opponent.getName() + " avec une attaque de base, provoquant " + damages
-                    + " points de dégats. (Santé: " + opponent.getAttributes().get(Attribute.HEALTH) + ")";
+                    + " points de dégats. (Santé: " + opponent.getAttributeValue(Attribute.HEALTH) + ")";
             if (!opponent.isAlive()) {
                 text += "\nLe personnage " + opponent.getName() + " est mort!";
             }
@@ -489,7 +483,7 @@ public class Action {
     public String blockResult(boolean success, int blockValue) {
         if (success == true) {
             return "(" + character.getName() + ") Bloque les attaques pour le prochain coup. Défense augmentée de " + blockValue
-                    + ". (Défense: " + character.getAttributes().get(Attribute.DEFENSE) + ")";
+                    + ". (Défense: " + character.getAttributeValue(Attribute.DEFENSE) + ")";
         }
         return "(" + character.getName() + ") Bloquage échoué.";
     }

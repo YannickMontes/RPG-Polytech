@@ -57,7 +57,7 @@ public class Team {
     public int getTeamSpeed() {
         int speedTot = 0;
         for (Character ch : characters) {
-            speedTot += ch.getAttributes().get(Attribute.SPEED);
+            speedTot += ch.getAttributeValue(Attribute.SPEED);
         }
         return speedTot;
     }

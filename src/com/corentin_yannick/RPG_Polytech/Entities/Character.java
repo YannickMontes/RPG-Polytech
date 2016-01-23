@@ -11,6 +11,10 @@ import java.util.List;
 import com.corentin_yannick.RPG_Polytech.Controllers.Controller;
 import com.corentin_yannick.RPG_Polytech.Items.Greave;
 import com.corentin_yannick.RPG_Polytech.Items.Potion;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.RED;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.GREEN;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.CYAN;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.YELLOW;
 
 /**
  * Cette classe abstraite contient toutes les informations nécéssaires pour un
@@ -29,19 +33,57 @@ public abstract class Character {
     public final static int NBPOINTLEVELUP = 3;
 
     //Variables d'instances
+    /**
+     * Correspond au nom du personnage
+     */
     protected String name;
+    /**
+     * Variable contenant le nom de la classe du personnage
+     */
     protected String className;
+    /**
+     * Map<Clé,Valeur> contenant les attributs du personnage
+     * (tout compris)
+     */
     protected Attributes attributes;
+    /**
+     * Map<Clé,Valeur> contenant les attributs de base du personnage.
+     * L'équipement ainsi que les buffs et autre n'influent pas sur ces attributs.
+     * Ces attributs sont régis par des contraintes.
+     */
     protected Attributes basicAttributes;
+    /**
+     * Variable contenant le level du personnage.
+     * Permet également de connaitre son expérience actuelle, et l'exp nécéssaire
+     * pour passer au niveau supérieur.
+     */
     protected Level level;
+    /**
+     * Attribut permettant de savoir la capacité maximum que peut transporter le 
+     * personnage.
+     */
     protected int maxWeight;
+    /**
+     * Liste contenant tous les objets du personnage. Cette liste contient 
+     * également les équipements actuels. 
+     * La somme totale des poids de chaque item ne peut pas excéder l'attribut
+     * maxWeight du personnage.
+     */
     protected List<Item> inventory;
+    /**
+     * Liste contenant les items actuellement équipés du personnage. Le poids des
+     * Chaque item de cette liste est également présent dans l'inventaire.
+     */
     protected List<StuffItem> equipment;
+    /**
+     * Liste de string contenant les capacités de chaque personnages.
+     */
     protected List<String> capacities;
 
     /*
         CONSTRUCTEURS
      */
+    
     /**
      * Constructeur basique de la classe personnage. Initialise un personnage au
      * niveau 1, avec le stuff de départ.
@@ -145,6 +187,7 @@ public abstract class Character {
 
     /**
      * Fonction permettant d'initialiser les stats du personnage.
+     * A implementer dans les sous-classes.
      */
     public abstract void initStats();
 
@@ -155,8 +198,14 @@ public abstract class Character {
         return name;
     }
 
-    public Attributes getAttributes() {
-        return attributes;
+    public int getAttributeValue(Attribute at)
+    {
+        return this.attributes.get(at);
+    }
+    
+    public int getBasicAttributeValue(Attribute at)
+    {
+        return this.basicAttributes.get(at);
     }
 
     public Attributes getBasicAttributesCHEAT() {
@@ -178,15 +227,11 @@ public abstract class Character {
     public List<String> getCapacities() {
         return capacities;
     }
-
-    public List<StuffItem> getEquipment() {
-        return equipment;
-    }
-
-    public List<Item> getInventory() {
-        return inventory;
-    }
     
+    /**
+     * Permet d'obtenir le nombre d'item équipable total
+     * @return 
+     */
     public int getNbEquipableItem()
     {
         int nb = 0;
@@ -194,17 +239,62 @@ public abstract class Character {
         {
             if(this.inventory.get(i) instanceof StuffItem)
             {
-                nb++;
+                if(((StuffItem)this.inventory.get(i)).getRequiredLevel() <= this.getLevel())
+                {
+                    nb++;   
+                }
             }
         }
         return nb;
     }
     
     /**
-     * Fonction permettant d'obtenir la taille totale que prennent les objets
+     * Permet d'obtenir le nombre d'item équipables d'un certain type. 
+     * Les items contenu dans l'équipement ne sont pas comptabilisés. 
+     * @param clas  Le type d'item voulu
+     * @return Le nombre d'items équipables.
+     */
+    public int getNbEquipableItem(Class clas)
+    {
+        int sum = 0;
+        for(int i=0; i<this.inventory.size(); i++)
+        {
+            if(this.inventory.get(i).getClass()==clas && !this.equipment.contains(i))
+            {
+                sum++;
+            }
+        }
+        return sum;
+    }
+    
+    /**
+     * Permet de savoir si l'item passé en paramètres est dans l'inventaire.
+     * @param i Item dont on veut connaitre l'existence dans l'inventaire
+     * @return Vrai si l'inventaire le contient, faux sinon
+     */
+    public boolean inventoryContains(Item i)
+    {
+        return (this.inventory.contains(i));
+    }
+    
+    /**
+     * Permet d'obtenir le poids total de l'équipement actuel du personnage.
+     * @return le poids total.
+     */
+    public int getTotalWeightEquipment()
+    {
+        int sum = 0;
+        for(Item i : this.equipment)
+        {
+            sum += i.getWeight();
+        }
+        return sum;
+    }
+    
+    /**
+     * Fonction permettant d'obtenir le poids total que prennent les objets
      * dans l'inventaire.
-     *
-     * @return La taille totale, sous forme d'entier
+     * @return La poids total, sous forme d'entier
      */
     protected int inventoryWeight() {
         int weight = 0;
@@ -249,7 +339,7 @@ public abstract class Character {
      *
      * @return Le nombre d'objets utilisable, sous forme d'entier.
      */
-    public int numberUseableItem() {
+    public int getNumberUseableItem() {
         int i = 0;
         for (Item item : inventory) {
             if (item instanceof UseableItem) {
@@ -295,22 +385,49 @@ public abstract class Character {
         return true;
     }
     
-    public List<UseableItem> getUseableItems()
+    public String getUseableItemsToString()
     {
-        List<UseableItem> ret = new ArrayList<>();
+        String ret = "";
+        int nb = 1;
         for(Item i : this.inventory)
         {
             if(i instanceof UseableItem)
             {
-                ret.add((UseableItem)i);
+                ret+="Item n°"+nb+i.toString();
             }
         }
         return ret;
+    }
+    
+    /**
+     * Permet d'obtenir l'item de l'inventaire en fonction du niveau passé en
+     * paramètre, ainsi que sa classe. Les items équipés ne sont pas comptés dedans.
+     * @param classe La classe de l'item qu'on veut
+     * @param number le numéro dans la liste
+     * @return L'item concerné
+     */
+    public Item getInInventoryItemOfType(Class classe, int number)
+    {
+        int nb = 0;
+        for(Item i : this.inventory)
+        {
+            if(i.getClass()==classe && !this.equipment.contains(i))
+            {
+                if(nb==number)
+                {
+                    return i;
+                }
+                nb++;
+            }
+        }
+        return null;
     }
 
     /*
         FONCTION DE GESTION DE L'INVENTAIRE ET EQUIPEMENT
      */
+    
+    
     /**
      * Permet d'ajouter un iteam a l'inventaire.
      *
@@ -414,9 +531,6 @@ public abstract class Character {
         this.attributes.replace(Attribute.HEALTH, this.attributes.get(Attribute.HEALTH) - value);
     }
 
-   
-
-
     /*
         FONCTIONS D'ATTRIBUTS
      */
@@ -475,7 +589,9 @@ public abstract class Character {
     }
 
     /**
-     *
+     * Permet de calculer le poids total que peut transporter le personnage
+     * en fonction de sa force.
+     * Valeur de base sans force: 25.
      */
     private void calculateMaxWeight() {
         this.maxWeight = 25 + this.attributes.get(Attribute.STRENGTH);
@@ -510,20 +626,20 @@ public abstract class Character {
     private void upLevel() {
         restoreAttributes();
 
-        String text = ConsoleDesign.textBox("Passage au niveau supérieur!", ConsoleDesign.redText)
+        String text = ConsoleDesign.textBox("Passage au niveau supérieur!", RED)
                 + "\n";
 
         if (this.basicAttributes.canUpSomething()) {
-            text += ConsoleDesign.textBox("Vos caractéristiques actuelles:\n" + this.toString(), ConsoleDesign.redText)
+            text += ConsoleDesign.textBox("Vos caractéristiques actuelles:\n" + this.toString(), RED)
                     + "\n"
-                    + ConsoleDesign.textDashArrow("Vous pouvez répartir " + NBPOINTLEVELUP + " points de compétence supplémentaires!", ConsoleDesign.redText)
+                    + ConsoleDesign.textDashArrow("Vous pouvez répartir " + NBPOINTLEVELUP + " points de compétence supplémentaires!", RED)
                     + "\n"
-                    + ConsoleDesign.text("1 -> Force\n", ConsoleDesign.redText)
-                    + ConsoleDesign.text("2 -> Défense\n", ConsoleDesign.redText)
-                    + ConsoleDesign.text("3 -> Dextérité\n", ConsoleDesign.redText)
-                    + ConsoleDesign.text("4 -> Vitesse\n", ConsoleDesign.redText);
+                    + ConsoleDesign.text("1 -> Force\n", RED)
+                    + ConsoleDesign.text("2 -> Défense\n", RED)
+                    + ConsoleDesign.text("3 -> Dextérité\n", RED)
+                    + ConsoleDesign.text("4 -> Vitesse\n", RED);
         } else {
-            text = ConsoleDesign.text("Vous ne pouvez plus rien améliorer (caractéristiques de bases déjà au maximum).", ConsoleDesign.redText);
+            text = ConsoleDesign.text("Vous ne pouvez plus rien améliorer (caractéristiques de bases déjà au maximum).", RED);
             System.out.println(text);
             return;
         }
@@ -569,184 +685,129 @@ public abstract class Character {
                     }
                     break;
             }
-            text += ConsoleDesign.textDashArrow("Réitérez l'opération encore " + cpt + " fois", ConsoleDesign.redText)
+            text += ConsoleDesign.textDashArrow("Réitérez l'opération encore " + cpt + " fois", RED)
                     + "\n"
-                    + ConsoleDesign.text("1 -> Force\n", ConsoleDesign.redText)
-                    + ConsoleDesign.text("2 -> Défense\n", ConsoleDesign.redText)
-                    + ConsoleDesign.text("3 -> Dextérité\n", ConsoleDesign.redText)
-                    + ConsoleDesign.text("4 -> Vitesse\n", ConsoleDesign.redText);
+                    + ConsoleDesign.text("1 -> Force\n", RED)
+                    + ConsoleDesign.text("2 -> Défense\n", RED)
+                    + ConsoleDesign.text("3 -> Dextérité\n", RED)
+                    + ConsoleDesign.text("4 -> Vitesse\n", RED);
         }
 
         System.out.println("Vos nouvelles statistiques:\n" + this.toString());
     }
 
-    /*
-        FONCTIONS D'AFFICHAGE
-     */
-    /**
-     * Afficher les données du personnage.
-     */
-    public void showData() {
-        System.out.println("--------------------");
-        System.out.println("DONNEES DE " + this.name);
-        System.out.println("Classe: " + this.className);
-        System.out.println("Niveau: " + this.level.getLevel());
-        System.out.println("Niveau de santé: " + this.attributes.get(Attribute.HEALTH));
-        System.out.println("Niveau de mana: " + this.attributes.get(Attribute.MANA));
-        System.out.println("Niveau de dextérité: " + this.attributes.get(Attribute.DEXTERITY));
-        System.out.println("Niveau de défense: " + this.attributes.get(Attribute.DEFENSE));
-        System.out.println("Niveau de vitesse: " + this.attributes.get(Attribute.SPEED));
-        System.out.println("Niveau de force: " + this.attributes.get(Attribute.STRENGTH));
-        System.out.println("Nombre d'objet dans l'inventaire: " + this.inventory.size());
-        System.out.println("Equipement actuel: ");
-        for (StuffItem stuffItem : equipment) {
-            System.out.println("-" + stuffItem.getName() + " Poids: " + stuffItem.getWeight() + " Maniabilité:" + stuffItem.getHandlingAbility());
-        }
-    }
+    /*****
+     * 
+        FONCTIONS AVEC RETOUR TEXTE
+     * 
+     *****/
 
     /**
-     * Affiche son inventaire.
+     * Fonction toString. Renvoie les données du personnage sous forme de texte.
+     * @return Un string contenant les données du personnage.
      */
-    public void showInventary() {
-        for (Item item : inventory) {
-            System.out.print("-" + item.getName() + " (" + item.getClass() + ") Poids: " + item.getWeight());
-            if (item instanceof UseableItem) {
-                System.out.println(" Valeur de bonus:" + ((UseableItem) item).getValue());
-            } else if (item instanceof StuffItem) {
-                System.out.println(" Maniabilité:" + ((StuffItem) item).getHandlingAbility());
-            }
-        }
-    }
-
     @Override
     public String toString() {
-        String text = ConsoleDesign.text("Nom: " + this.name, ConsoleDesign.cyanText)
+        String text = ConsoleDesign.text("Nom: " + this.name, CYAN)
                 + "\n"
-                + ConsoleDesign.text("Classe: " + this.className, ConsoleDesign.cyanText)
+                + ConsoleDesign.text("Classe: " + this.className, CYAN)
                 + "\n"
-                + ConsoleDesign.text("Niveau: " + this.level.getLevel(), ConsoleDesign.cyanText)
+                + ConsoleDesign.text("Niveau: " + this.level.getLevel(), CYAN)
                 + "\n";
         if (this.isAlive()) {
-            text += ConsoleDesign.text("Santé: " + this.attributes.get(Attribute.HEALTH), ConsoleDesign.cyanText)
+            text += ConsoleDesign.text("Santé: " + this.attributes.get(Attribute.HEALTH), CYAN)
                     + "\n"
-                    + ConsoleDesign.text("Mana: " + this.attributes.get(Attribute.MANA), ConsoleDesign.cyanText)
+                    + ConsoleDesign.text("Mana: " + this.attributes.get(Attribute.MANA), CYAN)
                     + "\n"
-                    + ConsoleDesign.text("Force: " + this.attributes.get(Attribute.STRENGTH), ConsoleDesign.cyanText)
+                    + ConsoleDesign.text("Force: " + this.attributes.get(Attribute.STRENGTH), CYAN)
                     + "\n"
-                    + ConsoleDesign.text("Défense: " + this.attributes.get(Attribute.DEFENSE), ConsoleDesign.cyanText)
+                    + ConsoleDesign.text("Défense: " + this.attributes.get(Attribute.DEFENSE), CYAN)
                     + "\n"
-                    + ConsoleDesign.text("Dextérité: " + this.attributes.get(Attribute.DEXTERITY), ConsoleDesign.cyanText)
+                    + ConsoleDesign.text("Dextérité: " + this.attributes.get(Attribute.DEXTERITY), CYAN)
                     + "\n"
-                    + ConsoleDesign.text("Vitesse: " + this.attributes.get(Attribute.SPEED), ConsoleDesign.cyanText)
+                    + ConsoleDesign.text("Vitesse: " + this.attributes.get(Attribute.SPEED), CYAN)
                     + "\n";
         } else {
-            text += ConsoleDesign.text("Personnage mort.\n", ConsoleDesign.redText);
+            text += ConsoleDesign.text("Personnage mort.\n", RED);
         }
 
         return text;
     }
 
     /**
-     * Affiche les informations sur le niveau actuel.
+     * Permet d'obtenir les infos sur le niveau actuel.
+     * @return Un string contenant les informations.
      */
-    public void printActualLevelState() {
-        System.out.println(this.level);
+    public String getActuelLevelState() 
+    {
+        return this.level.toString();
     }
 
+    /**
+     * Permet d'obtenir l'inventaire du personnage sous forme de texte.
+     * Chaque item contenu dans l'équipement sera signalé avec le mot "Equipé".
+     * @return Un string contenant la totalité de l'inventaire.
+     */
     public String getInvetoryToString()
     {
         String text ="";
         int cpt=1;
-        text += ConsoleDesign.text("\nInventaire de: \n"+this.name,ConsoleDesign.cyanText);
+        text += ConsoleDesign.text("\nInventaire de: \n"+this.name,CYAN);
         for(Item i : this.inventory)
         {
             if(this.equipment.contains(i))
             {
-                text +=ConsoleDesign.text("\n("+cpt+")", ConsoleDesign.greenText)+ConsoleDesign.text("Equipé\n", ConsoleDesign.yellowText)+i.toString();
+                text +=ConsoleDesign.text("\n("+cpt+")", GREEN)+ConsoleDesign.text("Equipé\n", YELLOW)+i.toString();
             }
             else
             {
-                text +=ConsoleDesign.text("\n("+cpt+")", ConsoleDesign.greenText)+i.toString();
+                text +=ConsoleDesign.text("\n("+cpt+")", GREEN)+i.toString();
             }
             cpt++;
         }
         return text;
     }
 
+    /**
+     * Permet d'obtenir sous forme de texte l'équipement actuel du personnage.
+     * @return Un texte contenant l'équipement du personnage.
+     */
     public String getEquipmentToString()
     {
         String text = "";
         int cpt = 1;
-        text += ConsoleDesign.text("Equipement de: \n"+this.name,ConsoleDesign.cyanText);
+        text += ConsoleDesign.text("Equipement de: \n"+this.name,CYAN);
         for(StuffItem i : this.equipment)
         {
             if(this.equipment.contains(i))
             {
-                text +=ConsoleDesign.text("\n("+cpt+")", ConsoleDesign.greenText)+ConsoleDesign.text("Equipé\n", ConsoleDesign.yellowText)+i.toString();
+                text +=ConsoleDesign.text("\n("+cpt+")", GREEN)+ConsoleDesign.text("Equipé\n", YELLOW)+i.toString();
             }
             cpt++;
         }
         return text;
     }
-
-    public String getEquipeableItemToString()
-    {
-        String text ="";
-        int cpt=1;
-        text += ConsoleDesign.text("Elements équipables de "+this.name+":",ConsoleDesign.cyanText);
-        for(Item i : this.inventory)
-        {
-            if(!this.equipment.contains(i) && i instanceof StuffItem)
-            {
-                text +=ConsoleDesign.text("\n("+cpt+")\n", ConsoleDesign.greenText)+i.toString();
-                cpt++;
-            }
-        }  
-        return text;
-    }
-
+    
+    /**
+     * Permet d'obtenir sous forme de string, chaque élément équipable du personnage
+     * selon un type passé en paramètre. 
+     * Les items présents dans l'équipement ne sont pas comptabilisés.
+     * @param clas Le type d'item voulu
+     * @return Un texte contenant la liste des éléments équipables du perso.
+     */
     public String getEquipeableItemToString(Class clas)
     {
         String text ="";
         int cpt=1;
-        text += ConsoleDesign.text("Elements équipables de "+this.name+":",ConsoleDesign.cyanText);
+        text += ConsoleDesign.text("Elements équipables de "+this.name+":",CYAN);
         for(Item i : this.inventory)
         {
             if(!this.equipment.contains(i) && i.getClass()==clas)
             {
-                text +=ConsoleDesign.text("\n("+cpt+")\n", ConsoleDesign.greenText)+i.toString();
+                text +=ConsoleDesign.text("\n("+cpt+")\n", GREEN)+i.toString();
                 cpt++;
             }
         }  
         return text;
-    }
-
-    public int getNbEquipableItem(Class clas)
-    {
-        int sum = 0;
-        for(int i=0; i<this.inventory.size(); i++)
-        {
-            if(this.inventory.get(i).getClass()==clas && !this.equipment.contains(i))
-            {
-                sum++;
-            }
-        }
-        return sum;
-    }
-    
-    public StuffItem getInInventoryItemOfType(Class classe, int number)
-    {
-        int nb = 0;
-        for(Item i : this.inventory)
-        {
-            if(i.getClass()==classe)
-            {
-                if(nb==number)
-                {
-                    return (StuffItem)i;
-                }
-            }
-        }
-        return null;
     }
 }

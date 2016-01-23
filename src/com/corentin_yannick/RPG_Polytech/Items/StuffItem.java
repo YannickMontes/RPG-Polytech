@@ -6,6 +6,7 @@
 package com.corentin_yannick.RPG_Polytech.Items;
 
 import com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.MAGENTA;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +37,9 @@ public abstract class StuffItem extends Item {
     public String toString() {
 
         return super.toString()
-                + ConsoleDesign.text("Maniabilité: " + this.handlingAbility, ConsoleDesign.magentaText)
+                + ConsoleDesign.text("Maniabilité: " + this.handlingAbility, MAGENTA)
                 + "\n"
-                + ConsoleDesign.text("Niveau requis: " + this.requiredLevel, ConsoleDesign.magentaText)
+                + ConsoleDesign.text("Niveau requis: " + this.requiredLevel, MAGENTA)
                 + "\n";
 
     }

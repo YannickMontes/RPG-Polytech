@@ -6,6 +6,7 @@
 package com.corentin_yannick.RPG_Polytech.Items;
 
 import com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.MAGENTA;
 import com.corentin_yannick.RPG_Polytech.Entities.Attribute;
 import java.util.List;
 
@@ -24,8 +25,8 @@ public class Potion extends UseableItem {
 
     @Override
     public String toString() {
-        return ConsoleDesign.text("Type: Potion", ConsoleDesign.magentaText) + "\n" +
-                ConsoleDesign.text("Attribut augmenté:: " + this.attributeBonus , ConsoleDesign.magentaText) + "\n" +
-                ConsoleDesign.text("Bonus: " + this.getValue(), ConsoleDesign.magentaText) + "\n";
+        return ConsoleDesign.text("Type: Potion", MAGENTA) + "\n" +
+                ConsoleDesign.text("Attribut augmenté:: " + this.attributeBonus , MAGENTA) + "\n" +
+                ConsoleDesign.text("Bonus: " + this.getValue(), MAGENTA) + "\n";
     }
 }

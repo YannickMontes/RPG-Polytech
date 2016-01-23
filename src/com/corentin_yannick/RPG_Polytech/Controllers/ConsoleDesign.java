@@ -11,22 +11,22 @@ package com.corentin_yannick.RPG_Polytech.Controllers;
  */
 public abstract class ConsoleDesign {
 
-    public static String boldText = "\u001B[1m";
-    public static String redBack = "\033[41m";
-    public static String redText = "\033[31m";
-    public static String greenBack = "\033[42m";
-    public static String greenText = "\033[32m";
-    public static String yellowBack = "\033[43m";
-    public static String yellowText = "\033[33m";
-    public static String blueBack = "\033[44m";
-    public static String blueText = "\033[34m";
-    public static String magentaBack = "\033[45m";
-    public static String magentaText = "\033[35m";
-    public static String cyanBack = "\033[46m";
-    public static String cyanText = "\033[36m";
-    public static String whiteBack = "\033[47m";
-    public static String whiteText = "\033[1;37m";
-    public static String reset = "\033[0m";
+    public static String BOLD = "\u001B[1m";
+    public static String REDBACK = "\033[41m";
+    public static String RED = "\033[31m";
+    public static String GREENBACK = "\033[42m";
+    public static String GREEN = "\033[32m";
+    public static String YELLOWBACK = "\033[43m";
+    public static String YELLOW = "\033[33m";
+    public static String BLUEBACK = "\033[44m";
+    public static String BLUE = "\033[34m";
+    public static String MAGENTABACK = "\033[45m";
+    public static String MAGENTA= "\033[35m";
+    public static String CYANBACK = "\033[46m";
+    public static String CYAN = "\033[36m";
+    public static String WHITEBACK = "\033[47m";
+    public static String WHITE = "\033[1;37m";
+    public static String RESET = "\033[0m";
 
     public static String textBox(String text, String color) {
         String textBox = "";
@@ -44,7 +44,7 @@ public abstract class ConsoleDesign {
         for (int i = 0; i < text.length() + 4; i++) {
             textBox += "-";
         }
-        textBox += reset;
+        textBox += RESET;
         return textBox;
     }
 
@@ -64,7 +64,7 @@ public abstract class ConsoleDesign {
         for (int i = 0; i < text.length() + 4; i++) {
             textBox += "-";
         }
-        textBox += reset;
+        textBox += RESET;
         return textBox;
     }
 
@@ -72,7 +72,7 @@ public abstract class ConsoleDesign {
         String textBox = "";
         textBox += color;
         textBox += "--> " + text + " <--";
-        textBox += reset;
+        textBox += RESET;
         return textBox;
     }
 
@@ -80,7 +80,7 @@ public abstract class ConsoleDesign {
         String textBox = "";
         textBox += color;
         textBox += "--- " + text + " ---";
-        textBox += reset;
+        textBox += RESET;
         return textBox;
     }
 
@@ -88,7 +88,7 @@ public abstract class ConsoleDesign {
         String textBox = "";
         textBox += color;
         textBox += text;
-        textBox += reset;
+        textBox += RESET;
         return textBox;
     }
 
@@ -121,7 +121,7 @@ public abstract class ConsoleDesign {
         textBox += color + color2;
         textBox += "                                                      \n";
 
-        textBox += reset;
+        textBox += RESET;
         return textBox;
     }
 }

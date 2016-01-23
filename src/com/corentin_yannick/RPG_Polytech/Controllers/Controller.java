@@ -6,6 +6,7 @@
 package com.corentin_yannick.RPG_Polytech.Controllers;
 
 import java.util.Scanner;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.RED;
 
 /**
  *
@@ -27,7 +28,7 @@ public abstract class Controller {
                     throw new Exception();
                 }
             } catch (Exception e) {
-                System.out.println(ConsoleDesign.text("Veuillez entrer un chiffre entre " + Integer.toString(start) + " et " + Integer.toString(limit), ConsoleDesign.redText));
+                System.out.println(ConsoleDesign.text("Veuillez entrer un chiffre entre " + Integer.toString(start) + " et " + Integer.toString(limit), RED));
             }
         } while (true);
     }
@@ -50,7 +51,7 @@ public abstract class Controller {
                     throw new Exception();
                 }
             } catch (Exception e) {
-                System.out.println(ConsoleDesign.text("Veuillez entrez O ou o pour OUI / N ou n pour NON", ConsoleDesign.redText));
+                System.out.println(ConsoleDesign.text("Veuillez entrez O ou o pour OUI / N ou n pour NON", RED));
             }
         } while (true);
     }

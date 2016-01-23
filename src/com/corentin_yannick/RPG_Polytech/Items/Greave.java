@@ -1,6 +1,7 @@
 package com.corentin_yannick.RPG_Polytech.Items;
 
 import com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.MAGENTA;
 import java.util.List;
 
 /**
@@ -40,9 +41,9 @@ public class Greave extends StuffItem {
 
     @Override
     public String toString() {
-        return ConsoleDesign.text("Type: Jambières\n", ConsoleDesign.magentaText)
+        return ConsoleDesign.text("Type: Jambières\n", MAGENTA)
                 + super.toString()
-                + ConsoleDesign.text("Defense: " + this.defenseValue, ConsoleDesign.magentaText)
+                + ConsoleDesign.text("Defense: " + this.defenseValue, MAGENTA)
                 + "\n";
     }
 }

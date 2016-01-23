@@ -6,7 +6,7 @@
 package com.corentin_yannick.RPG_Polytech.Items;
 
 import com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign;
-import com.corentin_yannick.RPG_Polytech.Entities.Attribute;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.MAGENTA;
 
 /**
  *
@@ -46,11 +46,11 @@ public abstract class Item {
 
     @Override
     public String toString() {
-        return ConsoleDesign.text("Nom: " + this.name, ConsoleDesign.magentaText)
+        return ConsoleDesign.text("Nom: " + this.name, MAGENTA)
                 + "\n"
-                + ConsoleDesign.text("Poids: " + this.weight, ConsoleDesign.magentaText)
+                + ConsoleDesign.text("Poids: " + this.weight, MAGENTA)
                 + "\n"
-                + ConsoleDesign.text("Rareté: " + this.rarity, ConsoleDesign.magentaText)
+                + ConsoleDesign.text("Rareté: " + this.rarity, MAGENTA)
                 + "\n";
     }
 }

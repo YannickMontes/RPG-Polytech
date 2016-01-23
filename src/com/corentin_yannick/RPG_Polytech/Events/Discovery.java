@@ -20,6 +20,8 @@ import com.corentin_yannick.RPG_Polytech.Items.Rarity;
 import com.corentin_yannick.RPG_Polytech.Items.StuffItem;
 import com.corentin_yannick.RPG_Polytech.Items.UseableItem;
 import com.corentin_yannick.RPG_Polytech.Items.Weapon;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.RED;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.MAGENTA;
 
 /**
  *
@@ -37,17 +39,17 @@ public class Discovery extends Event {
     }
 
     private void askUserAddItem(Item item) {
-        String text = "\n" + ConsoleDesign.textBox("Sur votre chemin, vous découvrez l'item suivant:", ConsoleDesign.redText)+"\n";
+        String text = "\n" + ConsoleDesign.textBox("Sur votre chemin, vous découvrez l'item suivant:", RED)+"\n";
         text += item.toString();
         System.out.println(text);
-        boolean yes = Controller.askYesNo(ConsoleDesign.textDashArrow("Voulez-vous ajouter cet item découvert ? [O/N]", ConsoleDesign.redText));
+        boolean yes = Controller.askYesNo(ConsoleDesign.textDashArrow("Voulez-vous ajouter cet item découvert ? [O/N]", RED));
         text = "";
         if (yes) {
             int num = 0;
             String characText = "";
-            System.out.println(ConsoleDesign.textDash("A qui voulez-vous ajouter l'item découvert ?", ConsoleDesign.redText));
+            System.out.println(ConsoleDesign.textDash("A qui voulez-vous ajouter l'item découvert ?", RED));
             for (Character c : team.getCharacters()) {
-                characText += ConsoleDesign.text(Integer.toString(num) + " -> " + c.getName(), ConsoleDesign.redText) + "\n";
+                characText += ConsoleDesign.text(Integer.toString(num) + " -> " + c.getName(), RED) + "\n";
                 num++;
             }
             int persoNumber;
@@ -59,9 +61,9 @@ public class Discovery extends Event {
             boolean successAdd = chosePerso.addInventory(item);
 
             if (successAdd) {
-                text += ConsoleDesign.text("Il a été placé dans l'inventaire du personnage " + team.getCharacters().get(persoNumber).getName() + ".", ConsoleDesign.redText);
+                text += ConsoleDesign.text("Il a été placé dans l'inventaire du personnage " + team.getCharacters().get(persoNumber).getName() + ".", RED);
             } else {
-                text += ConsoleDesign.text("Vous n'avez plus de place dans tout vos inventaires.", ConsoleDesign.redText);
+                text += ConsoleDesign.text("Vous n'avez plus de place dans tout vos inventaires.", RED);
             }
             System.out.println(text);
         }
@@ -74,9 +76,9 @@ public class Discovery extends Event {
         if (randomNumber == 0)//1%
         {
             //Nouveau personnage
-            System.out.println("\n" + ConsoleDesign.textBox("Vous avez découvert un nouveau personnage!", ConsoleDesign.redText) + "\n");
+            System.out.println("\n" + ConsoleDesign.textBox("Vous avez découvert un nouveau personnage!", RED) + "\n");
             if (Team.NBMAXCHARACTERS <= this.team.getNbCharacters()) {
-                System.out.println(ConsoleDesign.text("Cependant, vous ne pouvez plus ajouter de personnages à votre équipe.", ConsoleDesign.redText));
+                System.out.println(ConsoleDesign.text("Cependant, vous ne pouvez plus ajouter de personnages à votre équipe.", RED));
             } else {
                 Character newCh = null;
                 randomNumber = (int) (Math.random() * (Character.NBCLASSES - 1));
@@ -92,7 +94,7 @@ public class Discovery extends Event {
                         break;
                 }
                 team.addCharacterTeam(newCh);
-                System.out.println(ConsoleDesign.text(newCh.toString() + "Ce personnage à été ajouté à votre équipe.\n", ConsoleDesign.magentaText));
+                System.out.println(ConsoleDesign.text(newCh.toString() + "Ce personnage à été ajouté à votre équipe.\n", MAGENTA));
             }
         } else if (randomNumber <= 20)//20%
         {

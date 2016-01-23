@@ -11,6 +11,10 @@ import com.corentin_yannick.RPG_Polytech.Manager.Turn;
 import com.corentin_yannick.RPG_Polytech.Entities.Character;
 import com.corentin_yannick.RPG_Polytech.Entities.Level;
 import com.corentin_yannick.RPG_Polytech.Manager.Team;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.RED;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.WHITE;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.REDBACK;
+import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.CYANBACK;
 
 /**
  *
@@ -36,7 +40,7 @@ public class Fight extends Event {
     }
 
     private void executeFight() {
-        System.out.println(ConsoleDesign.textBox("Début d'un combat", ConsoleDesign.whiteText, ConsoleDesign.redBack));
+        System.out.println(ConsoleDesign.textBox("Début d'un combat", WHITE, REDBACK));
         boolean equipe = false;
         if (playerTeam.getTeamSpeed() > ennemyTeam.getTeamSpeed()) {
             equipe = true;
@@ -56,15 +60,15 @@ public class Fight extends Event {
     private void executeTurn(boolean equipe) {
         System.out.println("");
         if (equipe == true) {
-            String text = ConsoleDesign.textDashArrow("Souhaitez-vous en savoir plus sur l'état de vos troupes et de l'adversaire ? [O/N]", ConsoleDesign.redText);
+            String text = ConsoleDesign.textDashArrow("Souhaitez-vous en savoir plus sur l'état de vos troupes et de l'adversaire ? [O/N]", RED);
             if (Controller.askYesNo(text) == true) {
-                System.out.println(ConsoleDesign.textBox("Etats des troupes", ConsoleDesign.whiteText, ConsoleDesign.cyanBack));
-                System.out.println(ConsoleDesign.textDash("Votre équipe", ConsoleDesign.redText));
+                System.out.println(ConsoleDesign.textBox("Etats des troupes", WHITE, CYANBACK));
+                System.out.println(ConsoleDesign.textDash("Votre équipe", RED));
                 for (Character c : playerTeam.getCharacters()) {
                     System.out.println(c.toString());
                     System.out.println("");
                 }
-                System.out.println(ConsoleDesign.textDash("Votre adversaire", ConsoleDesign.redText));
+                System.out.println(ConsoleDesign.textDash("Votre adversaire", RED));
                 for (Character c : ennemyTeam.getCharacters()) {
                     System.out.println(c.toString());
                     System.out.println("");
@@ -73,30 +77,30 @@ public class Fight extends Event {
                 System.out.println("");
             }
             actualTurn = new Turn(playerTeam, ennemyTeam);
-            System.out.println(ConsoleDesign.textBox("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName(), ConsoleDesign.whiteText, ConsoleDesign.cyanBack));
+            System.out.println(ConsoleDesign.textBox("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName(), WHITE, CYANBACK));
             actualTurn.executeTurn();
         } else {
             actualTurn = new Turn(ennemyTeam, playerTeam);
-            System.out.println(ConsoleDesign.textBox("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName(), ConsoleDesign.whiteText, ConsoleDesign.cyanBack));
+            System.out.println(ConsoleDesign.textBox("C'est au tour de l'équipe " + actualTurn.getTeamTurn().getName(), WHITE, CYANBACK));
             actualTurn.executeTurnAuto();
         }
     }
 
     private void endFight(Team winner) {
-        System.out.println(ConsoleDesign.textBox("Victoire de l'équipe " + winner.getName() + "!", ConsoleDesign.whiteText, ConsoleDesign.cyanBack));
+        System.out.println(ConsoleDesign.textBox("Victoire de l'équipe " + winner.getName() + "!", WHITE, CYANBACK));
 
         if (winner == playerTeam) {
-            System.out.println(ConsoleDesign.textDashArrow("Votre équipe a gagné! Chaque membre de l'équipe va gagner un certain nombre de points d'expérience.", ConsoleDesign.redText));
+            System.out.println(ConsoleDesign.textDashArrow("Votre équipe a gagné! Chaque membre de l'équipe va gagner un certain nombre de points d'expérience.", RED));
             for (Character c : playerTeam.getCharacters()) {
                 int experience = this.ennemyTeam.getAverageLevel() * 4000 * this.ennemyTeam.getNbCharacters();
                 experience = (experience / ((Level.MAX_LEVEL + 1) - c.getLevel()));
                 c.increaseExperience(experience);
-                System.out.println(ConsoleDesign.text("Le personnage " + c.getName() + " a gagné " + experience + " points d'expérience.", ConsoleDesign.redText));
-                c.printActualLevelState();
+                System.out.println(ConsoleDesign.text("Le personnage " + c.getName() + " a gagné " + experience + " points d'expérience.", RED));
+                System.out.println(c.getActuelLevelState());
             }
             System.out.println("");
         } else {
-            System.out.println(ConsoleDesign.text("Votre équipe à perdu. Vous ne gagnez pas de points d'expérience.", ConsoleDesign.redText));
+            System.out.println(ConsoleDesign.text("Votre équipe à perdu. Vous ne gagnez pas de points d'expérience.", RED));
                         System.out.println("");
         }
     }

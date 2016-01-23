@@ -63,7 +63,10 @@ public class Game {
     }
 
     private void createPlayerTeam() {
-        System.out.println(ConsoleDesign.textBox("Création de votre équipe", WHITE, REDBACK));
+        team = new Team("Test");
+        team.addCharacterTeam(new Warrior("José", 50));
+        return;
+        /*System.out.println(ConsoleDesign.textBox("Création de votre équipe", WHITE, REDBACK));
 
         team = new Team(Controller.askText(ConsoleDesign.textBox("Entrez un nom pour votre équipe", RED)));
 
@@ -72,7 +75,7 @@ public class Game {
 
         System.out.println(ConsoleDesign.textBox("Récapitulatif de votre équipe:", RED));
         System.out.println(this.team.toString());
-        Story.replaceVars(team);
+        Story.replaceVars(team);*/
     }
 
     private void startGame() {
@@ -134,6 +137,7 @@ public class Game {
                     break;
                 case 3:
                     changeEquipmentTeam();
+                    break;
                 case 4:
                     System.out.println(ConsoleDesign.text(this.team.toString(), CYAN));
                     break;
@@ -149,6 +153,91 @@ public class Game {
         return true;
     }
 
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public void changeEquipment(Character chara, Class classe) {
+        System.out.println("Equipement actuel:");
+        System.out.println(chara.getEquipment(classe));
+        System.out.println(chara.getEquipeableItemToString(classe));
+        if(chara.getNbEquipableItem(classe)==0)
+        {
+            System.out.println(ConsoleDesign.text("Vous n'avez aucun item de type "+classe+" à équiper." , RED));
+            return;
+        }
+        int choiceUser = Controller.askNumberBetween("Choisissez le numéro de l'item que vous voulez remplacer (0 pour rien changer)", 0, chara.getNbEquipableItem(classe));
+        if (choiceUser == 0) {
+            return;
+        }
+        System.out.println(chara.replaceEquipment((StuffItem)chara.getInInventoryItemOfType(Weapon.class, choiceUser - 1), chara.getEquipment(Weapon.class)));
+    }
+
+    private void displayTips() {
+        System.out.println(ConsoleDesign.text("Bonjour, et bienvenue dans Beat the Invador! Les règles du jeu sont simples.", GREEN)
+                + "\n" + ConsoleDesign.text("Vous êtes aux commandes d'une équipe que vous avez créer.", GREEN)
+                + "\n" + ConsoleDesign.text("Durant votre périple, vous allez être ammenés à vous déplacer sur Terre, pour récupérer des informations.", GREEN)
+                + "\n" + ConsoleDesign.text("Cependant, les milieux sont hostiles! Vous pouvez a tout moment rencontrer une horde d'ennemis, qui sont généralement vos semblables (bien qu'ils ne vous ressemblent plus énormément)", GREEN)
+                + "\n" + ConsoleDesign.text("Vous devrez éliminer ces groupes pour pouvoir avancer. A la fin de chaque rencontre, votre vie vous est rendue.", GREEN)
+                + "\n" + ConsoleDesign.text("Entres chaque combat, vous pourrez gérer votre équipement et votre inventaire.", GREEN)
+                + "\n" + ConsoleDesign.text("Qui sait, peut-être que vous ferrez des découvertes au fil du temps...", GREEN)
+                + "\n" + ConsoleDesign.text("Allez, c'est à vous!", GREEN));
+        System.out.println("\n");
+    }
+
+    private void changeEquipmentTeam() {
+        String text = "Modifer l'équipement du personnage:\n";
+        int i = 0;
+        for (Character c : this.team.getCharacters()) {
+            text += i + "-> " + c.getName() + "\n";
+            i++;
+        }
+        text += i + "-> Ne pas modifier";
+        int choice = Controller.askNumberBetween(text, 0, i);
+        if (choice == i) {
+            return;
+        } else {
+            Character c = this.team.getCharacters().get(choice);
+            if(c.getNbEquipableItem()==0)
+            {
+                System.out.println(ConsoleDesign.text("\nVous n'avez pas d'items à équiper.\n",RED));
+                return;
+            }
+            System.out.println(ConsoleDesign.text(c.getEquipmentToString(), GREEN));
+            boolean result = Controller.askYesNo("Voulez-vous modifier votre équipement? [O/N]");
+            while (result) {
+                String toDisplay = "1--> Rempalcer Arme\n2--> Rempalcer Armure\n3--> Rempalcer Jambières\n4--> Ne rien remplacer\n";
+                int choiceUser = Controller.askNumberBetween(ConsoleDesign.text(toDisplay, MAGENTA), 1, 4);
+                switch (choiceUser) {
+                    case 1:
+                        changeEquipment(c, Weapon.class);
+                        break;
+                    case 2:
+                        changeEquipment(c, Armor.class);
+                        break;
+                    case 3:
+                        changeEquipment(c, Greave.class);
+                        break;
+                    case 4:
+                        result = false;
+                        break;
+                }
+            }
+        }
+    }
+    
     private void readJSONFiles() {
         JSONParser parser = new JSONParser();
 
@@ -215,79 +304,5 @@ public class Game {
             e.printStackTrace();
         }
 
-    }
-
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<Event> events) {
-        this.events = events;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
-    public void changeEquipment(Character chara, Class classe) {
-        System.out.println("Equipement actuel:");
-        System.out.println(chara.getEquipment(classe));
-        System.out.println(chara.getEquipeableItemToString(classe));
-        int choiceUser = Controller.askNumberBetween("Choisissez le numéro de l'item que vous voulez remplacer (0 pour rien changer)", 0, chara.getNbEquipableItem(classe));
-        if (choiceUser == 0) {
-            return;
-        }
-        System.out.println(chara.replaceEquipment((StuffItem)chara.getInInventoryItemOfType(Weapon.class, choiceUser - 1), chara.getEquipment(Weapon.class)));
-    }
-
-    private void displayTips() {
-        System.out.println(ConsoleDesign.text("Bonjour, et bienvenue dans Beat the Invador! Les règles du jeu sont simples.", GREEN)
-                + "\n" + ConsoleDesign.text("Vous êtes aux commandes d'une équipe que vous avez créer.", GREEN)
-                + "\n" + ConsoleDesign.text("Durant votre périple, vous allez être ammenés à vous déplacer sur Terre, pour récupérer des informations.", GREEN)
-                + "\n" + ConsoleDesign.text("Cependant, les milieux sont hostiles! Vous pouvez a tout moment rencontrer une horde d'ennemis, qui sont généralement vos semblables (bien qu'ils ne vous ressemblent plus énormément)", GREEN)
-                + "\n" + ConsoleDesign.text("Vous devrez éliminer ces groupes pour pouvoir avancer. A la fin de chaque rencontre, votre vie vous est rendue.", GREEN)
-                + "\n" + ConsoleDesign.text("Entres chaque combat, vous pourrez gérer votre équipement et votre inventaire.", GREEN)
-                + "\n" + ConsoleDesign.text("Qui sait, peut-être que vous ferrez des découvertes au fil du temps...", GREEN)
-                + "\n" + ConsoleDesign.text("Allez, c'est à vous!", GREEN));
-        System.out.println("\n");
-    }
-
-    private void changeEquipmentTeam() {
-        String text = "Modifer l'équipement du personnage:\n";
-        int i = 0;
-        for (Character c : this.team.getCharacters()) {
-            text += i + "-> " + this.team.getCharacters().get(i).getName() + "\n";
-            i++;
-        }
-        text += i + "-> Ne pas modifier";
-        int choice = Controller.askNumberBetween(text, 0, i);
-        if (choice == i) {
-            return;
-        } else {
-            Character c = this.team.getCharacters().get(choice);
-            System.out.println(ConsoleDesign.text(c.getEquipmentToString(), GREEN));
-            boolean result = Controller.askYesNo("Voulez-vous modifier votre équipement? [O/N]");
-            while (result) {
-                int choiceUser = Controller.askNumberBetween(ConsoleDesign.text("1-> Remplacer Arme\n2-> Remplacer Armure\n3-> Remplacer Jambières\n4-> Ne rien remplacer", MAGENTA), 1, 4);
-                switch (choiceUser) {
-                    case 1:
-                        changeEquipment(c, Weapon.class);
-                        break;
-                    case 2:
-                        changeEquipment(c, Armor.class);
-                        break;
-                    case 3:
-                        changeEquipment(c, Greave.class);
-                        break;
-                    case 4:
-                        result = false;
-                        break;
-                }
-            }
-        }
     }
 }

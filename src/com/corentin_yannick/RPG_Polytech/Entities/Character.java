@@ -15,6 +15,7 @@ import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.RED;
 import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.GREEN;
 import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.CYAN;
 import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.YELLOW;
+import com.corentin_yannick.RPG_Polytech.Items.Rarity;
 
 /**
  * Cette classe abstraite contient toutes les informations nécéssaires pour un
@@ -171,17 +172,41 @@ public abstract class Character {
                     listPossibleGreave.add(greave);
                 }
             }
-
-            int nbAlea = (int) (Math.random() * listPossibleArmor.size());
-            this.addEquipement(listPossibleArmor.get(nbAlea));
-            nbAlea = (int) (Math.random() * listPossibleGreave.size());
-            this.addEquipement(listPossibleGreave.get(nbAlea));
-            nbAlea = (int) (Math.random() * listPossibleWeapon.size());
-            this.addEquipement(listPossibleWeapon.get(nbAlea));
+            int nbAlea;
+            if(listPossibleArmor.isEmpty())
+            {
+                this.addEquipement(Armor.getRandomItemInList(Rarity.COMMON, this.getLevel(), Armor.listeArmorItem));
+            }
+            else
+            {
+                nbAlea = (int) (Math.random() * listPossibleArmor.size());
+                this.addEquipement(listPossibleArmor.get(nbAlea));
+            }
+            if(listPossibleGreave.isEmpty())
+            {
+                 this.addEquipement(Greave.getRandomItemInList(Rarity.COMMON, this.getLevel(), Greave.listGreaveItem));
+            }
+            else
+            {
+                nbAlea = (int) (Math.random() * listPossibleGreave.size());
+                this.addEquipement(listPossibleGreave.get(nbAlea));
+            }
+            if(listPossibleWeapon.isEmpty())
+            {
+                 this.addEquipement(Weapon.getRandomItemInList(Rarity.COMMON, this.getLevel(), Weapon.listWeaponItem));
+            }
+            else
+            {
+                nbAlea = (int) (Math.random() * listPossibleWeapon.size());
+                this.addEquipement(listPossibleWeapon.get(nbAlea));
+            }
         }
         this.inventory.add(Potion.listPotionItem.get(0));
         this.inventory.add(Potion.listPotionItem.get(0));
-        //this.inventory.add(Weapon.listWeaponItem.get(1));
+        this.inventory.add(Weapon.listWeaponItem.get(1));
+        this.inventory.add(Weapon.listWeaponItem.get(2));
+        this.inventory.add(Weapon.listWeaponItem.get(3));
+        this.inventory.add(Weapon.listWeaponItem.get(4));
         this.reinitStats();
     }
 
@@ -229,19 +254,19 @@ public abstract class Character {
     }
     
     /**
-     * Permet d'obtenir le nombre d'item équipable total
-     * @return 
+     * Permet d'obtenir le nombre d'item équipable total.
+     * @return Le nombre d'item équipable total
      */
     public int getNbEquipableItem()
     {
         int nb = 0;
-        for(int i=0; i<this.inventory.size(); i++)
+        for(Item i : this.inventory)
         {
-            if(this.inventory.get(i) instanceof StuffItem)
+            if(i instanceof StuffItem)
             {
-                if(((StuffItem)this.inventory.get(i)).getRequiredLevel() <= this.getLevel())
+                if(((StuffItem)(i)).getRequiredLevel()<=this.getLevel())
                 {
-                    nb++;   
+                    nb++;
                 }
             }
         }
@@ -252,19 +277,22 @@ public abstract class Character {
      * Permet d'obtenir le nombre d'item équipables d'un certain type. 
      * Les items contenu dans l'équipement ne sont pas comptabilisés. 
      * @param clas  Le type d'item voulu
-     * @return Le nombre d'items équipables.
+     * @return Le nombre d'items équipables du type voulu
      */
     public int getNbEquipableItem(Class clas)
     {
-        int sum = 0;
-        for(int i=0; i<this.inventory.size(); i++)
+        int nb = 0;
+        for(Item i : this.inventory)
         {
-            if(this.inventory.get(i).getClass()==clas && !this.equipment.contains(i))
+            if(i.getClass() == clas)
             {
-                sum++;
+                if(((StuffItem)(i)).getRequiredLevel()<=this.getLevel())
+                {
+                    nb++;
+                }
             }
         }
-        return sum;
+        return nb;
     }
     
     /**
@@ -462,16 +490,13 @@ public abstract class Character {
      * @param stuffItem l'item à équiper
      * @return Vrai si l'item a pu etre équipé, faux sinon.
      */
-    public String addEquipement(StuffItem stuffItem) {
-        /*if (!this.inventory.contains(stuffItem)) {
-            if (!this.addInventory(stuffItem)) {
-                return "Vous ne pouvez pas transporter plus d'objets.";
-            }
-        }*/
+    public String addEquipement(StuffItem stuffItem) 
+    {
         if (equipment.size() < MAXEQUIPMENT) {
             if ((stuffItem.getClass() == Weapon.class && numberOfClassEquipment(Weapon.class) < MAXWEAPONEQUIPMENT)
                     || (stuffItem.getClass() == Armor.class && numberOfClassEquipment(Armor.class) < MAXARMOREQUIPMENT)
-                    || (stuffItem.getClass() == Greave.class && numberOfClassEquipment(Greave.class) < MAXGREAVEEQUIPMENT)) {
+                    || (stuffItem.getClass() == Greave.class && numberOfClassEquipment(Greave.class) < MAXGREAVEEQUIPMENT)) 
+            {
                 if(stuffItem.getRequiredLevel()>this.getLevel())
                 {
                     return "Vous n'avez pas le niveau requis pour équiper cet item.";
@@ -479,8 +504,9 @@ public abstract class Character {
                 this.equipment.add(stuffItem);
                 return "";
             }
+            return "Vous avez déjà un équipement du même type équipé.";
         }
-        return "Vous avez déjà trop d'équipements équipés.";
+        return "Vous avez trop d'éléments équipés.";
     }
 
     /**
@@ -752,7 +778,7 @@ public abstract class Character {
     {
         String text ="";
         int cpt=1;
-        text += ConsoleDesign.text("\nInventaire de: \n"+this.name,CYAN);
+        text += ConsoleDesign.text("\nInventaire de "+this.name+ ":\n",CYAN);
         for(Item i : this.inventory)
         {
             if(this.equipment.contains(i))
@@ -776,7 +802,7 @@ public abstract class Character {
     {
         String text = "";
         int cpt = 1;
-        text += ConsoleDesign.text("Equipement de: \n"+this.name,CYAN);
+        text += ConsoleDesign.text("Equipement de: "+this.name+"\n",CYAN);
         for(StuffItem i : this.equipment)
         {
             if(this.equipment.contains(i))

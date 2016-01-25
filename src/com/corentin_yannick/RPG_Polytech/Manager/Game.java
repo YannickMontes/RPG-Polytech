@@ -103,8 +103,8 @@ public class Game {
                     character = new Thief(name);
                     break;
             }
-            character.getBasicAttributesCHEAT().cheat();
-            character.reinitStats();
+            //character.getBasicAttributesCHEAT().cheat();
+            //character.reinitStats();
             team.addCharacterTeam(character);
         }
     }

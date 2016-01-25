@@ -434,10 +434,10 @@ public abstract class Character {
      */
     public Item getInInventoryItemOfType(Class classe, int number)
     {
-        int nb = 0;
+        int nb = 1;
         for(Item i : this.inventory)
         {
-            if(i.getClass()==classe && !this.equipment.contains(i))
+            if(i instanceof UseableItem && !this.equipment.contains(i))
             {
                 if(nb==number)
                 {

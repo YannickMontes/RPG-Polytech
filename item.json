@@ -46,9 +46,22 @@
         ],
         "Greave": [
         {"weight":1, "handlingability":100, "defenseValue": 0, "rarity":0, "requiredLevel":1, "name":"Chaussettes sales"},
-        {"weight":1, "handlingability":100, "defenseValue": 1, "rarity":0, "requiredLevel":1, "name":"Chaussettes du voyageur"},
-        {"weight":1, "handlingability":50, "defenseValue": 2, "rarity":1, "requiredLevel":2, "name":"Bottes trouées"},
-        {"weight":1, "handlingability":20, "defenseValue": 5, "rarity":3, "requiredLevel":3, "name":"Patins à glace"},
-        {"weight":1, "handlingability":100, "defenseValue": 3, "rarity":1, "requiredLevel":5, "name":"Jambières en acier"}
+        {"weight":2, "handlingability":100, "defenseValue": 1, "rarity":0, "requiredLevel":1, "name":"Chaussettes du voyageur"},
+        {"weight":2, "handlingability":50, "defenseValue": 2, "rarity":1, "requiredLevel":2, "name":"Bottes trouées"},
+        {"weight":3, "handlingability":20, "defenseValue": 5, "rarity":3, "requiredLevel":2, "name":"Patins à glace"},
+        {"weight":2, "handlingability":100, "defenseValue": 3, "rarity":1, "requiredLevel":3, "name":"Jambières"}
+        {"weight":2, "handlingability":80, "defenseValue": 3, "rarity":0, "requiredLevel":3, "name":"Collants"}
+        {"weight":4, "handlingability":90, "defenseValue": 4, "rarity":0, "requiredLevel":4, "name":"Jean"}
+        {"weight":2, "handlingability":25, "defenseValue": 5, "rarity":2, "requiredLevel":4, "name":"Porte-jartelles"}
+        {"weight":7, "handlingability":90, "defenseValue": 6, "rarity":1, "requiredLevel":5, "name":"Jambières en fer"}
+        {"weight":6, "handlingability":95, "defenseValue": 7, "rarity":3, "requiredLevel":5, "name":"Bottes de vitesse (pas du tout)"}
+        {"weight":15, "handlingability":40, "defenseValue": 7, "rarity":0, "requiredLevel":6, "name":"Jambières en acier"}
+        {"weight":10, "handlingability":60, "defenseValue": 8, "rarity":2, "requiredLevel":6, "name":"Pantalon de ski"}
+        {"weight":1, "handlingability":100, "defenseValue": 5, "rarity":0, "requiredLevel":7, "name":"Slip de bain"}
+        {"weight":1, "handlingability":100, "defenseValue": 5, "rarity":1, "requiredLevel":7, "name":"Boxer Freegun"}
+        {"weight":10, "handlingability":50, "defenseValue": 10, "rarity":3, "requiredLevel":8, "name":"Jambières en fibres"}
+        {"weight":9, "handlingability":90, "defenseValue": 12, "rarity":1, "requiredLevel":9, "name":"Bottes renforcée"}
+        {"weight":10, "handlingability":70, "defenseValue": 15, "rarity":3, "requiredLevel":10, "name":"Chaussures de sécurité"}
+
         ]
 }

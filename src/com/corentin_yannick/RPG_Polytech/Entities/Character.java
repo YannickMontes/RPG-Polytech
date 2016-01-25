@@ -418,7 +418,8 @@ public abstract class Character {
         {
             if(i instanceof UseableItem)
             {
-                ret+="Item n°"+nb+i.toString();
+                ret+="Item n°"+nb+"\n"+i.toString();
+                nb++;
             }
         }
         return ret;

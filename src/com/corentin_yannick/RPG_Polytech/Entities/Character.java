@@ -200,13 +200,8 @@ public abstract class Character {
                 nbAlea = (int) (Math.random() * listPossibleWeapon.size());
                 this.addEquipement(listPossibleWeapon.get(nbAlea));
             }
+            this.addRandomItems();
         }
-        this.inventory.add(Potion.listPotionItem.get(0));
-        this.inventory.add(Potion.listPotionItem.get(0));
-        this.inventory.add(Weapon.listWeaponItem.get(1));
-        this.inventory.add(Weapon.listWeaponItem.get(2));
-        this.inventory.add(Weapon.listWeaponItem.get(3));
-        this.inventory.add(Weapon.listWeaponItem.get(4));
         this.reinitStats();
     }
 
@@ -565,6 +560,7 @@ public abstract class Character {
      */
     public void restoreLife() {
         this.attributes.replace(Attribute.HEALTH, 150 + 2 * level.getLevel() + 3);
+        this.attributes.replace(Attribute.MANA, 20 + 2 * level.getLevel() + 3);
     }
 
     /**
@@ -711,7 +707,7 @@ public abstract class Character {
                     }
                     break;
             }
-            text += ConsoleDesign.textDashArrow("Réitérez l'opération encore " + cpt + " fois", RED)
+            text = ConsoleDesign.textDashArrow("Réitérez l'opération encore " + cpt + " fois", RED)
                     + "\n"
                     + ConsoleDesign.text("1 -> Force\n", RED)
                     + ConsoleDesign.text("2 -> Défense\n", RED)
@@ -866,7 +862,7 @@ public abstract class Character {
 
     public void decreaseAttribute(Attribute attribute, int i)
     {
-        this.attributes.remove(attribute, this.getAttributeValue(attribute)-i);
+        this.attributes.replace(attribute, this.getAttributeValue(attribute)-i);
     }
 
     public int getNbItemsInInventory()
@@ -887,5 +883,14 @@ public abstract class Character {
     public void removeItemInInventory(Item item)
     {
         this.inventory.remove(item);
+    }
+
+    private void addRandomItems()
+    {
+        int nbAlea = (int)(Math.random()*5)+5;
+        for(int i=0; i<nbAlea; i++)
+        {
+            Potion.getRandomItem(Potion.listPotionItem);
+        }
     }
 }

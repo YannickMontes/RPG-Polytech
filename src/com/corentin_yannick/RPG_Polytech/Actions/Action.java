@@ -40,10 +40,13 @@ public class Action {
 
     public String makeAutoAttack() {
         Character opponent = null;
-        int opponentNumber = 0;
-        int probaOpponent = (int) (Math.random() * (opponentsTeam.getCharacters().size() * 100));
-        opponentNumber = probaOpponent / 100;
-        opponent = opponentsTeam.getCharacters().get(opponentNumber);
+        do
+        {
+            int opponentNumber = 0;
+            int probaOpponent = (int) (Math.random() * (opponentsTeam.getCharacters().size() * 100));
+            opponentNumber = probaOpponent / 100;
+            opponent = opponentsTeam.getCharacters().get(opponentNumber);
+        }while(!opponent.isAlive());
         boolean success = verifySuccess("attack");
         int damages = 0;
         if (success == true) {
@@ -174,7 +177,7 @@ public class Action {
         int num = 0;
         for (Character op : opponentsTeam.getCharacters()) {
             if (op.isAlive()) {
-                actionText += ConsoleDesign.text(Integer.toString(num) + " -> " + op.getName(), RED) + "\n";
+                actionText += ConsoleDesign.text(Integer.toString(num) + " -> " + op.getName(), RED) +" (Santé:"+op.getAttributeValue(Attribute.HEALTH) + ")\n";
             }
             num++;
         }
@@ -388,6 +391,10 @@ public class Action {
         else
         {
             this.message += result;
+            if(result.equals("Vous n'avez pas assez de mana"))
+            {
+                return false;
+            }
         }
         
         System.out.println(ConsoleDesign.text(this.message, RED));
@@ -447,7 +454,7 @@ public class Action {
      */
     public int measureImpact(String capacity, Character opponent, UseableItem useableItem) {
         if ("attack".equals(capacity) && opponent != null) {
-            return this.reduceDamages(opponent, character.getAttributeValue(Attribute.STRENGTH));
+            return this.reduceDamages(opponent, (int) (character.getAttributeValue(Attribute.STRENGTH)*1.5f));
         } else if ("block".equals(capacity)) {
             return (int) (0.5 * character.getAttributeValue(Attribute.STRENGTH));
         } else if ("useItem".equals(capacity) && useableItem != null) {
@@ -562,7 +569,10 @@ public class Action {
         {
             text += "(" + character.getName() + ") Frappe "+opponent.getName()+" avec Pickpocket, infligeant "+damages+" points de dégâts (Santé: "+opponent.getAttributeValue(Attribute.HEALTH)+")";
         }
-        
+        if (!opponent.isAlive()) 
+        {
+            text += "\nLe personnage " + opponent.getName() + " est mort!";
+        }
         return text;
     }
 
@@ -610,13 +620,19 @@ public class Action {
             int finaldamage = (int) (basedmg + ratioAtt*this.character.getAttributeValue(Attribute.STRENGTH) + ratioVit*this.character.getAttributeValue(Attribute.SPEED));
             
             int nbItems = opponent.getNbItemsInInventory();
-            Item item = opponent.getItem((int) (Math.random()*nbItems));
-            
-            if(this.character.addInventory(item))
+            if(nbItems!=0)
             {
-                opponent.removeItemInInventory(item);
+                Item item = opponent.getItem((int) (Math.random()*nbItems));    
+                if(this.character.addInventory(item))
+                {
+                    opponent.removeItemInInventory(item);
+                }
+                this.message += "(" + character.getName() + ") vole l'item suivant:\n"+item.toString();
             }
-            this.message += "(" + character.getName() + ") vole l'item suivant:"+item.toString();
+            else
+            {
+                this.message += "\nVotre ennemi n'as pas d'item à piller.\n";
+            }
             return this.reduceDamages(opponent, finaldamage);
         }
         return 0;

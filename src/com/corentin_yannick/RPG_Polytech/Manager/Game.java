@@ -53,7 +53,6 @@ public class Game {
 
     private void initPlot() {
         Story.initStory();
-        Story.displayAll();
     }
 
     private void displayBegining() {
@@ -62,11 +61,7 @@ public class Game {
     }
 
     private void createPlayerTeam() {
-        team = new Team("Test");
-        team.addCharacterTeam(new Warrior("José", 50));
-        team.getCharacters().get(0).addCapacity();
-        return;
-        /*System.out.println(ConsoleDesign.textBox("Création de votre équipe", WHITE, REDBACK));
+        System.out.println(ConsoleDesign.textBox("Création de votre équipe", WHITE, REDBACK));
 
         team = new Team(Controller.askText(ConsoleDesign.textBox("Entrez un nom pour votre équipe", RED)));
 
@@ -75,7 +70,7 @@ public class Game {
 
         System.out.println(ConsoleDesign.textBox("Récapitulatif de votre équipe:", RED));
         System.out.println(this.team.toString());
-        Story.replaceVars(team);*/
+        Story.replaceVars(team);
     }
 
     private void startGame() {
@@ -115,6 +110,7 @@ public class Game {
 
     private void initEvents() {
         while (true) {
+            team.reinitStats();
             int choiceUser = Controller.askNumberBetween("1-> Se déplacer\n2-> Consulter son inventaire\n3-> Modifier l'équipement des personnages\n"
                     + "4-> Voir le statut de l'équipe", 1, 4);
             switch (choiceUser) {

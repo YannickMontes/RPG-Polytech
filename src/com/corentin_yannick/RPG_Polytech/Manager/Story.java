@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -24,6 +23,7 @@ import org.json.simple.parser.ParseException;
 public class Story
 {
     public static List<String> plot = new ArrayList<>();
+    public static List<String> eventStory = new ArrayList<>();
     public static List<Boolean> alreadyPlot = new ArrayList<>();
     public static List<String> namesPlayer = new ArrayList<>();
     public static List<String> namesTeam = new ArrayList<>();
@@ -45,7 +45,9 @@ public class Story
             {
                 JSONObject objTemp = iterator.next();
                 String plot = (String) objTemp.get("plot");
+                String event = (String) objTemp.get("type");
                 Story.plot.add(plot);
+                Story.eventStory.add(event);
                 Story.alreadyPlot.add(false);
             }
         } catch (Exception ex)
@@ -54,6 +56,14 @@ public class Story
         }
         
         initNames();
+    }
+    
+    public static void displayAll()
+    {
+        for(String i : eventStory)
+        {
+            System.out.println(i);
+        }
     }
     
     public static void initNames()

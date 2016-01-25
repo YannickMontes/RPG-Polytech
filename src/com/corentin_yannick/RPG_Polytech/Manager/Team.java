@@ -32,6 +32,18 @@ public class Team {
     public Team(String name) {
         this.name = name;
         characters = new ArrayList<>();
+        if(this.name.equals("Boss"))
+        {
+            Team t = new Team("Boss");
+            Warrior w = new Warrior("Chef", 10);
+            Warrior w2 = new Warrior("Sous-fifre",4);
+            Athlete w3 = new Athlete("Colosse",5);
+            Thief w4 = new Thief("Pillard",5);
+            t.addCharacterTeam(w);
+            t.addCharacterTeam(w2);
+            t.addCharacterTeam(w3);
+            t.addCharacterTeam(w4);
+       }
     }
 
     public void addCharacterTeam(Character character) {

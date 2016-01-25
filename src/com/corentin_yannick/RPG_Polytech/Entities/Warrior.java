@@ -5,6 +5,7 @@
  */
 package com.corentin_yannick.RPG_Polytech.Entities;
 
+import com.corentin_yannick.RPG_Polytech.Actions.Anger;
 import com.corentin_yannick.RPG_Polytech.Actions.Attack;
 import com.corentin_yannick.RPG_Polytech.Actions.Block;
 import com.corentin_yannick.RPG_Polytech.Items.UseableItem;
@@ -14,7 +15,7 @@ import com.corentin_yannick.RPG_Polytech.Actions.UseItem;
  *
  * @author yannick
  */
-public class Warrior extends Character implements Attack, Block, UseItem {
+public class Warrior extends Character implements Attack, Block, UseItem, Anger {
 
     public Warrior(String name) {
         super(name, "Guerrier");
@@ -117,6 +118,25 @@ public class Warrior extends Character implements Attack, Block, UseItem {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String anger(Character opponent)
+    {
+        if(capacities.contains("Anger"))
+        {
+            if(this.attributes.get(Attribute.MANA)>=10)
+            {
+                int nbAlea = (int)(Math.random()*100);
+                if(nbAlea<=this.getAttributeValue(Attribute.DEXTERITY))
+                {
+                    return "";
+                }
+                return "Attaque échouée";
+            }
+            return "Vous n'avez pas assez de mana";
+        }
+        return "Vous n'avez pas la compétence.";
     }
 
 }

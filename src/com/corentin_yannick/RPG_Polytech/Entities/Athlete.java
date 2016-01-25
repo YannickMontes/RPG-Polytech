@@ -8,6 +8,7 @@ package com.corentin_yannick.RPG_Polytech.Entities;
 import com.corentin_yannick.RPG_Polytech.Actions.Action;
 import com.corentin_yannick.RPG_Polytech.Actions.Attack;
 import com.corentin_yannick.RPG_Polytech.Actions.Block;
+import com.corentin_yannick.RPG_Polytech.Actions.Uppercut;
 import com.corentin_yannick.RPG_Polytech.Items.UseableItem;
 import com.corentin_yannick.RPG_Polytech.Actions.UseItem;
 
@@ -15,7 +16,7 @@ import com.corentin_yannick.RPG_Polytech.Actions.UseItem;
  *
  * @author yannick
  */
-public class Athlete extends Character implements Attack, Block, UseItem {
+public class Athlete extends Character implements Attack, Block, UseItem, Uppercut {
 
     public Athlete(String name) {
         super(name, "Athlete");
@@ -127,4 +128,17 @@ public class Athlete extends Character implements Attack, Block, UseItem {
         return false;
     }
 
+    @Override
+    public String uppercut(Character opponent)
+    {
+        if(capacities.contains("Uppercut"))
+        {
+            if(this.attributes.get(Attribute.MANA)>=10)
+            {
+                return "";
+            }
+            return "Vous n'avez pas assez de mana";
+        }
+        return "Vous n'avez pas la compétence.";
+    }
 }

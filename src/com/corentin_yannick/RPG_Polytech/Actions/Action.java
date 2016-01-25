@@ -19,6 +19,7 @@ import com.corentin_yannick.RPG_Polytech.Entities.Thief;
 import com.corentin_yannick.RPG_Polytech.Entities.Warrior;
 import com.corentin_yannick.RPG_Polytech.Manager.Turn;
 import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.RED;
+import com.corentin_yannick.RPG_Polytech.Items.Item;
 /**
  *
  * @author coren
@@ -28,11 +29,13 @@ public class Action {
     public Character character;
     public Team opponentsTeam;
     public Turn currentTurn;
+    public String message;
 
     public Action(Character character, Team opponentsTeam, Turn currentTurn) {
         this.character = character;
         this.opponentsTeam = opponentsTeam;
         this.currentTurn = currentTurn;
+        this.message = "";
     }
 
     public String makeAutoAttack() {
@@ -208,6 +211,8 @@ public class Action {
         return true;
     }
 
+    
+    
     public boolean makeDefense() {
         String text = ConsoleDesign.textDashArrow("Quelle parade voulez-vous utiliser ?", RED) + " \n";
         text += ConsoleDesign.text("1 -> Blocage", RED) + "\n";
@@ -353,6 +358,43 @@ public class Action {
         return true;
     }
 
+    public boolean useCapacity()
+    {
+        Character opponent = null;
+        String actionText = ConsoleDesign.textDashArrow("Choississez un adversaire", RED) + "\n";
+        int num = 0;
+        for (Character op : opponentsTeam.getCharacters()) {
+            if (op.isAlive()) {
+                actionText += ConsoleDesign.text(Integer.toString(num) + " -> " + op.getName(), RED) + "\n";
+            }
+            num++;
+        }
+
+        int opponentNumber;
+        do {
+            opponentNumber = Controller.askNumberBetween(actionText, 0, num - 1);
+        } while (!opponentsTeam.getCharacters().get(opponentNumber).isAlive());
+        
+        opponent = opponentsTeam.getCharacters().get(opponentNumber);
+       
+        String result = this.verifySuccesCapacity(opponent);
+        
+        if(result.equals(""))
+        {
+            int damages = measureImpact("capacity", opponent, null);
+            opponent.takeABlow(damages);
+            this.message += this.capacityResult(opponent, damages);
+        }
+        else
+        {
+            this.message += result;
+        }
+        
+        System.out.println(ConsoleDesign.text(this.message, RED));
+        
+        return true;
+    }
+
     /**
      * Fonction permettant d'utiliser une capacité.
      *
@@ -403,18 +445,21 @@ public class Action {
      * @param useableItem
      * @return
      */
-    public int measureImpact(String capacity, com.corentin_yannick.RPG_Polytech.Entities.Character opponent, UseableItem useableItem) {
+    public int measureImpact(String capacity, Character opponent, UseableItem useableItem) {
         if ("attack".equals(capacity) && opponent != null) {
-            return this.calculateDamageBasicAttack(opponent);
+            return this.reduceDamages(opponent, character.getAttributeValue(Attribute.STRENGTH));
         } else if ("block".equals(capacity)) {
             return (int) (0.5 * character.getAttributeValue(Attribute.STRENGTH));
         } else if ("useItem".equals(capacity) && useableItem != null) {
             return useableItem.getValue();
+        } else if("capacity".equals(capacity))
+        {
+            return this.calculateDamageCapacity(opponent);
         }
         return 0;
     }
 
-    private int calculateDamageBasicAttack(com.corentin_yannick.RPG_Polytech.Entities.Character opponent) {
+    private int reduceDamages(Character opponent, int initialValue) {
         int defenseOpponent = opponent.getAttributeValue(Attribute.DEFENSE);
         int damage = 0;
         float reduction;
@@ -427,7 +472,7 @@ public class Action {
         } else {
             reduction = 0.9f;
         }
-        damage = (int) (character.getAttributeValue(Attribute.STRENGTH) * (1 - reduction));
+        damage = (int) (initialValue * (1 - reduction));
 
         return damage;
     }
@@ -501,5 +546,79 @@ public class Action {
         }
         return "L'esquive a échoué";
     }
+    
+    public String capacityResult(Character opponent, int damages)
+    {
+        String text = "";
+        if(character instanceof Warrior)
+        {
+            text += "(" + character.getName() + ") Frappe "+opponent.getName()+" avec Anger, infligeant "+damages+" points de dégâts (Santé: "+opponent.getAttributeValue(Attribute.HEALTH)+")";
+        }
+        else if(character instanceof Athlete)
+        {
+            text += "(" + character.getName() + ") Frappe "+opponent.getName()+" avec Uppercut, ignorant ainsi la défense de l'adversaire et infligeant "+damages+" points de dégâts (Santé: "+opponent.getAttributeValue(Attribute.HEALTH)+")";
+        }
+        else if(character instanceof Thief)
+        {
+            text += "(" + character.getName() + ") Frappe "+opponent.getName()+" avec Pickpocket, infligeant "+damages+" points de dégâts (Santé: "+opponent.getAttributeValue(Attribute.HEALTH)+")";
+        }
+        
+        return text;
+    }
 
+    private String verifySuccesCapacity(Character opponent)
+    {
+        if(character instanceof Warrior)
+        {
+            return ((Warrior)character).anger(opponent);
+        }
+        else if(character instanceof Athlete)
+        {
+            return ((Athlete)character).uppercut(opponent);
+        }
+        else if(character instanceof Thief)
+        {
+            return ((Thief)character).pickpocket(opponent);
+        }
+        return "Problème";
+    }
+
+    private int calculateDamageCapacity(Character opponent)
+    {
+        if(character instanceof Warrior)
+        {
+            this.character.decreaseAttribute(Attribute.MANA, 25);
+            int basedmg = 40+(5*this.character.getLevel());
+            float ratio = 0.8f;
+            int finaldamage = (int) (basedmg + ratio*this.character.getAttributeValue(Attribute.STRENGTH));
+            return this.reduceDamages(opponent, finaldamage);
+        }
+        else if(character instanceof Athlete)
+        {
+            this.character.decreaseAttribute(Attribute.MANA, 15);
+            int basedmg = 25+(5*this.character.getLevel());
+            float ratio = 0.5f;
+            int finaldamage = (int) (basedmg + ratio*this.character.getAttributeValue(Attribute.STRENGTH));
+            return finaldamage;
+        }
+        else if(character instanceof Thief)
+        {
+            this.character.decreaseAttribute(Attribute.MANA, 10);
+            int basedmg = 15+(5*this.character.getLevel());
+            float ratioVit = 2f;
+            float ratioAtt = 0.2f;
+            int finaldamage = (int) (basedmg + ratioAtt*this.character.getAttributeValue(Attribute.STRENGTH) + ratioVit*this.character.getAttributeValue(Attribute.SPEED));
+            
+            int nbItems = opponent.getNbItemsInInventory();
+            Item item = opponent.getItem((int) (Math.random()*nbItems));
+            
+            if(this.character.addInventory(item))
+            {
+                opponent.removeItemInInventory(item);
+            }
+            this.message += "(" + character.getName() + ") vole l'item suivant:"+item.toString();
+            return this.reduceDamages(opponent, finaldamage);
+        }
+        return 0;
+    }
 }

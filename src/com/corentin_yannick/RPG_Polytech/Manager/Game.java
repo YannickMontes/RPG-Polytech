@@ -42,8 +42,6 @@ public class Game {
 
     private List<Event> events;
     private Team team;
-    private int nbFights = 0;
-    private int nbDiscovery = 0;
 
     public Game() {
         this.readJSONFiles();
@@ -55,6 +53,7 @@ public class Game {
 
     private void initPlot() {
         Story.initStory();
+        Story.displayAll();
     }
 
     private void displayBegining() {
@@ -65,6 +64,7 @@ public class Game {
     private void createPlayerTeam() {
         team = new Team("Test");
         team.addCharacterTeam(new Warrior("José", 50));
+        team.getCharacters().get(0).addCapacity();
         return;
         /*System.out.println(ConsoleDesign.textBox("Création de votre équipe", WHITE, REDBACK));
 
@@ -123,10 +123,8 @@ public class Game {
                         int rd = (int) (Math.random() * 2);
                         if (rd == 0) {
                             events.add(new Fight(team, new Team(team)));
-                            nbFights++;
                         } else {
                             events.add(new Discovery(team));
-                            nbDiscovery++;
                         }
                     }
                     break;
@@ -146,7 +144,37 @@ public class Game {
     }
 
     public boolean displayStory() {
-        if (this.nbFights >= 2 && this.nbDiscovery >= 2 && !Story.alreadyPlot.get(2)) {
+        if (this.team.getLevelMaxInTeam()>=2 && !Story.alreadyPlot.get(2))
+        {
+            System.out.println(Story.getPlot());
+            for(Character c : team.getCharacters())
+            {
+                c.addCapacity();
+            }
+            return false;
+        }
+        if(this.team.getLevelMaxInTeam()>=4 && !Story.alreadyPlot.get(3))
+        {
+            System.out.println(Story.getPlot());
+            return false;
+        }
+        if(this.team.getLevelMaxInTeam()>=5 && !Story.alreadyPlot.get(4))
+        {
+            System.out.println(Story.getPlot());
+            events.add(new Fight(team, new Team(team)));
+            System.out.println(Story.getPlot());
+            return false;
+        }
+        if(this.team.getLevelMaxInTeam()>=6 && !Story.alreadyPlot.get(6))
+        {
+            System.out.println(Story.getPlot());
+            return false;
+        }
+        if(this.team.getLevelMaxInTeam()>=7 && !Story.alreadyPlot.get(7))
+        {
+            System.out.println(Story.getPlot());
+            events.add(new Fight(team, new Team("Boss")));
+            System.out.println(Story.getPlot());
             System.out.println(Story.getPlot());
             return false;
         }

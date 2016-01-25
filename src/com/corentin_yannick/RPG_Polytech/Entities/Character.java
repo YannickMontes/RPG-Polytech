@@ -836,4 +836,56 @@ public abstract class Character {
         }  
         return text;
     }
+
+    public String addCapacity()
+    {
+        if(this instanceof Warrior)
+        {
+            ((Warrior)this).capacities.add("Anger");
+            return "Le personnage "+this.name+" a appris la nouvelle capacité 'Anger'! Il peut désormais l'utiliser"
+                    + "en échange de 25 points de mana. Les dégâts de base sont de 40, plus 0.8 fois l'attaque du personnage. "
+                    + "Le taux de réussite est fonction de la dextérité du personnage (en pourcentage).";
+        }
+        else if(this instanceof Athlete)
+        {
+            ((Athlete)this).capacities.add("Uppercut");
+            return "Le personnage "+this.name+" a appris la nouvelle capacité 'Uppercut'! Il peut désormais l'utiliser"
+                    + "en échange de 15 points de mana. Les dégâts de base sont de 25, plus 0.5 fois l'attaque du personnage. Cette compétence ignore la défense advairse. "
+                    + "Cette attaque ne peut échouer.";
+        }
+        else if(this instanceof Thief)
+        {
+            ((Thief)this).capacities.add("Pickpocket");
+            return "Le personnage "+this.name+" a appris la nouvelle capacité 'Pickpocket'! Il peut désormais l'utiliser"
+                    + "en échange de 10 points de mana. Les dégâts de base sont de 15, plus 2 fois la vitesse du personnage, et 0.2 fois son attaque."
+                    + "Cette compétence permet également de voler un objet a l'adeversaire."
+                    + "Le taux de réussite est fonction de la dextérité du personnage (à partir de 50, 100%).";
+        }
+        return "";
+    }
+
+    public void decreaseAttribute(Attribute attribute, int i)
+    {
+        this.attributes.remove(attribute, this.getAttributeValue(attribute)-i);
+    }
+
+    public int getNbItemsInInventory()
+    {
+        int sum = 0;
+        for(Item i : this.inventory)
+        {
+            sum++;
+        }
+        return sum;
+    }
+    
+    public Item getItem(int nb)
+    {
+        return this.inventory.get(nb);
+    }
+
+    public void removeItemInInventory(Item item)
+    {
+        this.inventory.remove(item);
+    }
 }

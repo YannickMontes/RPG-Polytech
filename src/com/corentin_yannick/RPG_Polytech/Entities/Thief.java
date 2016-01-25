@@ -7,6 +7,7 @@ package com.corentin_yannick.RPG_Polytech.Entities;
 
 import com.corentin_yannick.RPG_Polytech.Actions.Attack;
 import com.corentin_yannick.RPG_Polytech.Actions.Block;
+import com.corentin_yannick.RPG_Polytech.Actions.Pickpocket;
 import com.corentin_yannick.RPG_Polytech.Items.UseableItem;
 import com.corentin_yannick.RPG_Polytech.Actions.UseItem;
 
@@ -14,7 +15,7 @@ import com.corentin_yannick.RPG_Polytech.Actions.UseItem;
  *
  * @author yannick
  */
-public class Thief extends Character implements Attack, UseItem, Block {
+public class Thief extends Character implements Attack, UseItem, Block, Pickpocket {
 
     public Thief(String name) {
         super(name, "Voleur");
@@ -102,8 +103,7 @@ public class Thief extends Character implements Attack, UseItem, Block {
     }
 
     @Override
-    public boolean strikeABlow(Character opponent, int damages
-    ) {
+    public boolean strikeABlow(Character opponent, int damages) {
         if (capacities.contains("Attaquer")) {
             opponent.takeABlow(damages);
             return true;
@@ -127,5 +127,24 @@ public class Thief extends Character implements Attack, UseItem, Block {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String pickpocket(Character opponent)
+    {
+        if(capacities.contains("Pickpocket"))
+        {
+            if(this.attributes.get(Attribute.MANA)>=10)
+            {
+                int nbAlea = (int)(Math.random()*100);
+                if(nbAlea<=this.getAttributeValue(Attribute.DEXTERITY)*2)
+                {
+                    return "";
+                }
+                return "Attaque échouée";
+            }
+            return "Vous n'avez pas assez de mana";
+        }
+        return "Vous n'avez pas la compétence.";
     }
 }

@@ -9,6 +9,6 @@ package com.corentin_yannick.RPG_Polytech.Actions;
  *
  * @author Corentin
  */
-public interface Capacity {
-
+public interface Capacity 
+{
 }

@@ -62,6 +62,11 @@ public class Turn {
                 text += "\n" + ConsoleDesign.text("3 -> Utiliser un objet", RED);
                 limitAction++;
             }
+            else
+            {
+                text += "\n" + ConsoleDesign.text("4 -> "+capacity, RED);
+                limitAction++;
+            }
         }
 
         int actionNumber = Controller.askNumberBetween(text, 1, limitAction);
@@ -78,6 +83,12 @@ public class Turn {
                 break;
             case 3:
                 if (new Action(character, opponentsTeam, this).useObject() == false) {
+                    turnOf(character, false);
+                }
+                break;
+            case 4:
+                if(new Action(character, opponentsTeam, this).useCapacity() == false)
+                {
                     turnOf(character, false);
                 }
                 break;

@@ -202,6 +202,8 @@ public abstract class Character {
             }
             this.addRandomItems();
         }
+        this.inventory.add(Potion.listPotionItem.get(0));
+        this.inventory.add(Potion.listPotionItem.get(0));
         this.reinitStats();
     }
 

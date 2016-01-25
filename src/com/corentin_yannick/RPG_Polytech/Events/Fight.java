@@ -15,6 +15,7 @@ import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.RED;
 import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.WHITE;
 import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.REDBACK;
 import static com.corentin_yannick.RPG_Polytech.Controllers.ConsoleDesign.CYANBACK;
+import com.corentin_yannick.RPG_Polytech.Manager.Game;
 
 /**
  *
@@ -101,7 +102,8 @@ public class Fight extends Event {
             System.out.println("");
         } else {
             System.out.println(ConsoleDesign.text("Votre équipe à perdu. Vous ne gagnez pas de points d'expérience.", RED));
-                        System.out.println("");
+            System.out.println("");
+            Game.game = false;          
         }
     }
 }

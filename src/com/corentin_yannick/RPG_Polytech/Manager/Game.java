@@ -42,6 +42,7 @@ public class Game {
 
     private List<Event> events;
     private Team team;
+    public static boolean game = true;
 
     public Game() {
         this.readJSONFiles();
@@ -102,14 +103,14 @@ public class Game {
                     character = new Thief(name);
                     break;
             }
-            //character.getBasicAttributesCHEAT().cheat();
-            //character.reinitStats();
+            character.getBasicAttributesCHEAT().cheat();
+            character.reinitStats();
             team.addCharacterTeam(character);
         }
     }
 
     private void initEvents() {
-        while (true) {
+        while (game) {
             team.reinitStats();
             int choiceUser = Controller.askNumberBetween("1-> Se déplacer\n2-> Consulter son inventaire\n3-> Modifier l'équipement des personnages\n"
                     + "4-> Voir le statut de l'équipe", 1, 4);
@@ -172,6 +173,7 @@ public class Game {
             events.add(new Fight(team, new Team("Boss")));
             System.out.println(Story.getPlot());
             System.out.println(Story.getPlot());
+            game = Controller.askYesNo("Voulez-vous continuer de jouer?[o/n]");
             return false;
         }
         return true;

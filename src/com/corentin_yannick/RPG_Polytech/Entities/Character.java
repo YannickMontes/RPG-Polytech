@@ -437,7 +437,7 @@ public abstract class Character {
         int nb = 1;
         for(Item i : this.inventory)
         {
-            if(i instanceof UseableItem && !this.equipment.contains(i))
+            if(classe.isInstance(i) && !this.equipment.contains(i))
             {
                 if(nb==number)
                 {

@@ -208,7 +208,7 @@ public class Game {
         if (choiceUser == 0) {
             return;
         }
-        System.out.println(chara.replaceEquipment((StuffItem)chara.getInInventoryItemOfType(Weapon.class, choiceUser - 1), chara.getEquipment(Weapon.class)));
+        System.out.println(chara.replaceEquipment((StuffItem)chara.getInInventoryItemOfType(Weapon.class, choiceUser), chara.getEquipment(Weapon.class)));
     }
 
     private void displayTips() {

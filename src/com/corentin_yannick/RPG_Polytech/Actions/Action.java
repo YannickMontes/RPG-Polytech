@@ -393,6 +393,7 @@ public class Action {
             this.message += result;
             if(result.equals("Vous n'avez pas assez de mana"))
             {
+                System.out.println(this.message);
                 return false;
             }
         }
